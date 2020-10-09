@@ -39,7 +39,8 @@
       .box-col-cal {
          padding-right: 15px;
       }
-      .col-cal {
+      div.col-cal {
+         width: 100%;
          background: #EEEEEE;
          color: #1B1C1C;
          padding-bottom: 10px;
@@ -82,9 +83,9 @@
                </div>
             </div>
             <div id="cal">
-               <div class="d-flex row-cal" v-for="week in calendar">
-                  <div class="box-col-cal" v-for="day in week" style="width: 14.2857%;">
-                     <div class="col-cal">{{day}}</div>
+               <div class="d-flex row-cal" v-for="(week, kw) in calendar">
+                  <div class="box-col-cal" v-for="(day, kd) in week" style="width: 14.2857%;">
+                     <div class="col-cal btn btn-success" v-on:click="reservDay(kw, kd)">{{day}}</div>
                   </div>
                </div>
             </div>
@@ -97,8 +98,8 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="type_reserv" class="pr-2 mb-0">Reservar por:</label>
                         <div class="col-8 col-lg-7">
-                           <select name="type_reserv" id="type_reserv" class="form-control">
-                              <option value="novalue" hidden="hidden" selected="selected">Seleccione una opción</option>
+                           <select name="type_reserv" id="type_reserv" class="form-control" v-model="type_reserv">
+                              <option value="novalue" hidden="hidden">Seleccione una opción</option>
                               <option value="days">Dias</option>
                               <option value="hours">Horas</option>
                            </select>
@@ -109,7 +110,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="count_time" class="pr-2 mb-0">Cantidad:</label>
                         <div class="col-8 col-sm-7">
-                           <input type="number" name="count_time" id="count_time" class="form-control" />
+                           <input type="number" name="count_time" id="count_time" class="form-control" min="0" v-model="count_time" />
                         </div>
                      </div>
                   </div>
@@ -117,7 +118,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="count_people" class="pr-2 mb-0">Personas:</label>
                         <div class="col-8 col-sm-7">
-                           <input type="number" name="count_people" id="count_people" class="form-control"/>
+                           <input type="number" name="count_people" id="count_people" class="form-control" min="0" v-model="count_people" />
                         </div>
                      </div>
                   </div>
@@ -128,7 +129,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="chairs" class="pr-2 mb-0">Sillas:</label>
                         <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="chairs" id="chairs" class="form-control"/>
+                           <input type="number" name="chairs" id="chairs" class="form-control" min="0" v-model="chairs" />
                         </div>
                      </div>
                   </div>
@@ -136,7 +137,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="tables" class="pr-2 mb-0">Mesas:</label>
                         <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="tables" id="tables" class="form-control" />
+                           <input type="number" name="tables" id="tables" class="form-control" min="0" v-model="tables" />
                         </div>
                      </div>
                   </div>
@@ -144,7 +145,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="tablecloths" class="pr-2 mb-0">Manteles:</label>
                         <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="tablecloths" id="tablecloths" class="form-control" />
+                           <input type="number" name="tablecloths" id="tablecloths" class="form-control" min="0" v-model="tablecloths" />
                         </div>
                      </div>
                   </div>
@@ -152,7 +153,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="assistants" class="pr-2 mb-0">Asistentes:</label>
                         <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="assistants" id="assistants" class="form-control" />
+                           <input type="number" name="assistants" id="assistants" class="form-control" min="0" v-model="assistants" />
                         </div>
                      </div>
                   </div>
@@ -162,7 +163,7 @@
                      <div class="input-group align-items-center justify-content-end">
                         <label for="total" class="pr-2 mb-0">Total:</label>
                         <div class="col-8 col-sm-7">
-                           <input type="text" name="total" id="total" class="form-control"/>
+                           <input type="text" name="total" id="total" class="form-control" v-model="total" />
                         </div>
                      </div>
                   </div>
@@ -172,7 +173,7 @@
                <i class="fas fa-cart-plus fa-2x mr-2"></i>
                <button type="button" class="btn btn-dark btn-sm mr-2">Agregar al carrito</button>
                <button type="button" class="btn btn-dark btn-sm mr-2">Cotizar</button>
-               <button type="button" class="btn btn-dark btn-sm">Limpiar</button>
+               <button type="button" class="btn btn-dark btn-sm" v-on:click="clearFields">Limpiar</button>
             </div>
          </article>
       </section>
