@@ -55,7 +55,7 @@
 <body class="w-100">
    <main class="container" id="app">
       <section id="date-price" class="row mb-3">
-         <article id="date" class="w-100 text-center pt-2">
+         <article id="date" class="w-100 text-center pt-2 col-lg-5">
             <h5 class="mb-2 font-weight-bold">Seleccione la fecha</h5>
             <div id="month" class="d-flex justify-content-between align-items-center mb-3 pb-3">
                <button type="button" class="btn btn-dark" v-on:click="previuosMonth">&LeftAngleBracket;</button>
@@ -89,14 +89,14 @@
                </div>
             </div>
          </article>
-         <article id="price" class="w-100 pt-4 pb-4 pl-sm-3 pr-sm-3">
+         <article id="price" class="w-100 pt-4 pb-4 pl-sm-3 pr-sm-3 col-lg-7">
             <h5 class="font-weight-bold">Cotización</h5>
             <form method="post">
                <div class="row mb-2 justify-content-end">
                   <div class="mb-2 col-md-7">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="type_reserv" class="pr-2 mb-0">Reservar por:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-lg-7">
                            <select name="type_reserv" id="type_reserv" class="form-control">
                               <option value="novalue" hidden="hidden" selected="selected">Seleccione una opción</option>
                               <option value="days">Dias</option>
@@ -127,7 +127,7 @@
                   <div class="mb-2 col-sm-6 col-md-4">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="chairs" class="pr-2 mb-0">Sillas:</label>
-                        <div class="col-8 col-sm-7">
+                        <div class="col-8 col-sm-7 col-lg-6">
                            <input type="number" name="chairs" id="chairs" class="form-control"/>
                         </div>
                      </div>
@@ -135,7 +135,7 @@
                   <div class="mb-2 col-sm-6 col-md-4">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="tables" class="pr-2 mb-0">Mesas:</label>
-                        <div class="col-8 col-sm-7">
+                        <div class="col-8 col-sm-7 col-lg-6">
                            <input type="number" name="tables" id="tables" class="form-control" />
                         </div>
                      </div>
@@ -143,7 +143,7 @@
                   <div class="mb-2 col-sm-6 col-md-4">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="tablecloths" class="pr-2 mb-0">Manteles:</label>
-                        <div class="col-8 col-sm-7">
+                        <div class="col-8 col-sm-7 col-lg-6">
                            <input type="number" name="tablecloths" id="tablecloths" class="form-control" />
                         </div>
                      </div>
@@ -151,7 +151,7 @@
                   <div class="col-sm-6 col-md-4">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="assistants" class="pr-2 mb-0">Asistentes:</label>
-                        <div class="col-8 col-sm-7">
+                        <div class="col-8 col-sm-7 col-lg-6">
                            <input type="number" name="assistants" id="assistants" class="form-control" />
                         </div>
                      </div>
@@ -179,20 +179,20 @@
       <section id="services" class="mb-5 pl-sm-3 pr-sm-3">
          <h4 class="font-weight-bold">Contamos con los diferentes servicios</h4>
          <article class="row mb-3">
-            <div class="mb-3 pl-md-5 pr-md-5">
+            <div class="mb-3 pl-md-5 pr-md-5 col-lg-6 pl-lg-3 pr-lg-3">
                <img src="../img/boda.jpg" alt="Boda" class="img-fluid" style="border-radius: 30px;">
             </div>
-            <div>
+            <div class="col-lg-6">
                <h5 class="font-weight-bold">Bodas</h5>
                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam ex veritatis hic, expedita autem soluta perferendis blanditiis, voluptate non illum maxime? Tempore, quod rerum saepe sequi non quo quae vitae?</p>
             </div>
          </article>
          <article class="row">
-            <div>
+            <div class="col-lg-6">
                <h5 class="font-weight-bold">Graduaciones</h5>
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet sapiente saepe perspiciatis officia, sit quibusdam placeat beatae est eos eligendi nisi adipisci exercitationem deserunt quos. Inventore quasi atque at itaque.</p>
             </div>
-            <div class="pl-md-5 pr-md-5">
+            <div class="pl-md-5 pr-md-5 col-lg-6 pl-lg-3 pr-lg-3">
                <img src="../img/luz.jpg" alt="Iluminación" class="img-fluid" style="border-radius: 30px;">
             </div>
          </article>
