@@ -55,7 +55,7 @@
 <body class="w-100">
    <main class="container" id="app">
       <section id="date-price" class="row mb-3">
-         <article id="date" class="col-md-5 text-center pt-2">
+         <article id="date" class="w-100 text-center pt-2">
             <h5 class="mb-2 font-weight-bold">Seleccione la fecha</h5>
             <div id="month" class="d-flex justify-content-between align-items-center mb-3 pb-3">
                <button type="button" class="btn btn-dark" v-on:click="previuosMonth">&LeftAngleBracket;</button>
@@ -89,11 +89,11 @@
                </div>
             </div>
          </article>
-         <article id="price" class="col-md-7 pt-3 pb-4">
+         <article id="price" class="w-100 pt-4 pb-4 pl-sm-3 pr-sm-3">
             <h5 class="font-weight-bold">Cotización</h5>
             <form method="post">
                <div class="row mb-2">
-                  <div class="col-md-8 mb-2 pr-md-2">
+                  <div class="w-100 mb-2">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="type_reserv" class="pr-2 mb-0">Reservar por:</label>
                         <div class="col-8">
@@ -105,20 +105,18 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="mb-2 col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="count_time" class="pr-2 mb-0">Cantidad:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="number" name="count_time" id="count_time" class="form-control" />
                         </div>
                      </div>
                   </div>
-               </div>
-               <div class="row justify-content-end mb-2">
-                  <div class="col-md-4">
+                  <div class="col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="count_people" class="pr-2 mb-0">Personas:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="number" name="count_people" id="count_people" class="form-control"/>
                         </div>
                      </div>
@@ -126,46 +124,44 @@
                </div>
                <p class="p-0 font-weight-bold">Mobiliario:</p>
                <div class="row mb-2">
-                  <div class="col-md-4 mb-2 pr-md-2">
+                  <div class="mb-2 col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="chairs" class="pr-2 mb-0">Sillas:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="number" name="chairs" id="chairs" class="form-control"/>
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-4 mb-2 pr-md-2">
+                  <div class="mb-2 col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="tables" class="pr-2 mb-0">Mesas:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="number" name="tables" id="tables" class="form-control" />
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="mb-2 col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="tablecloths" class="pr-2 mb-0">Manteles:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="number" name="tablecloths" id="tablecloths" class="form-control" />
                         </div>
                      </div>
                   </div>
-               </div>
-               <div class="row mb-2">
-                  <div class="col-md-4">
+                  <div class="col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="assistants" class="pr-2 mb-0">Asistentes:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="number" name="assistants" id="assistants" class="form-control" />
                         </div>
                      </div>
                   </div>
                </div>
                <div class="row justify-content-end mb-3">
-                  <div class="col-md-4">
+                  <div class="col-sm-6">
                      <div class="input-group align-items-center justify-content-end">
                         <label for="total" class="pr-2 mb-0">Total:</label>
-                        <div class="col-8">
+                        <div class="col-8 col-sm-7">
                            <input type="text" name="total" id="total" class="form-control"/>
                         </div>
                      </div>
@@ -180,23 +176,23 @@
             </div>
          </article>
       </section>
-      <section id="services" class="mb-5">
+      <section id="services" class="mb-5 pl-sm-3 pr-sm-3">
          <h4 class="font-weight-bold">Contamos con los diferentes servicios</h4>
          <article class="row mb-3">
-            <div class="col-md-6 pr-md-4 mb-3">
+            <div class="mb-3">
                <img src="../img/boda.jpg" alt="Boda" class="img-fluid" style="border-radius: 30px;">
             </div>
-            <div class="col-md-6 pl-md-4">
+            <div>
                <h5 class="font-weight-bold">Bodas</h5>
                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam ex veritatis hic, expedita autem soluta perferendis blanditiis, voluptate non illum maxime? Tempore, quod rerum saepe sequi non quo quae vitae?</p>
             </div>
          </article>
          <article class="row">
-            <div class="col-md-6 pr-md-4">
+            <div>
                <h5 class="font-weight-bold">Graduaciones</h5>
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet sapiente saepe perspiciatis officia, sit quibusdam placeat beatae est eos eligendi nisi adipisci exercitationem deserunt quos. Inventore quasi atque at itaque.</p>
             </div>
-            <div class="col-md-6 pl-md-4">
+            <div>
                <img src="../img/luz.jpg" alt="Iluminación" class="img-fluid" style="border-radius: 30px;">
             </div>
          </article>
