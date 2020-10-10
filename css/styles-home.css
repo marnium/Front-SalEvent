@@ -1,0 +1,6 @@
+
+img{ object-fit: cover; }
+@media screen and (max-width: 700px){
+    img{ height: 300px; }
+    .logo img{ height: 40px;}
+}
