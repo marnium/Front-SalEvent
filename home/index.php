@@ -22,7 +22,7 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../img/img-home/content-carousel/img-1.jpg" 
+      <img src="../img/home/content-carousel/img-1.jpg" 
         class="img-responsive d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../img/img-home/content-carousel/img-2.jpg" 
+      <img src="../img/home/content-carousel/img-2.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../img/img-home/content-carousel/img-3.jpg" 
+      <img src="../img/home/content-carousel/img-3.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../img/img-home/content-carousel/img-4.jpg" 
+      <img src="../img/home/content-carousel/img-4.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../img/img-home/content-carousel/img-5.jpg" 
+      <img src="../img/home/content-carousel/img-5.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../img/img-home/content-carousel/img-6.jpg" 
+      <img src="../img/home/content-carousel/img-6.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
@@ -83,7 +83,7 @@
 
   <div class="row p-2 d-flex justify-content-between">
     <div class="col-md-4">
-      <img src="../img/img-home/content-down/img-webiste.jpg" class="card-img" alt="...">
+      <img src="../img/home/content-down/img-webiste.jpg" class="card-img" alt="...">
     </div>
     <div class="col-md-6">
         <p class="border-top border-left border-bottom p-2 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam cum aperiam, sint commodi asperiores esse modi iste ad corrupti quia unde exercitationem voluptates nam itaque? Labore illum cum eum inventore.
@@ -102,13 +102,13 @@
         </p>
     </div>
     <div class="col-md-4">
-      <img src="../img/img-home/content-down/img-event-catering.jpg" class="card-img" alt="...">
+      <img src="../img/home/content-down/img-event-catering.jpg" class="card-img" alt="...">
     </div>
   </div>
   
   <div class="row p-2 d-flex justify-content-between">
     <div class="col-md-4">
-      <img src="../img/img-home/content-down/img-wedding-guests.jpg" class="card-img" alt="...">
+      <img src="../img/home/content-down/img-wedding-guests.jpg" class="card-img" alt="...">
     </div>
     <div class="col-md-6">
         <p class="border-top border-left border-bottom p-2 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam cum aperiam, sint commodi asperiores esse modi iste ad corrupti quia unde exercitationem voluptates nam itaque? Labore illum cum eum inventore.
@@ -128,7 +128,7 @@
         </p>
     </div>
     <div class="col-md-4">
-      <img src="../img/img-home/content-down/img-event-live-band.jpeg" class="card-img" alt="...">
+      <img src="../img/home/content-down/img-event-live-band.jpeg" class="card-img" alt="...">
     </div>
   </div>
 

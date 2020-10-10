@@ -57,7 +57,7 @@
    <?php
       include('../partials/home/navigation.html');
    ?>
-   <main class="container" id="app">
+   <main class="container mt-2" id="app">
       <section id="date-price" class="row mb-3">
          <article id="date" class="w-100 text-center pt-2 col-lg-5">
             <h5 class="mb-2 font-weight-bold">Seleccione la fecha</h5>
@@ -184,7 +184,7 @@
          <h4 class="font-weight-bold">Contamos con los diferentes servicios</h4>
          <article class="row mb-3">
             <div class="mb-3 pl-md-5 pr-md-5 col-lg-6 pl-lg-3 pr-lg-3">
-               <img src="../img/img-services/boda.jpg" alt="Boda" class="img-fluid" style="border-radius: 30px;">
+               <img src="../img/services/boda.jpg" alt="Boda" class="img-fluid" style="border-radius: 30px;">
             </div>
             <div class="col-lg-6">
                <h5 class="font-weight-bold">Bodas</h5>
@@ -197,7 +197,7 @@
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet sapiente saepe perspiciatis officia, sit quibusdam placeat beatae est eos eligendi nisi adipisci exercitationem deserunt quos. Inventore quasi atque at itaque.</p>
             </div>
             <div class="pl-md-5 pr-md-5 col-lg-6 pl-lg-3 pr-lg-3">
-               <img src="../img/img-services/luz.jpg" alt="Iluminación" class="img-fluid" style="border-radius: 30px;">
+               <img src="../img/services/luz.jpg" alt="Iluminación" class="img-fluid" style="border-radius: 30px;">
             </div>
          </article>
       </section>
