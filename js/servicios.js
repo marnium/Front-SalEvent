@@ -19,7 +19,8 @@ var vm = new Vue({
       tablecloths: 0,
       assistants: 0,
       total: 0,
-      day_reserv: null
+      date_reserved: null,
+      is_visibility_reserv: false
    },
    methods: {
       nextMonth: function() {
@@ -28,6 +29,7 @@ var vm = new Vue({
             this.month = 0;
             this.year++;
          }
+         this.rendererDateReserved();
       },
       previuosMonth: function() {
          if(this.month > 0) { this.month--; }
@@ -35,6 +37,7 @@ var vm = new Vue({
             this.month = 11;
             this.year--;
          }
+         this.rendererDateReserved();
       },
       clearFields: function() {
          console.log('limpiando campos');
@@ -46,53 +49,76 @@ var vm = new Vue({
          this.assistants = 0;
          this.total = 0;
       },
-      reservDay: function(w, d) {
-         let date_select = new Date(this.year, this.month, this.calendar[w][d]);
-         console.log('día: ' + this.calendar[w][d]);
+      reservedDay: function(w, d) {
+         if (w == null || d == null) return;
 
-         if (this.day_reserv === null) {
-            /**
-             * Es la primera vez que se selecciona una fecha
-             */
-            this.day_reserv = date_select;
-         } else if (!(date_select == this.day_reserv)) {
-            /**
-             * NO es la primera vez que se selecciona una fecha
-             * por lo mismo es necesario cambiar el color de la fecha
-             * seleccionada previamente y después el cambiar el color
-             * de la fecha seleccionada actualmente, el que lanzo el evento
-             */
-            let day_reserv_prev = this.day_reserv;
-            this.day_reserv = date_select;
-            if (day_reserv_prev.getFullYear() == this.year && day_reserv_prev.getMonth() == this.month) {
-               let pos = this.searchDayInCal(day_reserv_prev);
-               let element = document.querySelector('#cal > div:nth-child('+pos.week+')').childNodes[pos.day].firstChild;
-               let className = element.className.split(' ');
-               className.pop();
-               className.pop();
-               className.push('btn-success');
-               element.className = className.join(' ');
+         let date_selected = new Date(this.year, this.month, this.calendar[w][d]);
+
+         if (this.date_reserved == null) {
+            this.date_reserved = date_selected;
+         } else if (this.date_reserved.getFullYear() == date_selected.getFullYear() &&
+             this.date_reserved.getMonth() == date_selected.getMonth()) {
+            let date_reserved_old = this.date_reserved;
+            this.date_reserved = date_selected;
+            if (date_reserved_old.getFullYear() == this.year && date_reserved_old.getMonth() == this.month) {
+               this.removeDateReserved(date_reserved_old);
             }
          }
-         let element = document.querySelector('#cal > div:nth-child('+(w+1)+')').childNodes[d].firstChild;
-         console.log('elemento: ', element.firstChild.nodeValue);
-         let className = element.className.split(' ');
-         className.pop();
-         className.push('btn-warning');
-         className.push('disabled');
-         element.className = className.join(' ');
+         this.addDateReserved(this.date_reserved);
+         this.is_visibility_reserv = true;
       },
       searchDayInCal: function(date) {
          let position = {week: 0, day: 0};
          for (let w = 0; w < this.calendar.length; w++) {
             for (let d = 0; d < this.calendar[w].length; d++) {
-               if (date.getDay() == this.calendar[w][d]) {
+               if (date.getDate() == this.calendar[w][d]) {
                   position.week = w + 1;
-                  position.day = d + 1;
+                  position.day = d;
                }
             }
          }
          return position;
+      },
+      rendererDateReserved: function(date_old) {
+         if (this.date_reserved == null) return;
+         if (this.year == this.date_reserved.getFullYear() &&
+             this.month == this.date_reserved.getMonth()) {
+            this.addDateReserved(this.date_reserved);
+            this.is_visibility_reserv = true;
+         } else if (this.is_visibility_reserv) {
+            let filas = document.querySelectorAll('#cal > div.row-cal');
+            for (const f of filas) {
+               for (const c of f.childNodes) {
+                  let className = c.firstChild.className;
+                  if (className.indexOf('btn-warning') != -1) {
+                     className = className.split(' ');
+                     className.pop();
+                     className.pop();
+                     className.push('btn-sucess');
+                     c.firstChild.className = className.join(' ');
+                     this.is_visibility_reserv = false;
+                  }
+               }
+            }
+         }
+      },
+      removeDateReserved: function(date) {
+         let pos = this.searchDayInCal(date);
+         let element = document.querySelector('#cal > div:nth-child('+pos.week+')').childNodes[pos.day].firstChild;
+         let className = element.className.split(' ');
+         className.pop();
+         className.pop();
+         className.push('btn-success');
+         element.className = className.join(' ');
+      },
+      addDateReserved: function(date) {
+         let pos = this.searchDayInCal(date);
+         let element = document.querySelector('#cal > div:nth-child('+(pos.week)+')').childNodes[pos.day].firstChild;
+         let className = element.className.split(' ');
+         className.pop();
+         className.push('btn-warning');
+         className.push('disabled');
+         element.className = className.join(' ');
       }
    },
    computed: {

@@ -85,7 +85,7 @@
             <div id="cal">
                <div class="d-flex row-cal" v-for="(week, kw) in calendar">
                   <div class="box-col-cal" v-for="(day, kd) in week" style="width: 14.2857%;">
-                     <div class="col-cal btn btn-success" v-on:click="reservDay(kw, kd)">{{day}}</div>
+                     <div class="col-cal btn btn-success" v-on:click="reservedDay(kw, kd)">{{day}}</div>
                   </div>
                </div>
             </div>
