@@ -161,7 +161,11 @@
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary bg-dark">Primary</button>
+            <div class="mt-3 d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary bg-dark border-0">
+                Actualizar datos
+              </button>
+            </div>
           </form>
         </div>
         <div
