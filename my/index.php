@@ -39,11 +39,9 @@
     include('../partials/my/navigation.html');
 ?>
 
-    <!--<nav class="nav flex-column bg-dark ">-->
     <div class="container-fluid mt-4" id="app-change">
       <div class="d-flex flex-md-row-reverse flex-wrap">
-        <div class="col-md-8 mb-4 pb-4">
-          <!--<div class="container-fluid" v-html="message"></div>-->
+        <div class="col-md-9 mb-4 pb-4">
           <form class="form-signin">
             <div class="container-fluid">
               <div class="card mb-3 overflow-auto">
@@ -169,7 +167,7 @@
           </form>
         </div>
         <div
-          class="col-md-4 navbar-expand-lg navbar-dark bg-dark sticky-bottom"
+          class="col-md-3 navbar-expand-lg navbar-dark bg-dark sticky-bottom"
         >
           <button
             class="navbar-toggler"
