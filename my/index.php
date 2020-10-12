@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link
@@ -17,7 +17,17 @@
       .sticky-bottom {
         position: fixed;
         height: 100%;
-        left: 20px;
+        left: 0;
+      }
+      @media screen and (max-width: 992px){
+        .sticky-bottom{
+          padding-left: 0;
+          text-align: center;
+        }
+        .list-group-item{
+          padding-left: 10px;
+          text-align: center;
+        }
       }
       @media screen and (max-width: 767px) {
         .sticky-bottom {
@@ -29,6 +39,11 @@
           background-color: red;
           color: white;
           text-align: center;
+        }
+        .img-settings{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
         }
       }
     </style>
@@ -122,7 +137,6 @@
                           >
                             Ver
                           </button>
-                          <!--<a href="#" class="my-auto pl-3">Ver</a>-->
                         </div>
                       </div>
 
@@ -184,33 +198,32 @@
             <div class="list-group m-auto overflow-hidden" id="list-tab">
               <div class="text-white border-bottom">
                 <p class="mt-3 h3 text-center">Hola Eleomar</p>
-                <p class="mt-3 h4 text-center">Reservaciones</p>
+                <p class="mt-3 h5 text-center">Reservaciones</p>
               </div>
 
               <a
-                class="list-group-item list-group-item-action list-group-item-dark h4 text-center mt-2"
+                class="list-group-item list-group-item-action list-group-item-dark h5 text-center mt-2"
                 id="revervations"
                 data-toggle="list"
-                v-on:click="change(1)"
-                href="#list-profile"
+                href="#"
                 aria-controls="home"
               >
                 Mis reservaciones
               </a>
               <a
-                class="list-group-item list-group-item-action list-group-item-dark h4 text-center border-bottom-0"
+                class="list-group-item list-group-item-action list-group-item-dark h5 text-center border-bottom-0"
                 id="calendar"
                 data-toggle="list"
-                href="#list-profile"
+                href="#"
                 role="tab"
               >
                 Calendario
               </a>
               <a
-                class="list-group-item list-group-item-action list-group-item-dark h4 text-center border-0"
+                class="list-group-item list-group-item-action list-group-item-dark h5 text-center border-0"
                 id="notifications"
                 data-toggle="list"
-                href="#list-messages"
+                href="#"
                 role="tab"
               >
                 Notificaciones
@@ -220,7 +233,7 @@
                 class="list-group-item list-group-item-action list-group-item-dark h4 text-center mt-2 active"
                 id="settings"
                 data-toggle="list"
-                href="#list-settings"
+                href="#"
                 role="tab"
               >
                 Ajustes
