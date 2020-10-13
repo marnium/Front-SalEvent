@@ -44,7 +44,7 @@
     <?php
     include('../partials/my/navigation.html');
 ?>
-  <main class="container my-2">
+  <main class="container-fluid my-2">
     <div id="nav-left" class="w-100 collapse text-center p-0 list-group list-group-flush bg-dark">
       <h4 class="list-group-item bg-dark text-white font-weight-bold" style="border: none;">¡Hola Usuario!</h4>
       <h5 class="list-group-item bg-dark text-white font-weight-bold mb-2" style="border-bottom-color: white;">Reservaciones</h5>
