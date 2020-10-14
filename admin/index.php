@@ -14,6 +14,9 @@
          border-left: none !important;
          border-right: none !important;
       }
+      #nav-left {
+         top: 84px;
+      }
       @media only screen and (min-width: 992px) {
          #nav-left {
             display: flex !important;
@@ -51,17 +54,16 @@
    include('../partials/admin/navigation.html');
    ?>
    <main class="container-fluid mt-2">
-      <div id="nav-left" class="w-100 collapse text-center p-0 list-group list-group-flush bg-dark">
+      <div id="nav-left" class="w-100 collapse text-center p-0 list-group list-group-flush bg-dark sticky-top">
          <h5 class="list-group-item bg-dark text-white font-weight-bold mb-2" style="border-bottom-color: white;">¡Hola Admnin!</h5>
-         <span class="btn btn-dark btn-block" onclick="load_page(this)">Clientes</span>
-         <span class="btn btn-dark btn-block" onclick="load_page(this)">Reservaciones</span>
-         <span id="opt-salon" class="btn btn-dark btn-block option-selected" onclick="load_page(this, 'salon')">Salon</span>
-         <span class="btn btn-dark btn-block" onclick="load_page(this)">Reportes</span>
+         <span id="opt-customers" class="btn btn-dark btn-block option-selected" onclick="load_page(this, 'customers')">Clientes</span>
+         <span id="opt-reservations" class="btn btn-dark btn-block" onclick="load_page(this, 'reservations')">Reservaciones</span>
+         <span id="opt-salon" class="btn btn-dark btn-block" onclick="load_page(this, 'salon')">Salon</span>
          <div class="list-group-item bg-dark text-white mt-2 px-0" style="border: none; border-top: 1px solid white;">
-            <span id="opt-settings" class="btn btn-dark btn-block" onclick="load_page(this, 'settings')">Ajustes</span>
+            <span id="opt-personal-information" class="btn btn-dark btn-block" onclick="load_page(this, 'personal-information')">Datos personales</span>
          </div>
       </div>
-      <section id="settings" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none;">
+      <section id="customers" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee;">
          <article class="input-group mb-2 col-sm-7">
             <div class="input-group-prepend">
                <label for="select" class="input-group-text">Ver datos:</label>
@@ -134,140 +136,217 @@
             </div>
          </article>
       </section>
-      <section id="salon" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee;">
-         <form>
-            <div class="w-100 d-flex flex-wrap">
-               <div class="px-0 col-lg-6">
-                  <div class="pr-lg-3">
-                     <div class="w-100 d-flex flex-wrap box-input">
-                        <label for="name_salon" class="col-sm-4">Nombre salon:</label>
-                        <input type="text" name="name_salon" id="name_salon" class="form-control col-sm-8" />
-                     </div>
-                     <div class="box-input">
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="street" class="col-sm-4">Calle:</label>
-                           <input type="text" name="street" id="street" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="state" class="col-sm-4">Estado:</label>
-                           <input type="text" name="state" id="state" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="municip" class="col-sm-4">Municipio:</label>
-                           <input type="text" name="municip" id="municip" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap">
-                           <label for="suburb" class="col-sm-4">Colonia:</label>
-                           <input type="text" name="suburb" id="suburb" class="form-control col-sm-8" />
-                        </div>
-                     </div>
-                     <div class="box-input">
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="tel" class="col-sm-4">Teléfono:</label>
-                           <input type="text" name="tel" id="tel" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap">
-                           <label for="email" class="col-sm-4">Correo:</label>
-                           <input type="email" name="email" id="email" class="form-control col-sm-8" />
-                        </div>
-                     </div>
-                     <div class="box-input">
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="bank" class="col-sm-4">Banco:</label>
-                           <input type="text" name="bank" id="bank" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="owner" class="col-sm-4">Titular:</label>
-                           <input type="text" name="owner" id="owner" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="num_account" class="col-sm-4">No. Cuenta:</label>
-                           <input type="text" name="num_account" id="num_account" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap">
-                           <label for="key" class="col-sm-4">Clave:</label>
-                           <input type="text" name="key" id="key" class="form-control col-sm-8" />
-                        </div>
-                     </div>
+      <section id="reservations" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none">
+         <article class="w-100 d-flex flex-wrap px-2 mb-3 text-center px-sm-0 px-lg-4 px-xl-5">
+            <div class="w-100 border border-dark bg-success">
+               <h2 class="font-weight-bold">14</h2>
+               <h5>Miércoles</h5>
+            </div>
+            <div class="bg-success border border-top-0 border-dark col-sm-6">
+               <h2 class="font-weight-bold">10</h2>
+               <h5>Octubre</h5>
+            </div>
+            <div class="bg-success border border-top-0 border-dark col-sm-6">
+               <h2 class="font-weight-bold">38</h2>
+               <h5>Semana</h5>
+            </div>
+         </article>
+         <article class="py-3 mb-3">
+            <h4 class="font-wieght-bold pl-2">Buscar Reservaciones:</h4>
+            <div class="py-3 px-1 px-sm-2 px-md-3 px-lg-4 px-xl-5">
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <label for="res-today" class="input-group-text">
+                        <input type="radio" name="res-filter" id="res-today" class="mr-1" />Hoy</label>
+                     <label for="res-day" class="input-group-text">
+                        <input type="radio" name="res-filter" id="res-day" class="mr-1" />Seleccionar fecha</label>
                   </div>
-               </div>
-               <div class="px-0 col-lg-6">
-                  <div class="pl-lg-3">
-                     <div class="box-input">
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="capacity" class="col-sm-4">Capacidad:</label>
-                           <input type="number" min="0" name="capacity" id="capacity" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="open" class="col-sm-4">Hora apertura:</label>
-                           <input type="text" name="opne" id="opne" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap form-group">
-                           <label for="close" class="col-sm-4">Hora cierre:</label>
-                           <input type="text" name="close" id="close" class="form-control col-sm-8" />
-                        </div>
-                        <div class="w-100 d-flex flex-wrap">
-                           <label for="description_salon" class="col-sm-4">Descripción del salón:</label>
-                           <textarea name="description_salon" cols="5" id="description_salon" class="form-control col-sm-8" style="resize: none;"></textarea>
-                        </div>
-                     </div>
-                     <div class="box-input">
-                        <h4>Días de laboración</h4>
-                        <div class="form-group form-check">
-                           <label for="monday" class="form-check-label">
-                              <input type="checkbox" name="monday" id="monday" class="form-check-input" />
-                              Lunes
-                           </label>
-                        </div>
-                        <div class="form-group form-check">
-                           <label for="tuesday" class="form-check-label">
-                              <input type="checkbox" name="tuesday" id="tuesday" class="form-check-input" />
-                              Martes
-                           </label>
-                        </div>
-                        <div class="form-group form-check">
-                           <label for="wednesday" class="form-check-label">
-                              <input type="checkbox" name="wednesday" id="wednesday" class="form-check-input" />
-                              Miércoles
-                           </label>
-                        </div>
-                        <div class="form-group form-check">
-                           <label for="thursday" class="form-check-label">
-                              <input type="checkbox" name="thursday" id="thursday" class="form-check-input" />
-                              Jueves
-                           </label>
-                        </div>
-                        <div class="form-group form-check">
-                           <label for="friday" class="form-check-label">
-                              <input type="checkbox" name="friday" id="friday" class="form-check-input" />
-                              Viernes
-                           </label>
-                        </div>
-                        <div class="form-group form-check">
-                           <label for="saturday" class="form-check-label">
-                              <input type="checkbox" name="saturday" id="saturday" class="form-check-input" />
-                              Sabado
-                           </label>
-                        </div>
-                        <div class="form-group form-check">
-                           <label for="sunday" class="form-check-label">
-                              <input type="checkbox" name="sunday" id="sunday" class="form-check-input" />
-                              Domingo
-                           </label>
-                        </div>
-                     </div>
-                  </div>
+                  <input type="date" class="form-control" style="width: auto;" />
                </div>
             </div>
-            <div class="w-100 mt-3 d-flex justify-content-center">
+            <div class="border border-primary">
+               Calendario
+            </div>
+         </article>
+         <article class="pt-3 px-1 mb-3 px-md-3 px-lg-4 px-xl-5" style="font-size: 1.3rem;">
+            <div class="bg-warning mb-3 p-2 shadow rounded">
+               <div class="w-100 d-flex flex-wrap justify-content-around">
+                  <span>Cliente</span>
+                  <span>Teléfono</span>
+               </div>
+               <div class="w-100 d-flex flex-wrap justify-content-around">
+                  <span>Fecha</span>
+                  <span>Correo</span>
+               </div>
+               <div class="w-100 d-flex flex-wrap justify-content-around mb-3">
+                  <span class="font-weight-bold">Confirmar reservación</span>
+               </div>
+               <div class="w-100 d-flex justify-content-center">
+                  <button type="button" class="btn btn-primary">Confirmar</button>
+               </div>
+            </div>
+            <div class="bg-primary mb-3 p-2 shadow rounded">
+               <div class="w-100 d-flex flex-wrap justify-content-around">
+                  <span>Cliente</span>
+                  <span>Teléfono</span>
+               </div>
+               <div class="w-100 d-flex flex-wrap justify-content-around">
+                  <span>Fecha</span>
+                  <span>Correo</span>
+               </div>
+               <div class="w-100 d-flex flex-wrap justify-content-around">
+                  <span class="font-weight-bold">Reservación confirmada</span>
+               </div>
+            </div>
+         </article>
+      </section>
+      <section id="salon" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none">
+         <form>
+            <article class="w-100 d-flex flex-wrap">
+               <div class="px-0 col-lg-6 pr-lg-3">
+                  <article class="w-100 d-flex flex-wrap box-input">
+                     <label for="name_salon" class="col-sm-4">Nombre salon:</label>
+                     <input type="text" name="name_salon" id="name_salon" class="form-control col-sm-8" />
+                  </article>
+                  <article class="box-input">
+                     <div class="w-100 d-flex flex-wrap form-group">
+                        <label for="street" class="col-sm-4">Calle:</label>
+                        <input type="text" name="street" id="street" class="form-control col-sm-8" />
+                     </div>
+                     <div class="w-100 d-flex flex-wrap form-group">
+                        <label for="state" class="col-sm-4">Estado:</label>
+                        <input type="text" name="state" id="state" class="form-control col-sm-8" />
+                     </div>
+                     <div class="w-100 d-flex flex-wrap form-group">
+                        <label for="municip" class="col-sm-4">Municipio:</label>
+                        <input type="text" name="municip" id="municip" class="form-control col-sm-8" />
+                     </div>
+                     <div class="w-100 d-flex flex-wrap">
+                        <label for="suburb" class="col-sm-4">Colonia:</label>
+                        <input type="text" name="suburb" id="suburb" class="form-control col-sm-8" />
+                     </div>
+                  </article>
+                  <article class="box-input">
+                     <div class="w-100 d-flex flex-wrap form-group">
+                        <label for="tel" class="col-sm-4">Teléfono:</label>
+                        <input type="text" name="tel" id="tel" class="form-control col-sm-8" />
+                     </div>
+                     <div class="w-100 d-flex flex-wrap">
+                        <label for="email" class="col-sm-4">Correo:</label>
+                        <input type="email" name="email" id="email" class="form-control col-sm-8" />
+                     </div>
+                  </article>
+               </div>
+               <div class="px-0 col-lg-6 pl-lg-3">
+                  <article class="box-input">
+                     <div class="w-100 d-flex flex-wrap form-group">
+                        <label for="capacity" class="col-sm-4">Capacidad:</label>
+                        <input type="number" min="0" name="capacity" id="capacity" class="form-control col-sm-8" />
+                     </div>
+                     <div class="w-100 d-flex flex-wrap">
+                        <label for="description_salon" class="col-sm-4">Descripción del salón:</label>
+                        <textarea name="description_salon" cols="5" id="description_salon" class="form-control col-sm-8" style="resize: none;"></textarea>
+                     </div>
+                  </article>
+                  <article class="box-input">
+                     <h4>Días de laboración</h4>
+                     <div class="form-group form-check">
+                        <label for="monday" class="form-check-label">
+                           <input type="checkbox" name="monday" id="monday" class="form-check-input" />
+                           Lunes
+                        </label>
+                     </div>
+                     <div class="form-group form-check">
+                        <label for="tuesday" class="form-check-label">
+                           <input type="checkbox" name="tuesday" id="tuesday" class="form-check-input" />
+                           Martes
+                        </label>
+                     </div>
+                     <div class="form-group form-check">
+                        <label for="wednesday" class="form-check-label">
+                           <input type="checkbox" name="wednesday" id="wednesday" class="form-check-input" />
+                           Miércoles
+                        </label>
+                     </div>
+                     <div class="form-group form-check">
+                        <label for="thursday" class="form-check-label">
+                           <input type="checkbox" name="thursday" id="thursday" class="form-check-input" />
+                           Jueves
+                        </label>
+                     </div>
+                     <div class="form-group form-check">
+                        <label for="friday" class="form-check-label">
+                           <input type="checkbox" name="friday" id="friday" class="form-check-input" />
+                           Viernes
+                        </label>
+                     </div>
+                     <div class="form-group form-check">
+                        <label for="saturday" class="form-check-label">
+                           <input type="checkbox" name="saturday" id="saturday" class="form-check-input" />
+                           Sabado
+                        </label>
+                     </div>
+                     <div class="form-group form-check">
+                        <label for="sunday" class="form-check-label">
+                           <input type="checkbox" name="sunday" id="sunday" class="form-check-input" />
+                           Domingo
+                        </label>
+                     </div>
+                  </article>
+               </div>
+            </article>
+            <article class="w-100 mt-3 d-flex justify-content-center">
                <input type="submit" value="Actualizar" class="btn btn-primary" />
+            </article>
+         </form>
+      </section>
+      <section id="personal-information" class="py-4 mt-3 px-1 px-sm-3 px-md-4 col-lg-9 mt-lg-0 px-lg-5" style="background: #eeeeee; display: none;">
+         <h3 class="text-center font-weight-bold">Administrador</h3>
+         <div class="form-group">
+            <label for="inf-lastname" class="font-weight-bold">Nombre completo</label>
+            <input id="inf-lastname" type="text" value="Administrador-1 Lastname" readonly class="form-control" />
+         </div>
+         <div class="form-group">
+            <label for="inf-email" class="font-weight-bold">Email</label>
+            <input id="inf-email" type="text" value="amdin@salevent.com" readonly class="form-control" />
+         </div>
+         <div class="form-group">
+            <label for="inf-tel" class="font-weight-bold">Teléfono</label>
+            <input id="inf-tel" type="text" value="9287476" readonly class="form-control" />
+         </div>
+         <div class="form-group">
+            <label for="inf-user" class="font-weight-bold">Usuario</label>
+            <input id="inf-user" type="text" value="user-admin" readonly class="form-control" />
+         </div>
+         <div class="form-group">
+            <label for="inf-pass" class="font-weight-bold">Contraseña</label>
+            <button type="button" class="btn btn-link" onclick="show_or_hide_password(this, 'inf-pass')">Ver</button>
+            <input id="inf-pass" type="password" value="pass" readonly class="form-control" />
+         </div>
+         <form action="">
+            <div class="form-group">
+               <label for="inf-new-pass" class="font-weight-bold">Cambiar contraseña</label>
+               <input id="inf-new-pass" type="password" name="new_pass" placeholder="contraseña nueva" required class="form-control" />
+            </div>
+            <div class="form-group">
+               <label for="inf-retry-pass" class="font-weight-bold">Repetir contraseña</label>
+               <input id="inf-retry-pass" type="password" placeholder="contraseña nueva" required class="form-control" />
+            </div>
+            <div class="w-100 d-flex justify-content-center">
+               <input type="submit" value="Actualizar" class="btn btn-success" />
             </div>
          </form>
       </section>
    </main>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
    <script>
-      var option_page_current = document.getElementById('opt-salon');
-      var page_loaded_current = document.getElementById('salon');
+      $('.list-group span').on('click', function(){
+         $('.navbar-toggler').click();
+      });
+      var option_page_current = document.getElementById('opt-customers');
+      var page_loaded_current = document.getElementById('customers');
       
       function load_page(element, id_page) {
          if (active_option(element)) {
@@ -278,14 +357,7 @@
       }
       function active_option(element) {
          let list_class = element.className.split(' ');
-         if (list_class.lastIndexOf('option-selected') != -1) return false;
-         
-         console.log('Activando ', element.firstChild.nodeValue, '...');
-
-         list_class.push('option-selected');
-         element.className = list_class.join(' ');
-
-         console.log('Hecho.');
+         if (list_class.lastIndexOf('option-selected') != -1) return false; //Si ya esta activo la opción se sale
 
          if (option_page_current) {
             console.log('Desactivando ', option_page_current.firstChild.nodeValue, '...');
@@ -296,6 +368,11 @@
             console.log('Hecho.');
          }
 
+         console.log('Activando ', element.firstChild.nodeValue, '...');
+         list_class.push('option-selected');
+         element.className = list_class.join(' ');
+         console.log('Hecho.');
+
          option_page_current = element;
          return true;
       }
@@ -303,19 +380,31 @@
          if (!id_page) return;
 
          if (page_loaded_current) {
+            console.log('Ocultando página ', page_loaded_current.id, '...');
             page_loaded_current.style.display = 'none';
+            console.log('Hecho.');
          }
          
          let component = document.getElementById(id_page);
          console.log('Mostrando página ', component.id, '...');
          component.style.display = 'block';
+         console.log('Hecho');
 
          page_loaded_current = component;
-         console.log('Hecho');
+      }
+      function show_or_hide_password(button, id_pass) {
+         let el = document.getElementById(id_pass);
+         if (el.type == 'password') {
+            el.type = 'text';
+            button.firstChild.nodeValue = 'Ocultar';
+         }
+         else {
+            el.type = 'password';
+            button.firstChild.nodeValue = 'Ver';
+         }
+      }
+      function valide_equals_password(id_pass1, id_pass2) {
       }
    </script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
