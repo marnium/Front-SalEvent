@@ -85,7 +85,7 @@
         </section>
       </div>
       <div class="container-fluid d-flex flex-wrap justify-content-around mt-3">
-        <a href="/my/myreservation" class="text-white text-decoration-none mb-2">
+        <a href="/my/book" class="text-white text-decoration-none mb-2">
           <button class="btn btn-primary bg-dark border-0">Regresar</button>
         </a>
         <a href="/my/myreservation/" class="text-white text-decoration-none mb-2">
