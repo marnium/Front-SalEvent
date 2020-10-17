@@ -4,8 +4,8 @@
 <head>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
    <title>Admin</title>
    <style>
       .option-selected {
@@ -56,24 +56,14 @@
    <main class="container-fluid mt-2">
       <div id="nav-left" class="w-100 collapse text-center p-0 list-group list-group-flush bg-dark sticky-top">
          <h5 class="list-group-item bg-dark text-white font-weight-bold mb-2" style="border-bottom-color: white;">¡Hola Admnin!</h5>
-         <span id="opt-customers" class="btn btn-dark btn-block option-selected" onclick="load_page(this, 'customers')">Clientes</span>
+         <span id="opt-customers" class="btn btn-dark btn-block" onclick="load_page(this, 'customers')">Clientes</span>
          <span id="opt-reservations" class="btn btn-dark btn-block" onclick="load_page(this, 'reservations')">Reservaciones</span>
          <span id="opt-salon" class="btn btn-dark btn-block" onclick="load_page(this, 'salon')">Salon</span>
          <div class="list-group-item bg-dark text-white mt-2 px-0" style="border: none; border-top: 1px solid white;">
             <span id="opt-personal-information" class="btn btn-dark btn-block" onclick="load_page(this, 'personal-information')">Datos personales</span>
          </div>
       </div>
-      <section id="customers" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee;">
-         <article class="input-group mb-2 col-sm-7">
-            <div class="input-group-prepend">
-               <label for="select" class="input-group-text">Ver datos:</label>
-            </div>
-            <select id="select" class="custom-select">
-               <option value="novalue" selected hidden>Seleccione una opción</option>
-               <option value="client">Clientes</option>
-               <option value="user">Usuarios</option>
-            </select>
-         </article>
+      <section id="customers" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none;">
          <h4 class="font-weight-bold text-right pr-3 pr-lg-0">Fecha</h4>
          <article class="d-flex flex-wrap mb-3">
             <h4 class="mb-2 font-weight-bold text-center col-lg-6">Tabla Clientes/Usuarios</h4>
@@ -136,11 +126,11 @@
             </div>
          </article>
       </section>
-      <section id="reservations" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none">
+      <section id="reservations" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none;">
          <article class="w-100 d-flex flex-wrap px-2 mb-3 text-center px-sm-0 px-lg-4 px-xl-5">
             <div class="w-100 border border-dark bg-success">
-               <h2 class="font-weight-bold">14</h2>
-               <h5>Miércoles</h5>
+               <h2 class="font-weight-bold">2</h2>
+               <h5>Reserv</h5>
             </div>
             <div class="bg-success border border-top-0 border-dark col-sm-6">
                <h2 class="font-weight-bold">10</h2>
@@ -338,16 +328,24 @@
          </form>
       </section>
    </main>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"></script>
    <script>
       $('.list-group span').on('click', function(){
          $('.navbar-toggler').click();
       });
-      var option_page_current = document.getElementById('opt-customers');
-      var page_loaded_current = document.getElementById('customers');
-      
+      $(document).ready(function() {
+         option_page_current = document.getElementById('opt-customers');
+         page_loaded_current = document.getElementById('customers');
+
+         page_loaded_current.style.display = 'block';
+         
+         let list_class = option_page_current.className.split(' ');
+         list_class.push('option-selected');
+         option_page_current.className = list_class.join(' ');
+      });
       function load_page(element, id_page) {
          if (active_option(element)) {
             show_page(id_page);
