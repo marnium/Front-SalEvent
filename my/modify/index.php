@@ -52,9 +52,9 @@
     <main
       class="container-fluid d-flex flex-wrap justify-content-around m-auto"
     >
-      <h1 class="col-md-12">Reservar:</h1>
+      <h1 class="col-md-12">Modificar Reserva:</h1>
       <section class="col-md-7 border border-dark">
-        <form action="/my/booking/" id="form-book" method="POST">
+        <form action="/my/myreservation/" id="form-book" method="POST">
           <div class="d-flex flex-row flex-wrap">
             <div class="col-md-6 input-group mb-2 mt-2">
               <div class="input-group-prepend">
@@ -208,7 +208,7 @@
             class="btn btn-primary bg-dark mr-3 mb-2 border-0"
             form="form-book"
           >
-            Reservar dia
+            Actualizar
           </button>
           <button class="btn btn-primary bg-dark mr-3 mb-2 border-0">
             Cotizar
@@ -224,7 +224,7 @@
         <div class="d-flex flex-wrap justify-content-around mb-2 repair-size">
           <a
             type="reset"
-            href="/my/calendar"
+            href="/my/myreservation"
             class="text-white text-decoration-none"
           >
             <button class="btn btn-primary bg-dark mr-3 pl-2 pr-2 border-0">
