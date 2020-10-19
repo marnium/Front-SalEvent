@@ -72,7 +72,15 @@
         </div>
       </div>
     </div>
-
+    <?php
+      if(isset($_POST['send'])){
+        require_once('../databaseOperations/operations.php');
+        $user = $_POST['user'];
+        $password = $_POST['password'];
+        $operaciones = new OperationBD();
+        $resultados = $operaciones->consultUser($user,$password);
+      }
+    ?>
     <?php
         include('../partials/home/footer.html');
     ?>
