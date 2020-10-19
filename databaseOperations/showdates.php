@@ -1,8 +1,12 @@
 <?php
     require_once('operations.php');
-    $user = 'leo';
-    $password ='leo';
-    $operaciones = new OperationBD();
-    $resultados = $operaciones->consultUser($user,$password);
-    echo $resultados;
+    $user = 'user';
+    $password ='password';
+    $operations = new OperationBD();
+    $results = $operations->consultUser($user,$password);
+    if(count($results)>0){
+        echo $results['user_user'];
+    }else{
+        echo 'No results found';
+    }
 ?>
