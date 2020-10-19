@@ -13,11 +13,10 @@
             $result_return = "";
             
             $this->querys = "SELECT * FROM user WHERE user_user='$user' AND password_user='$password';";
-            $this->result = mysqli_query( $this->connection, $this->querys ) or die ( "something has gone wrong in the query");
+            $this->result = $this->connectDB->query($this->querys);
             $result_return = mysqli_fetch_array($this->result);
             
-            $this->connectToBD->closeConnection();
-            
+            $this->connectDB->close();
             return $result_return;
         }
 
@@ -32,7 +31,7 @@
                 $this->connectDB->close();
                 return $query_status;
             }
-            $this->querys = "INSERT INTO user VALUES(0,1,'$name_user','$pa_lastname_user','$mo_lastname_user','$email_user',".
+            $this->querys = "INSERT INTO user VALUES(null,1,'$name_user','$pa_lastname_user','$mo_lastname_user','$email_user',".
                 "'$phone_user','$user_user','$password_user')";
 
             $query_status = array('message'=>'User successfully registered','status'=>true);
