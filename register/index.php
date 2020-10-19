@@ -80,6 +80,17 @@
     </section>
   </main>
   <?php
+  echo '<article class="bg-white mx-2"><p>'.$_SERVER['REQUEST_METHOD'].'</p>';
+  if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require_once('../databaseOperations/operations.php');
+    $operations = new OperationBD();
+    $response = $operations->create_user($_POST['name'],$_POST['pa_lastname'],$_POST['mo_lastname'],
+    $_POST['email'],$_POST['phone'],$_POST['user'],$_POST['password']);
+    echo '<p class="mt-3">Respuesta: '.$response['message']."</p>";
+    echo '<p>Estado: '.$response['status']."</p></article>";
+  }
+  ?>
+  <?php
   include('../partials/home/footer.html');
   ?>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
