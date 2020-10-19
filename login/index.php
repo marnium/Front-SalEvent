@@ -77,8 +77,11 @@
         require_once('../databaseOperations/operations.php');
         $user = $_POST['user'];
         $password = $_POST['password'];
-        $operaciones = new OperationBD();
-        $resultados = $operaciones->consultUser($user,$password);
+        $operations = new OperationBD();
+        $results = $operations->consultUser($user,$password);
+        if(count($results>0)){
+          
+        }
       }
     ?>
     <?php

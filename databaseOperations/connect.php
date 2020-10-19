@@ -4,21 +4,20 @@
         private $database = "sallevent";
         private $username = "acceso";
         private $password = "acceso";
-        public $conn;
+        public $connection;
         function __construct(){
-            $this->conn = mysqli_connect($this->servername,$this->username, 
+            $this->connection = mysqli_connect($this->servername,$this->username, 
                 $this->password,$this->database);
-            if (!$this->conn) {
+            if (!$this->connection) {
                 die("Connection failed: " . mysqli_connect_error());
             }
             echo "Connected successfully";
         }
         public function getConnection(){
-            if ($this->conn) {echo 'enviando conexion';}
-            return $this->conn;
+            return $this->connection;
         }
         public function closeConnection(){
-            mysqli_close($this->conn);
+            mysqli_close($this->connection);
         }
     }
 ?>
