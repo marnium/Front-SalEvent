@@ -8,8 +8,19 @@
 
       <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/home/">Cerrar Sesion</a>
+        <form action="" method="POST">
+          <button type="submit" class="nav-link bg-dark text-white border-0" name="closeSession">
+            Cerrar sesion
+          </button>
+        </form>
       </li>
       </ul>
   </div>
 </nav>
+<?php
+  if(isset($_POST['closeSession'])){
+    session_start();
+    session_destroy();
+    header("Location: /home/");
+  }
+?>

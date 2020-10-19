@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['dates_user'])){
+    header("Location: /home/");
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -14,7 +21,7 @@
   </head>
   <body>
     <?php
-      include('../partials/my/navigation.html');
+      include('../partials/my/navigation.php');
     ?>
     <main class="container-fluid mt-2 client">
       <div
@@ -68,7 +75,8 @@
                       id="Usuario"
                       class="form-control form-control mt-1"
                       placeholder="Nombre"
-                      value="Mike ... ..."
+                      value="<?php echo $_SESSION["dates_user"][2]." ".
+                        $_SESSION["dates_user"][3]." ".$_SESSION["dates_user"][4];  ?>"
                       readonly
                     />
                   </div>
@@ -79,7 +87,7 @@
                       id="email"
                       class="form-control form-control mt-1"
                       placeholder="Email"
-                      value="example@example.com"
+                      value="<?php echo $_SESSION["dates_user"][5];  ?>"
                       readonly
                     />
                   </div>
@@ -90,7 +98,7 @@
                       id="number"
                       class="form-control form-control mt-1"
                       placeholder="Telefono"
-                      value="123 123 1234"
+                      value="<?php echo $_SESSION["dates_user"][6];  ?>"
                       readonly
                     />
                   </div>
@@ -101,7 +109,7 @@
                       id="user"
                       class="form-control form-control mt-1"
                       placeholder="Usuario"
-                      value="Usuario"
+                      value="<?php echo $_SESSION["dates_user"][7];  ?>"
                       readonly
                     />
                   </div>
@@ -126,7 +134,7 @@
                         id="current-password"
                         class="form-control form-control mt-1 w-50"
                         placeholder="Contraseña actual"
-                        value="password"
+                        value="<?php echo $_SESSION["dates_user"][8];  ?>"
                         readonly
                       />
                       <i class="bx bx-show my-auto"></i>

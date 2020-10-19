@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(isset($_SESSION['dates_user'])){
+    header("Location: /my/");
+  }
+  
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -80,7 +87,24 @@
         $operations = new OperationBD();
         $results = $operations->consultUser($user,$password);
         if(count($results>0)){
-          
+          switch($results['type_user']){
+            case '0':
+              session_start();
+              $_SESSION['dates_admin'] = array($results['id_user'],$results['type_user'],
+                $results['name_user'],$results['pa_lastname_user'],$results['mo_lastname_user'],
+                $results['email_user'],$results['phone_user'],$results['user_user'],
+                $results['password_user']);
+              header('Location: /admin/');
+            break;
+            case '1':
+              session_start();
+              $_SESSION['dates_user'] = array($results['id_user'],$results['type_user'],
+                $results['name_user'],$results['pa_lastname_user'],$results['mo_lastname_user'],
+                $results['email_user'],$results['phone_user'],$results['user_user'],
+                $results['password_user']);
+              header('Location: /my/');
+            break;
+          }
         }
       }
     ?>

@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['dates_user'])){
+    header("Location: /home/");
+  }
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -20,7 +26,7 @@
   </head>
   <body>
     <?php
-      include('../../partials/my/navigation-options.html');
+      include('../../partials/my/navigation-options.php');
     ?>
     <main class="container-fluid mt-2 client">
       <div

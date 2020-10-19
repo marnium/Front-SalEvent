@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(isset($_SESSION['dates_user'])){
+    header("Location: /my/");
+  }
+  
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
