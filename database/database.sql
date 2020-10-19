@@ -4,10 +4,11 @@ CREATE TABLE IF NOT EXISTS user(
     id_user INT PRIMARY KEY AUTO_INCREMENT,
     type_user TINYINT NOT NULL,
     name_user VARCHAR(45) NOT NULL,
-    surname_user VARCHAR(45) NOT NULL,
+    pa_lastname_user VARCHAR(45) NOT NULL,
+    mo_lastname_user VARCHAR(45) NOT NULL,
     email_user VARCHAR(45) NOT NULL,
     phone_user VARCHAR(11) NOT NULL,
-    user_user VARCHAR(45) NOT NULL,
+    user_user VARCHAR(45) NOT NULL UNIQUE,
     password_user VARCHAR(45) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS services(

@@ -42,24 +42,24 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <form class="form-signin">
+              <form action="" method="POST">
                 <h1 class="mb-3 font-weight-normal pt-4 mt-4">Acceder</h1>
                 <div class="pt-4">
-                  <label for="Usuario" class="sr-only">Usuario</label>
-                  <input type="text" id="Usuario" 
-                    class="form-control form-control mt-2"
+                  <label for="user" class="sr-only">Usuario</label>
+                  <input type="text" id="user" 
+                    class="form-control form-control mt-2" name="user" 
                     placeholder="Usuario" required autofocus
                   />
                 </div>
                 <div class="pt-2 pb-4">
                   <label for="inputPassword" class="sr-only">Password</label>
                   <input type="password" id="inputPassword" 
-                    class="form-control form-control mt-4"
+                    class="form-control form-control mt-4" name="password" 
                     placeholder="Contraseña" required
                   />
                 </div>
-                <button class="btn btn-lg btn-primary btn-block-4 mt-4 pr-4 pl-4"
-                  type="submit"
+                <button type="submit" class="btn btn-lg btn-primary btn-block-4 mt-4 pr-4 pl-4" 
+                   name="send"
                 >
                   Acceder
                 </button>
