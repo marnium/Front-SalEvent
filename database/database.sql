@@ -17,23 +17,18 @@ CREATE TABLE IF NOT EXISTS services(
     price FLOAT NOT NULL,
     detail VARCHAR(45) NOT NULL
 );
-CREATE TABLE IF NOT EXISTS date_reservation(
-    id_date INT PRIMARY KEY AUTO_INCREMENT,
-    date_reservation TIMESTAMP DEFAULT 
-        CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
 CREATE TABLE IF NOT EXISTS reservations(
     id_reservation INT PRIMARY KEY AUTO_INCREMENT,
     type_event VARCHAR(45) NOT NULL,
     num_asistants INT NOT NULL,
     status_reservation TINYINT NOT NULL,
     price_total FLOAT NOT NULL,
+    date_reservation TIMESTAMP DEFAULT 
+        CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     id_user INT NOT NULL,
     id_service INT NOT NULL,
-    id_date INT NOT NULL,
     FOREIGN KEY (id_user) REFERENCES user(id_user),
-    FOREIGN KEY (id_service) REFERENCES services(id_service),
-    FOREIGN KEY (id_date) REFERENCES date_reservation(id_date)
+    FOREIGN KEY (id_service) REFERENCES services(id_service)
 );
 CREATE TABLE IF NOT EXISTS direction(
     id_direction INT PRIMARY KEY AUTO_INCREMENT,
@@ -64,3 +59,4 @@ CREATE TABLE IF NOT EXISTS room(
     FOREIGN KEY (id_info) REFERENCES info_room(id_info),
     FOREIGN KEY (id_user) REFERENCES user(id_user)
 );
+INSERT INTO user VALUES(null,0,"Mario","Perez","Ruiz","mario_123@hotmail.com","9581231234","admin","admin");
