@@ -1,9 +1,11 @@
 <?php
   session_start();
-  if(!isset($_SESSION['dates_user'])){
+  if(!isset($_SESSION['data_user'])){
     header("Location: /home/");
   }
-
+  if(isset($_SESSION['data_admin'])){
+    header("Location: /admin/");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -75,8 +77,8 @@
                       id="Usuario"
                       class="form-control form-control mt-1"
                       placeholder="Nombre"
-                      value="<?php echo $_SESSION["dates_user"][2]." ".
-                        $_SESSION["dates_user"][3]." ".$_SESSION["dates_user"][4];  ?>"
+                      value="<?php echo $_SESSION["data_user"][2]." ".
+                        $_SESSION["data_user"][3]." ".$_SESSION["data_user"][4];  ?>"
                       readonly
                     />
                   </div>
@@ -87,7 +89,7 @@
                       id="email"
                       class="form-control form-control mt-1"
                       placeholder="Email"
-                      value="<?php echo $_SESSION["dates_user"][5];  ?>"
+                      value="<?php echo $_SESSION["data_user"][5];  ?>"
                       readonly
                     />
                   </div>
@@ -98,7 +100,7 @@
                       id="number"
                       class="form-control form-control mt-1"
                       placeholder="Telefono"
-                      value="<?php echo $_SESSION["dates_user"][6];  ?>"
+                      value="<?php echo $_SESSION["data_user"][6];  ?>"
                       readonly
                     />
                   </div>
@@ -109,7 +111,7 @@
                       id="user"
                       class="form-control form-control mt-1"
                       placeholder="Usuario"
-                      value="<?php echo $_SESSION["dates_user"][7];  ?>"
+                      value="<?php echo $_SESSION["data_user"][7];  ?>"
                       readonly
                     />
                   </div>
@@ -134,7 +136,7 @@
                         id="current-password"
                         class="form-control form-control mt-1 w-50"
                         placeholder="Contraseña actual"
-                        value="<?php echo $_SESSION["dates_user"][8];  ?>"
+                        value="<?php echo $_SESSION["data_user"][8];  ?>"
                         readonly
                       />
                       <i class="bx bx-show my-auto"></i>

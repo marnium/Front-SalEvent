@@ -1,3 +1,12 @@
+<?php
+  session_start();
+  if(isset($_SESSION['data_user'])){
+    header("Location: /my/");
+  }
+  if(!isset($_SESSION['data_admin'])){
+    header("Location: /home/");
+  }
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -51,7 +60,7 @@
 
 <body>
    <?php
-   include('../partials/admin/navigation.html');
+   include('../partials/admin/navigation.php');
    ?>
    <main class="container-fluid mt-2">
       <div id="nav-left" class="w-100 collapse text-center p-0 list-group list-group-flush bg-dark sticky-top">

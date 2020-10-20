@@ -1,9 +1,11 @@
 <?php
   session_start();
-  if(isset($_SESSION['dates_user'])){
+  if(isset($_SESSION['data_user'])){
     header("Location: /my/");
   }
-  
+  if(isset($_SESSION['data_admin'])){
+    header("Location: /admin/");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -90,7 +92,7 @@
           switch($results['type_user']){
             case '0':
               session_start();
-              $_SESSION['dates_admin'] = array($results['id_user'],$results['type_user'],
+              $_SESSION['data_admin'] = array($results['id_user'],$results['type_user'],
                 $results['name_user'],$results['pa_lastname_user'],$results['mo_lastname_user'],
                 $results['email_user'],$results['phone_user'],$results['user_user'],
                 $results['password_user']);
@@ -98,7 +100,7 @@
             break;
             case '1':
               session_start();
-              $_SESSION['dates_user'] = array($results['id_user'],$results['type_user'],
+              $_SESSION['data_user'] = array($results['id_user'],$results['type_user'],
                 $results['name_user'],$results['pa_lastname_user'],$results['mo_lastname_user'],
                 $results['email_user'],$results['phone_user'],$results['user_user'],
                 $results['password_user']);

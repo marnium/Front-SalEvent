@@ -1,9 +1,11 @@
 <?php
   session_start();
-  if(isset($_SESSION['dates_user'])){
+  if(isset($_SESSION['data_user'])){
     header("Location: /my/");
   }
-  
+  if(isset($_SESSION['data_admin'])){
+    header("Location: /admin/");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="es">

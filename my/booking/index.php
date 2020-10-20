@@ -1,7 +1,10 @@
 <?php
   session_start();
-  if(!isset($_SESSION['dates_user'])){
+  if(!isset($_SESSION['data_user'])){
     header("Location: /home/");
+  }
+  if(isset($_SESSION['data_admin'])){
+    header("Location: /admin/");
   }
 ?>
 <!DOCTYPE html>
