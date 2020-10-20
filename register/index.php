@@ -23,6 +23,28 @@
   include('../partials/home/navigation.html');
   ?>
   <main class="container p-4 mt-2">
+  <?php
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+      require_once('../databaseOperations/operations.php');
+      $operationDB = new OperationBD();
+      $response = $operationDB->create_user($_POST['name'],$_POST['pa_lastname'],$_POST['mo_lastname'],
+      $_POST['email'],$_POST['phone'],$_POST['user'],$_POST['password']);
+
+      if(!$response['status']) {
+        echo '<div class="alert alert-danger alert-dismissible fade show mb-3">'.
+          '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+          .$response['message'].'</div>';
+      } else {
+        $_SESSION['message-register'] = $response['message'];
+        header('Location: /login/');
+      }
+    }
+  ?>
+  <script>
+    $(document).ready(function(){
+      $('#name').val()
+    });
+  </script>
     <section class="mb-3 card no-gutters flex-md-row">
       <article class="col-md-4 img-background">
         <h2 class="text-white text-center">Unete a nuestra comunidad</h2>
@@ -82,22 +104,21 @@
     </section>
   </main>
   <?php
-  echo '<article class="bg-white mx-2"><p>'.$_SERVER['REQUEST_METHOD'].'</p>';
-  if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require_once('../databaseOperations/operations.php');
-    $operations = new OperationBD();
-    $response = $operations->create_user($_POST['name'],$_POST['pa_lastname'],$_POST['mo_lastname'],
-    $_POST['email'],$_POST['phone'],$_POST['user'],$_POST['password']);
-    echo '<p class="mt-3">Respuesta: '.$response['message']."</p>";
-    echo '<p>Estado: '.$response['status']."</p></article>";
-  }
-  ?>
-  <?php
   include('../partials/home/footer.html');
   ?>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="../js/register.js"></script>
+  <?php
+    if(isset($response) && !$response['status']) {
+      echo '<script>$(document).ready(function(){$("#name").val("'.$_POST['name'].'");'.
+        '$("#pa_lastname").val("'.$_POST['pa_lastname'].'");'.
+        '$("#mo_lastname").val("'.$_POST['mo_lastname'].'");'.
+        '$("#user").val("'.$_POST['user'].'");'.
+        '$("#email").val("'.$_POST['email'].'");'.
+        '$("#phone").val("'.$_POST['phone'].'");});</script>';
+    }
+  ?>
 </body>
 
 </html>

@@ -26,7 +26,7 @@
         public function create_user($name_user, $pa_lastname_user, $mo_lastname_user,
             $email_user, $phone_user, $user_user, $password_user): array {
             if($this->user_exists($user_user)) {
-                $query_status['message'] = 'User has already been created';
+                $query_status['message'] = "El usuario $user_user ya existe, especifique otro usuario";
                 $query_status['status'] = false;
                 $this->connectDB->close();
                 return $query_status;
@@ -34,9 +34,9 @@
             $this->querys = "INSERT INTO user VALUES(null,1,'$name_user','$pa_lastname_user','$mo_lastname_user','$email_user',".
                 "'$phone_user','$user_user','$password_user')";
 
-            $query_status = array('message'=>'User successfully registered','status'=>true);
+            $query_status = array('message'=>"¡Felicidades! $name_user, has sido registrado exitosamente. Por favor inicia sesión",'status'=>true);
             if($this->connectDB->query($this->querys) === FALSE) {
-                $query_status['message'] = 'Error: user could not be registered';
+                $query_status['message'] = "Ocurrió un error al registrarte $name_user, por favor vuelve a intentarlo.";
                 $query_status['status'] = false;
             }
             $this->connectDB->close();
@@ -49,9 +49,7 @@
          * to the database.
          */
         public function user_exists(string $user): bool {
-            $result = $this->connectDB->query("SELECT id_user FROM user WHERE user_user='$user'");
-            if($result->num_rows > 0) {
-                echo '<p>El usuario existe</p>';
+            if($this->connectDB->query("SELECT id_user FROM user WHERE user_user='$user'")->num_rows > 0) {
                 return true;
             }
             return false;

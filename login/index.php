@@ -44,6 +44,14 @@
         include('../partials/home/navigation.html');
     ?>
     <div class="container p-4 mt-2">
+  <?php
+    if(isset($_SESSION['message-register'])) {
+      echo '<div class="alert alert-success alert-dismissible fade show">'.
+        '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+        .$_SESSION['message-register'].'</div>';
+      $_SESSION['message-register'] = null;
+    }
+  ?>
       <div class="card mb-3">
         <div class="row no-gutters">
           <div class="col-md-4 img-background">
