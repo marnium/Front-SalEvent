@@ -15,6 +15,14 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <?php
+      require_once('../databaseOperations/operations.php');
+      $operationsDB = new OperationBD();
+      $date = explode(' ', date('Y m'));
+      echo "<script>var reservations = JSON.parse('".
+         $operationsDB->select_date_reservations_for_month($date[0], $date[1]).
+         "');</script>";
+   ?>
    <title>Servicios</title>
    <style>
       #date {
@@ -38,12 +46,24 @@
       }
       .col-cal {
          width: 100%;
+         padding: 0;
          padding-bottom: 10px;
          background: #EEEEEE;
          color: #1B1C1C;
          border-color: #EEEEEE;
       }
       #cal div.btn.disabled {
+         background-color: purple;
+         border-color: purple;
+         opacity: 1;
+         cursor: not-allowed;
+      }
+      #cal div.btn.reservated {
+         background-color: #70A3ED;
+         border-color: #70A3ED;
+         opacity: 1;
+      }
+      #cal div.btn.on-hold {
          background: #FCC70F;
          border-color: #FCC70F;
          opacity: 1;
@@ -74,24 +94,31 @@
                   <div>{{day}}</div>
                </div>
             </div>
-            <div id="state" class="row m-0 no-gutters mb-2">
-               <div class="col-6">
-                  <div class="d-flex align-items-center justify-content-center">
+            <div id="state" class="row m-0 mb-2 no-gutters justify-content-around">
+               <div>
+                  <div class="d-flex align-items-center">
                      <div style="background: #70A3ED;" class="box-state"></div>
                      <p class="mb-0">Reservado</p>
                   </div>
                </div>
-               <div class="col-6">
-                  <div class="d-flex align-items-center justify-content-center">
+               <div>
+                  <div class="d-flex align-items-center">
                      <div style="background: #FCC70F;" class="box-state"></div>
-                     <p class="mb-0">Arreservar</p>
+                     <p class="mb-0">En espera</p>
+                  </div>
+               </div>
+               <div>
+                  <div class="d-flex align-items-center">
+                     <div style="background: purple;" class="box-state"></div>
+                     <p class="mb-0">Seleccionado</p>
                   </div>
                </div>
             </div>
             <div id="cal">
                <div class="d-flex row-cal" v-for="(week, indexweek) in calendar">
                   <div class="box-col-cal" v-for="(day, indexday) in week" style="width: 14.2857%;">
-                     <div class="col-cal btn btn-success" v-on:click="select_date(indexweek, indexday)">{{day}}</div>
+                     <div class="col-cal btn" v-bind:class="get_class_date(day)"
+                        v-on:click="select_date(indexweek, indexday)">{{day}}</div>
                   </div>
                </div>
             </div>
@@ -208,9 +235,8 @@
    <?php
       include('../partials/home/footer.html');
    ?>
-   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"></script>
    <script src="../js/servicios.js"></script>
 </body>

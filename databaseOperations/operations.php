@@ -54,5 +54,24 @@
             }
             return false;
         }
+        /**
+         * This method returns the date reservations
+         * for month indicated by $month in $year
+         */
+        public function select_date_reservations_for_month(string $year, string $month): string {
+            $date_reservations = '{"value": false';
+            $this->querys = "SELECT DAY(date_reservation) as day,status_reservation as status FROM reservations ".
+                "WHERE YEAR(date_reservation)=$year AND MONTH(date_reservation)=$month";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                $date_reservations = '{"value": true';
+                while($row = $this->result->fetch_assoc()){
+                    $date_reservations .= ',"'.$row['day'].'": [true,'.$row['status'].']';
+                }
+                $this->result->free();
+            }
+            $date_reservations .= '}';
+            return $date_reservations;
+        }
     }
 ?>
