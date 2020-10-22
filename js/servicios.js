@@ -1,4 +1,5 @@
 var current_date = new Date();
+current_date.setHours(0,0,0,0);
 
 var vm = new Vue({
    el: '#app',
@@ -16,8 +17,7 @@ var vm = new Vue({
       tablecloths: 0,
       assistants: 0,
       total: 0,
-      selected_date: {date: null, position: null},
-      selected_is_this_month: false,
+      selected_date: null,
       reservated_dates: reservations
    },
    methods: {
@@ -32,36 +32,38 @@ var vm = new Vue({
          this.total = 0;
       },
       next_month: function() {
-         this.unpaint_date_selected();
          this.reservated_dates = {};
          if(this.month < 11) { this.month++; }
          else {
             this.month = 0;
             this.year++;
          }
-         this.paint_date_selected();
-         $.post("getReservations.php", {year: this.year, month: this.month+1},
+
+         $.post("getReservations.php",
+            {year: this.year, month: this.month+1},
             function(data, status){
                if(status == 'success') {
                   vm.reservated_dates = JSON.parse(data);
+               }
             }
-         });
+         );
       },
       previuos_month: function() {
-         this.unpaint_date_selected();
          this.reservated_dates = {};
          if(this.month > 0) { this.month--; }
          else {
             this.month = 11;
             this.year--;
          }
-         this.paint_date_selected();
-         $.post("getReservations.php", {year: this.year, month: this.month+1},
-            function(data, status){
+
+         $.post("getReservations.php",
+            {year: this.year, month: this.month+1},
+            function(data, status) {
                if(status == 'success') {
                   vm.reservated_dates = JSON.parse(data);
+               }
             }
-         });
+         );
       },
       select_date: function(index_week, index_day) {
          if($('#cal > div:nth-child('+(index_week+1)+') > div:nth-child('+(index_day+1)+') > div')
@@ -70,34 +72,7 @@ var vm = new Vue({
          let date_select = new Date(this.year, this.month, this.calendar[index_week][index_day]);
          date_select.setHours(0,0,0,0);
 
-         // Se despinta si esta en este mes
-         if (this.selected_date.date != null && this.selected_is_this_month) {
-            this.paint_or_unpaint_date(this.selected_date.position, 'disabled btn-success');
-         }
-
-         this.selected_date.date = date_select;
-         this.selected_date.position = [index_week + 1, index_day + 1];
-
-         this.paint_or_unpaint_date(this.selected_date.position, 'btn-success disabled');
-         this.selected_is_this_month = true;
-      },
-      paint_or_unpaint_date: function(pos, str_class) {
-         $('#cal > div:nth-child('+pos[0]+') > div:nth-child('+pos[1]+') > div').toggleClass(str_class);
-      },
-      unpaint_date_selected: function(){
-         if(this.selected_date.date == null) return;
-         if(this.selected_is_this_month) {
-            this.paint_or_unpaint_date(this.selected_date.position, 'disabled btn-success');
-            this.selected_is_this_month = false;
-         }
-      },
-      paint_date_selected: function(){
-         if(this.selected_date.date == null) return;
-         if(this.year == this.selected_date.date.getFullYear() &&
-            this.month == this.selected_date.date.getMonth()) {
-            this.paint_or_unpaint_date(this.selected_date.position, 'btn-success disabled');
-            this.selected_is_this_month = true;
-         }
+         this.selected_date = date_select;
       },
       get_class_date: function(day){
          if(this.reservated_dates[day]) {
@@ -105,6 +80,14 @@ var vm = new Vue({
                return "reservated disabled";
             else
                return "on-hold disabled";
+         }
+         let date_for_day = new Date(this.year, this.month, day, 0,0,0,0);
+         if(date_for_day < current_date) {
+            return "disabled";
+         }
+         if(this.is_this_month_selected_date &&
+            day == this.selected_date.getDate()) {
+            return "selected disabled";
          }
          return "btn-success";
       }
@@ -148,6 +131,12 @@ var vm = new Vue({
             }
          }
          return cal;
+      },
+      is_this_month_selected_date: function() {
+         if(this.selected_date &&
+            this.year == this.selected_date.getFullYear() &&
+            this.month == this.selected_date.getMonth()) { return true; }
+         return false;
       }
    }
 });

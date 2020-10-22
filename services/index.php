@@ -39,10 +39,11 @@
       }
       .row-cal {
          margin-bottom: 15px;
-         margin-left: 15px;
+         margin-left: 12px;
       }
       .box-col-cal {
-         padding-right: 15px;
+         padding-right: 12px;
+         width: 14.2857%;
       }
       .col-cal {
          width: 100%;
@@ -52,21 +53,24 @@
          color: #1B1C1C;
          border-color: #EEEEEE;
       }
-      #cal div.btn.disabled {
+      #cal .btn.disabled {
+         cursor: not-allowed;
+         opacity: 1;
+         background: #EEEEEE;
+         color: #1B1C1C;
+         border-color: #EEEEEE;
+      }
+      #cal div.btn.selected {
          background-color: purple;
          border-color: purple;
-         opacity: 1;
-         cursor: not-allowed;
       }
       #cal div.btn.reservated {
          background-color: #70A3ED;
          border-color: #70A3ED;
-         opacity: 1;
       }
       #cal div.btn.on-hold {
          background: #FCC70F;
          border-color: #FCC70F;
-         opacity: 1;
       }
       #cal > div.row-cal:first-child {
          justify-content: flex-end;
@@ -81,7 +85,7 @@
       include('../partials/home/navigation.html');
    ?>
    <main class="container p-0 mt-2" id="app">
-      <section id="date-price" class="row m-0 no-gutters mb-3">
+      <section id="date-price" class="row no-gutters mb-3">
          <article id="date" class="w-100 text-center pt-2 col-lg-5">
             <h5 class="mb-2 font-weight-bold">Seleccione la fecha</h5>
             <div id="month" class="d-flex justify-content-between align-items-center mb-3 pb-3">
@@ -90,11 +94,9 @@
                <button type="button" class="btn btn-dark" v-on:click="next_month">&RightAngleBracket;</button>
             </div>
             <div id="week" class="d-flex row-cal mb-2">
-               <div class="box-col-cal" v-for="day in week" style="width: 14.2857%;">
-                  <div>{{day}}</div>
-               </div>
+               <div class="box-col-cal" v-for="day in week">{{day}}</div>
             </div>
-            <div id="state" class="row m-0 mb-2 no-gutters justify-content-around">
+            <div id="state" class="row mb-2 no-gutters justify-content-around">
                <div>
                   <div class="d-flex align-items-center">
                      <div style="background: #70A3ED;" class="box-state"></div>
@@ -116,7 +118,7 @@
             </div>
             <div id="cal">
                <div class="d-flex row-cal" v-for="(week, indexweek) in calendar">
-                  <div class="box-col-cal" v-for="(day, indexday) in week" style="width: 14.2857%;">
+                  <div class="box-col-cal" v-for="(day, indexday) in week">
                      <div class="col-cal btn" v-bind:class="get_class_date(day)"
                         v-on:click="select_date(indexweek, indexday)">{{day}}</div>
                   </div>
@@ -126,7 +128,7 @@
          <article id="price" class="w-100 pt-4 pb-4 pl-sm-3 pr-sm-3 col-lg-7">
             <h5 class="font-weight-bold">Cotización</h5>
             <form method="post">
-               <div class="row m-0 no-gutters mb-2 justify-content-end">
+               <div class="row no-gutters mb-2 justify-content-end">
                   <div class="mb-2 col-md-7">
                      <div class="input-group align-items-center justify-content-end no-gutters">
                         <label for="type_reserv" class="pr-2 mb-0">Reservar por:</label>
@@ -157,7 +159,7 @@
                   </div>
                </div>
                <p class="p-0 font-weight-bold">Mobiliario:</p>
-               <div class="row m-0 no-gutters mb-2">
+               <div class="row no-gutters mb-2">
                   <div class="mb-2 col-sm-6 col-md-4">
                      <div class="input-group align-items-center justify-content-end no-gutters">
                         <label for="chairs" class="pr-2 mb-0">Sillas:</label>
@@ -191,7 +193,7 @@
                      </div>
                   </div>
                </div>
-               <div class="row m-0 no-gutters justify-content-end mb-3">
+               <div class="row no-gutters justify-content-end mb-3">
                   <div class="col-sm-6 col-md-5">
                      <div class="input-group align-items-center justify-content-end no-gutters">
                         <label for="total" class="pr-2 mb-0">Total:</label>
@@ -212,7 +214,7 @@
       </section>
       <section id="services" class="mb-5 pl-sm-3 pr-sm-3">
          <h4 class="font-weight-bold">Contamos con los diferentes servicios</h4>
-         <article class="row m-0 no-gutters mb-3">
+         <article class="row no-gutters mb-3">
             <div class="mb-3 pl-md-5 pr-md-5 col-lg-6 pl-lg-3 pr-lg-3">
                <img src="../img/services/boda.jpg" alt="Boda" class="img-fluid" style="border-radius: 30px;">
             </div>
@@ -221,7 +223,7 @@
                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam ex veritatis hic, expedita autem soluta perferendis blanditiis, voluptate non illum maxime? Tempore, quod rerum saepe sequi non quo quae vitae?</p>
             </div>
          </article>
-         <article class="row m-0 no-gutters">
+         <article class="row no-gutters">
             <div class="col-lg-6">
                <h5 class="font-weight-bold">Graduaciones</h5>
                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet sapiente saepe perspiciatis officia, sit quibusdam placeat beatae est eos eligendi nisi adipisci exercitationem deserunt quos. Inventore quasi atque at itaque.</p>

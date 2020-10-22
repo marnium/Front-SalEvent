@@ -36,7 +36,7 @@
             position: fixed;
             z-index: 1030;
          }
-         main>section.col-lg-9 {
+         main > section.col-lg-9 {
             margin-left: auto;
          }
       }
@@ -87,18 +87,18 @@
             <table class="table table-striped table-hover">
                <thead class="thead-dark">
                   <tr>
-                     <th>Id</th>
                      <th>Nombre</th>
-                     <th>Apellido</th>
-                     <th>Tel</th>
+                     <th>Apellido paterno</th>
+                     <th>Apellido materno</th>
+                     <th>Teléfono</th>
                      <th>Email</th>
                      <th>Usuario</th>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <td>1</td>
                      <td>Name-1</td>
+                     <td>Last-1</td>
                      <td>Last-1</td>
                      <td>tel-1</td>
                      <td>email-1</td>
@@ -200,6 +200,7 @@
          </article>
       </section>
       <section id="salon" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none">
+         <h2>Datos del Salón de Eventos</h2>
          <form>
             <article class="w-100 d-flex flex-wrap">
                <div class="px-0 col-lg-6 pr-lg-3">
@@ -303,24 +304,29 @@
          <h3 class="text-center font-weight-bold">Administrador</h3>
          <div class="form-group">
             <label for="inf-lastname" class="font-weight-bold">Nombre completo</label>
-            <input id="inf-lastname" type="text" value="Administrador-1 Lastname" readonly class="form-control" />
+            <input id="inf-lastname" type="text" value="<?php echo $_SESSION['data_admin'][2]." "
+               .$_SESSION['data_admin'][3]." ".$_SESSION['data_admin'][4]; ?>" readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-email" class="font-weight-bold">Email</label>
-            <input id="inf-email" type="text" value="amdin@salevent.com" readonly class="form-control" />
+            <input id="inf-email" type="text" value="<?php echo $_SESSION['data_admin'][5]; ?>"
+               readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-tel" class="font-weight-bold">Teléfono</label>
-            <input id="inf-tel" type="text" value="9287476" readonly class="form-control" />
+            <input id="inf-tel" type="text" value="<?php echo $_SESSION['data_admin'][6]; ?>"
+               readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-user" class="font-weight-bold">Usuario</label>
-            <input id="inf-user" type="text" value="user-admin" readonly class="form-control" />
+            <input id="inf-user" type="text" value="<?php echo $_SESSION['data_admin'][7]; ?>"
+               readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-pass" class="font-weight-bold">Contraseña</label>
             <button type="button" class="btn btn-link" onclick="show_or_hide_password(this, 'inf-pass')">Ver</button>
-            <input id="inf-pass" type="password" value="pass" readonly class="form-control" />
+            <input id="inf-pass" type="password" value="<?php echo $_SESSION['data_admin'][8]; ?>"
+               readonly class="form-control" />
          </div>
          <form action="">
             <div class="form-group">
