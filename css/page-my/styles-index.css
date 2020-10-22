@@ -1,6 +1,4 @@
-[class*="col"] {
-  padding: 0;
-}
+
 #date {
   background-color: #1b1c1c;
   color: #eeeeee;
@@ -20,7 +18,7 @@
 .box-col-cal {
   padding-right: 15px;
 }
-div.col-cal {
+.col-cal {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,15 +28,28 @@ div.col-cal {
   color: #1b1c1c;
   padding-bottom: 10px;
 }
+
+#cal div.btn.disabled {
+  background-color: purple;
+  border-color: purple;
+  opacity: 1;
+  cursor: not-allowed;
+}
+#cal div.btn.reservated {
+  background-color: #70A3ED;
+  border-color: #70A3ED;
+  opacity: 1;
+}
+#cal div.btn.on-hold {
+  background: #FCC70F;
+  border-color: #FCC70F;
+  opacity: 1;
+}
 #cal > div.row-cal:first-child {
   justify-content: flex-end;
 }
 #price {
   background-color: #eeeeee;
-}
-.calendar-fixed {
-  display: flex;
-  align-items: center;
 }
 .option-selected {
   background-color: #eeeeee !important;
