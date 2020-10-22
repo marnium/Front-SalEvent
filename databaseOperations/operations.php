@@ -9,13 +9,24 @@
             $this->connectDB = ConectionDB::get_connection();
         }
         
-        public function consultUser($user,$password){
+        public function consultUser($user, $password){
             $result_return = "";
             
             $this->querys = "SELECT * FROM user WHERE user_user='$user' AND password_user='$password';";
             $this->result = $this->connectDB->query($this->querys);
             $result_return = mysqli_fetch_array($this->result);
             
+            $this->connectDB->close();
+            return $result_return;
+        }
+        public function updatePasswordUser($id, $newPassword){
+            $result_return = "";
+            $this->querys = "UPDATE user SET password_user='$newPassword' WHERE id_user='$id' ;";
+            $result_return = array("successful-update",$newPassword); 
+            if($this->connectDB->query($this->querys) === FALSE){
+                $result_return = "not-successful"; 
+            }
+
             $this->connectDB->close();
             return $result_return;
         }
