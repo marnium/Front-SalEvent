@@ -42,26 +42,20 @@
         >
           Reservaciones
         </h5>
-        <a href="/my/myreservation" class="text-white text-decoration-none mb-2">
-          <span
-            class="btn btn-dark btn-block"
-            >Mis reservaciones</span
-          >
+        <a
+          href="/my/myreservation"
+          class="text-white text-decoration-none mb-2"
+        >
+          <span class="btn btn-dark btn-block">Mis reservaciones</span>
         </a>
         <a href="/my/calendar" class="text-white text-decoration-none">
-          <span
-            class="btn btn-dark btn-block"
-            >Calendario</span
-          >
+          <span class="btn btn-dark btn-block">Calendario</span>
         </a>
         <div
           class="list-group-item bg-dark text-white mt-2 px-0"
           style="border: none; border-top: 1px solid white"
         >
-          <span
-            class="btn btn-dark btn-block option-selected"
-            >Ajustes</span
-          >
+          <span class="btn btn-dark btn-block option-selected">Ajustes</span>
         </div>
       </div>
       <section id="settings" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3">
@@ -72,48 +66,28 @@
                 <div class="card-body">
                   <div class="mb-2">
                     <label for="Usuario">Nombre completo</label>
-                    <input
-                      type="text"
-                      id="Usuario"
-                      class="form-control form-control mt-1"
-                      placeholder="Nombre"
-                      value="<?php echo $_SESSION["data_user"][2]." ".
+                    <input type="text" id="Usuario" class="form-control
+                    form-control mt-1" placeholder="Nombre" value="<?php echo $_SESSION["data_user"][2]." ".
                         $_SESSION["data_user"][3]." ".$_SESSION["data_user"][4];  ?>"
-                      readonly
-                    />
+                    readonly />
                   </div>
                   <div class="mb-2">
                     <label for="email">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      class="form-control form-control mt-1"
-                      placeholder="Email"
-                      value="<?php echo $_SESSION["data_user"][5];  ?>"
-                      readonly
-                    />
+                    <input type="email" id="email" class="form-control
+                    form-control mt-1" placeholder="Email" value="<?php echo $_SESSION["data_user"][5];  ?>"
+                    readonly />
                   </div>
                   <div class="mb-2">
                     <label for="number">Telefono</label>
-                    <input
-                      type="number"
-                      id="number"
-                      class="form-control form-control mt-1"
-                      placeholder="Telefono"
-                      value="<?php echo $_SESSION["data_user"][6];  ?>"
-                      readonly
-                    />
+                    <input type="number" id="number" class="form-control
+                    form-control mt-1" placeholder="Telefono" value="<?php echo $_SESSION["data_user"][6];  ?>"
+                    readonly />
                   </div>
                   <div class="mb-2">
                     <label for="user">Usuario</label>
-                    <input
-                      type="text"
-                      id="user"
-                      class="form-control form-control mt-1"
-                      placeholder="Usuario"
-                      value="<?php echo $_SESSION["data_user"][7];  ?>"
-                      readonly
-                    />
+                    <input type="text" id="user" class="form-control
+                    form-control mt-1" placeholder="Usuario" value="<?php echo $_SESSION["data_user"][7];  ?>"
+                    readonly />
                   </div>
                 </div>
               </div>
@@ -131,14 +105,10 @@
                   <div class="mt-2">
                     <label for="current-password">Contraseña actual</label>
                     <div class="mt-2 d-flex flex-wrap">
-                      <input
-                        type="password"
-                        id="current-password"
-                        class="form-control form-control mt-1 w-50"
-                        placeholder="Contraseña actual"
-                        value="<?php echo $_SESSION["data_user"][8];  ?>"
-                        readonly
-                      />
+                      <input type="password" id="current-password"
+                      class="form-control form-control mt-1 w-50"
+                      placeholder="Contraseña actual" value="<?php echo $_SESSION["data_user"][8]; ?>"
+                      readonly />
                       <i class="bx bx-show my-auto"></i>
                       <button
                         type="button"
@@ -149,7 +119,7 @@
                       </button>
                     </div>
                   </div>
-                  <form class="form-signin" id="form-user">
+                  <form id="form-user">
                     <div class="mt-2 d-flex flex-wrap justify-content-around">
                       <div class="mt-2">
                         <label for="change-password">Cambiar contraseña</label>
@@ -176,6 +146,8 @@
                       </div>
                     </div>
                   </form>
+                  <div id="box-confirmpass" 
+                    class="col-md-12 w-100 d-flex flex-wrap justify-content-center"></div>
                 </div>
               </div>
             </div>
@@ -183,17 +155,15 @@
         </div>
         <div class="mt-3 d-flex justify-content-center">
           <button
-            type="submit"
             class="btn btn-primary bg-dark border-0"
+            type="submit"
             form="form-user"
+            onchange="showHint()"
           >
             Actualizar datos
           </button>
         </div>
       </section>
-
-
-      
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
@@ -201,15 +171,6 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-    <script>
-      function showPassword() {
-        var tipo = document.getElementById("current-password");
-        if (tipo.type == "password") {
-          tipo.type = "text";
-        } else {
-          tipo.type = "password";
-        }
-      }
-    </script>
+    <script src="../js/my/index.js"></script>
   </body>
 </html>
