@@ -30,7 +30,38 @@
             $this->connectDB->close();
             return $result_return;
         }
+        public function getReservations($id){
+            $result_return = "";
+            $this->querys = "SELECT reservations.id_reservation,reservations.type_event,reservations.date_reservation_start,
+                (reservations.price_total) AS 'total'
+                FROM reservations INNER JOIN folioServices ON
+                reservations.id_folio_services=folioServices.id_folio_services 
+                WHERE reservations.id_user='$id';";
+            $this->result = $this->connectDB->query($this->querys);
+            $result_return = array($this->result);
+            $this->connectDB->close();
+            return $result_return;
+        }
+        public function getDataRoom(){
+            $result_return = "";
 
+            $this->querys = "SELECT * FROM room;";
+            $this->result = $this->connectDB->query($this->querys);
+            $result_return = mysqli_fetch_array($this->result);
+            
+            $this->connectDB->close();
+            return $result_return;
+        }
+        public function getDescription(){
+            $result_return = "";
+
+            $this->querys = "SELECT description_saloon FROM room;";
+            $this->result = $this->connectDB->query($this->querys);
+            $result_return = mysqli_fetch_array($this->result);
+            
+            $this->connectDB->close();
+            return $result_return;
+        }
         /**
          * This method adds a record for a user in the user table.
          */
