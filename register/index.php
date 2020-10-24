@@ -40,11 +40,6 @@
       }
     }
   ?>
-  <script>
-    $(document).ready(function(){
-      $('#name').val()
-    });
-  </script>
     <section class="mb-3 card no-gutters flex-md-row">
       <article class="col-md-4 img-background">
         <h2 class="text-white text-center">Unete a nuestra comunidad</h2>

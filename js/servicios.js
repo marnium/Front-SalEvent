@@ -1,5 +1,8 @@
 var current_date = new Date();
 current_date.setHours(0,0,0,0);
+var date_accept = new Date();
+date_accept.setHours(0,0,0,0);
+date_accept.setDate(date_accept.getDate() + 2);
 
 var vm = new Vue({
    el: '#app',
@@ -82,7 +85,7 @@ var vm = new Vue({
                return "on-hold disabled";
          }
          let date_for_day = new Date(this.year, this.month, day, 0,0,0,0);
-         if(date_for_day < current_date) {
+         if(date_for_day < date_accept) {
             return "disabled";
          }
          if(this.is_this_month_selected_date &&
