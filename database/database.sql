@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS room(
     id_saloon INT PRIMARY KEY AUTO_INCREMENT,
     name_saloon VARCHAR(45) NOT NULL,
     capacity_saloon INT NOT NULL,
-    description_saloon TEXT,
+    description_saloon TEXT NOT NULL,
+    price_hour FLOAT NOT NULL,
     id_info INT NOT NULL,
     FOREIGN KEY (id_info) REFERENCES info_room(id_info)
 );
@@ -67,7 +68,8 @@ CREATE TABLE IF NOT EXISTS reservations(
     num_asistants INT NOT NULL,
     status_reservation TINYINT NOT NULL,
     price_total FLOAT NOT NULL,
-    date_reservation TIMESTAMP,
+    date_reservation_start DATETIME NOT NULL,
+    date_reservation_end DATETIME NOT NULL,
     id_user INT NOT NULL,
     id_folio_services INT NOT NULL,
     id_room INT NOT NULL,
@@ -76,3 +78,13 @@ CREATE TABLE IF NOT EXISTS reservations(
     FOREIGN KEY (id_room) REFERENCES room(id_saloon)
 );
 INSERT INTO user VALUES(null,0,"Mario","Perez","Ruiz","mario_123@hotmail.com","9581231234","admin","admin");
+INSERT INTO direction VALUES(null,"Siloe","oaxaca","Pochutla","12");
+INSERT INTO schedule values(null,'Y','Y','Y','Y','Y','Y','Y');
+INSERT INTO info_room VALUES(null,1,1);
+INSERT INTO room VALUES(null,"SallEvent",1000,"salon bien chido",100,1);
+INSERT INTO services VALUES(null,"Silla",10,"Blancos");
+INSERT INTO folioServices VALUES(null,500);
+INSERT INTO selectedservices VALUES(1,1,2,30);
+INSERT INTO reservations VALUES(null,"boda",11,1,12312,"2020-10-25 13:00:00","2020-10-25 15:00:00",1,1,1);
+INSERT INTO reservations VALUES(null,"bautizo",11,1,12312,"2020-10-26 13:00:00","2020-10-26 15:00:00",1,1,1);
+INSERT INTO reservations VALUES(null,"bautizo",11,1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",1,1,1);
