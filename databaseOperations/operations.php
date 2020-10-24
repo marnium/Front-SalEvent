@@ -37,18 +37,18 @@
         public function create_user($name_user, $pa_lastname_user, $mo_lastname_user,
             $email_user, $phone_user, $user_user, $password_user): array {
             if($this->user_exists($user_user)) {
-                $query_status['message'] = "El usuario $user_user ya existe, especifique otro usuario";
                 $query_status['status'] = false;
+                $query_status['type'] = 'user_already_exists';
                 $this->connectDB->close();
                 return $query_status;
             }
             $this->querys = "INSERT INTO user VALUES(null,1,'$name_user','$pa_lastname_user','$mo_lastname_user','$email_user',".
                 "'$phone_user','$user_user','$password_user')";
 
-            $query_status = array('message'=>"¡Felicidades! $name_user, has sido registrado exitosamente. Por favor inicia sesión",'status'=>true);
+            $query_status = array('status'=>true);
             if($this->connectDB->query($this->querys) === FALSE) {
-                $query_status['message'] = "Ocurrió un error al registrarte $name_user, por favor vuelve a intentarlo.";
                 $query_status['status'] = false;
+                $query_status['type'] = 'error';
             }
             $this->connectDB->close();
             return $query_status;
@@ -249,6 +249,7 @@
          * of table user.
          */
         public function select_user_type1() {
+            $value_return = [];
             $this->querys = "SELECT id_user,name_user,pa_lastname_user,mo_lastname_user,email_user,phone_user,user_user,password_user".
                 " FROM user WHERE type_user=1 LIMIT 15";
             $this->result = $this->connectDB->query($this->querys);
@@ -262,14 +263,23 @@
             return json_encode($value_return);
         }
         public function update_user_type1($data) {
+            $value_return = '{"status": false}';
             $this->querys = "UPDATE user SET name_user='".$data['name_user']."',pa_lastname_user='".
                 $data['pa_lastname_user']."',mo_lastname_user='".$data['mo_lastname_user']."',email_user='".
                 $data['email_user']."',phone_user='".$data['phone_user']."',password_user='".$data['password_user'].
                 "' WHERE id_user=".$data['id_user'];
             if($this->connectDB->query($this->querys) === TRUE) {
-                return '{"status": true}';
+                $value_return = '{"status": true}';
             }
-            return '{"status": false}';
+            $this->connectDB->close();
+            return $value_return;
+        }
+        public function remove_user_type1($id_user) {
+            $value_return = '{"status": false}';
+            if($this->connectDB->query("DELETE FROM user WHERE id_user=$id_user") === TRUE) {
+                $value_return = '{"status": true}';
+            }
+            return $value_return;
         }
     }
 ?>

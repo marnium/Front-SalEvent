@@ -54,12 +54,16 @@ if (!isset($_SESSION['data_admin'])) {
       }
 
       #customers > article.table-responsive,
-         #box-modified-customer div.modal-content {
+         #box-modify-customer div.modal-content {
          box-shadow: 0 0 7px 1px #3e9fce;
       }
       #customers .input-no-radius-tl-bl {
          border-top-left-radius: 0;
          border-bottom-left-radius: 0;
+      }
+
+      main button[type=button].disabled {
+         cursor: not-allowed;
       }
 
       .img-settings {
@@ -80,6 +84,12 @@ if (!isset($_SESSION['data_admin'])) {
          .box-input {
             padding: 15px;
          }
+      }
+      .scale-when-hover {
+         transition: transform 0.5s;
+      }
+      .scale-when-hover:hover {
+         transform: scale(1.1,1.1);
       }
    </style>
 </head>
@@ -109,7 +119,7 @@ if (!isset($_SESSION['data_admin'])) {
                <input id="search-customers" type="search" class="form-control" placeholder="nombre usuario" />
             </div>
          </article>
-         <article class="table-responsive">
+         <article class="table-responsive mb-3">
             <table class="table m-0 table-striped table-hover">
                <thead class="w-100 thead-dark">
                   <tr>
@@ -120,6 +130,7 @@ if (!isset($_SESSION['data_admin'])) {
                      <th>Email</th>
                      <th>Teléfono</th>
                      <th>Modificar</th>
+                     <th>Eliminar</th>
                   </tr>
                </thead>
                <tbody class="w-100">
@@ -133,70 +144,73 @@ if (!isset($_SESSION['data_admin'])) {
                      <td>
                         <button v-on:click="modify_customer(index)" type="button" class="btn btn-primary">Modificar</button>
                      </td>
+                     <td>
+                        <button v-on:click="remove_customer(index)" type="button" class="btn btn-primary">Eliminar</button>
+                     </td>
                   </tr>
                </tbody>
             </table>
          </article>
-         <article class="d-flex flex-wrap mx-auto mt-3 col-11 col-sm-10 col-md-11">
-            <div class="mb-2 col-sm-6 col-md-4">
-               <button type="button" class="btn btn-primary btn-block">Nuevo</button>
-            </div>
-            <div class="mb-2 col-sm-6 col-md-4">
-               <button type="button" class="btn btn-primary btn-block">Eliminar</button>
-            </div>
+         <article class="w-100">
+               <button v-on:click="fill_customer" type="button" class="btn btn-primary d-block mx-auto">Crear nuevo usuario</button>
          </article>
          <article id="box-modify-customer" class="modal fade">
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title">Modificar información de <strong>{{data_customer_update.user_user}}</strong></h5>
+                     <h5 class="modal-title">{{modal_data.title}}<strong>{{modal_data.strong}}</strong></h5>
                      <button type="button" class="close text-danger" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
-                     <div class="form-group input-group">
+                     <div class="form-group input-group" v-bind:style="modal_data.style_user">
                         <div class="input-group-prepend">
                            <label for="bxm-user" class="input-group-text"><i class="fas fa-user-circle fa-lg"></i></label>
                         </div>
-                        <input v-bind:value="data_customer_update.user_user" readonly
-                           type="text" id="bxm-user" class="form-control" placeholder="Usuario" />
+                        <input v-model="modal_customer.user_user" v-on:change="active_btn_modal"
+                           type="text" id="bxm-user" class="form-control" placeholder="Usuario" maxlength="46" />
                      </div>
                      <div class="form-group input-group flex-nowrap">
                         <div class="input-group-prepend">
                            <label for="bxm-name" class="input-group-text"><i class="fas fa-user-alt"></i></label>
                         </div>
                         <div class="d-flex flex-grow-1 flex-column">
-                           <input v-model="data_customer_update.name_user" v-on:change="active_update_customer"
-                              type="text" id="bxm-name" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Nombre" />
-                           <input v-model="data_customer_update.pa_lastname_user" v-on:change="active_update_customer"
-                              type="text" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Apellido paterno" />
-                           <input v-model="data_customer_update.mo_lastname_user" v-on:change="active_update_customer"
-                              type="text" class="form-control input-no-radius-tl-bl" placeholder="Apellido materno" />
+                           <input v-model="modal_customer.name_user" v-on:change="active_btn_modal"
+                              type="text" id="bxm-name" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Nombre" maxlength="46" />
+                           <input v-model="modal_customer.pa_lastname_user" v-on:change="active_btn_modal"
+                              type="text" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Apellido paterno" maxlength="46" />
+                           <input v-model="modal_customer.mo_lastname_user" v-on:change="active_btn_modal"
+                              type="text" class="form-control input-no-radius-tl-bl" placeholder="Apellido materno" maxlength="46" />
                         </div>
                      </div>
                      <div class="form-group input-group">
                         <div class="input-group-prepend">
                            <label for="bxm-email" class="input-group-text"><i class="fas fa-envelope"></i></label>
                         </div>
-                        <input v-model="data_customer_update.email_user" v-on:change="active_update_customer"
-                           type="email" id="bxm-email" class="form-control" placeholder="Email">
+                        <input v-model="modal_customer.email_user" v-on:change="active_btn_modal"
+                           type="email" id="bxm-email" class="form-control" placeholder="Email" maxlength="46">
                      </div>
                      <div class="form-group input-group">
                         <div class="input-group-prepend">
                            <label for="bxm-phone" class="input-group-text"><i class="fas fa-phone"></i></label>
                         </div>
-                        <input v-model="data_customer_update.phone_user" v-on:change="active_update_customer"
-                           type="tel" id="bxm-phone" class="form-control" placeholder="Teléfono">
+                        <input v-model="modal_customer.phone_user" v-on:change="active_btn_modal"
+                           type="tel" id="bxm-phone" class="form-control" placeholder="Teléfono" maxlength="11">
                      </div>
                      <div class="form-group input-group">
                         <div class="input-group-prepend">
                            <label for="bxm-pass" class="input-group-text"><i class="fas fa-lock"></i></label>
                         </div>
-                        <input v-model="data_customer_update.password_user" v-on:change="active_update_customer"
-                           type="password" id="bxm-pass" class="form-control" placeholder="Contraseña">
+                        <input v-model="modal_customer.password_user" v-on:change="active_btn_modal"
+                           type="password" id="bxm-pass" class="form-control" placeholder="Contraseña" maxlength="46">
+                        <div class="input-group-append">
+                           <span class="btn btn-success" onclick="show_or_hide_password('#bxm-show-pass', '#bxm-pass')">
+                              <i class="fas fa-eye" id="bxm-show-pass"></i>
+                           </span>
+                        </div>
                      </div>
                      <div class="w-100">
-                        <button id="btn-update-customer" type="button" class="btn btn-primary d-block mx-auto"
-                           v-bind:class="{disabled: is_disable_update_customer}">Actualizar</button>
+                        <button v-on:click="create_or_update_customer" type="button" class="btn btn-primary d-block mx-auto"
+                           v-bind:class="{disabled: is_disable_btn_modal}">{{modal_data.text_btn}}</button>
                      </div>
                   </div>
                </div>
@@ -268,7 +282,7 @@ if (!isset($_SESSION['data_admin'])) {
          </article>
       </section>
       <section id="salon" class="py-4 px-0 mt-3 px-sm-3 col-lg-9 mt-lg-0 px-lg-3" style="background: #eeeeee; display: none">
-         <h2 class="text-center mb-3">Datos del Salón de Eventos</h2>
+         <h3 class="text-center font-weight-bold mb-3">Datos del Salón de Eventos</h3>
          <article id="data-salon" class="w-100 d-flex flex-wrap">
             <div class="px-0 col-lg-6 pr-lg-3">
                <article class="w-100 d-flex flex-wrap box-input">
@@ -339,7 +353,7 @@ if (!isset($_SESSION['data_admin'])) {
             </div>
          </article>
          <article class="w-100 mt-3 d-flex justify-content-center">
-            <button id="update-salon" type="button" class="btn btn-primary">Actualizar</button>
+            <button v-on:click="update_salon" type="button" class="btn btn-primary">Actualizar</button>
          </article>
       </section>
       <section id="personal-information" class="py-4 mt-3 px-1 px-sm-3 px-md-4 col-lg-9 mt-lg-0 px-lg-5" style="background: #eeeeee; display: none;">
@@ -363,8 +377,14 @@ if (!isset($_SESSION['data_admin'])) {
          </div>
          <div class="form-group">
             <label for="inf-pass" class="font-weight-bold">Contraseña</label>
-            <button type="button" class="btn btn-link" onclick="show_or_hide_password(this, 'inf-pass')">Ver</button>
-            <input id="inf-pass" type="password" value="<?php echo $_SESSION['data_admin'][8]; ?>" readonly class="form-control" />
+            <div class="input-group">
+               <input id="inf-pass" type="password" value="<?php echo $_SESSION['data_admin'][8]; ?>" readonly class="form-control" />
+               <div class="input-group-append">
+                  <span class="btn btn-success" onclick="show_or_hide_password('#inf-show-pass', '#inf-pass')">
+                     <i class="fas fa-eye" id="inf-show-pass"></i>
+                  </span>
+               </div>
+            </div>
          </div>
          <form action="">
             <div class="form-group">
@@ -376,7 +396,7 @@ if (!isset($_SESSION['data_admin'])) {
                <input id="inf-retry-pass" type="password" placeholder="contraseña nueva" required class="form-control" />
             </div>
             <div class="w-100 d-flex justify-content-center">
-               <input type="submit" value="Actualizar" class="btn btn-success" />
+               <input type="submit" value="Actualizar" class="btn btn-primary" />
             </div>
          </form>
       </section>
@@ -384,24 +404,173 @@ if (!isset($_SESSION['data_admin'])) {
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
    <script>
-      var index_customer_update = 0;
       var vm = new Vue({
          el: "#app",
          data: {
             data_salon: data_salon,
             data_customers: data_customers,
-            data_customer_update: {},
-            is_disable_update_customer: true
+            modal_customer: {
+               id_user: 1,
+               user_user: '',
+               name_user: '',
+               pa_lastname_user: '',
+               mo_lastname_user: '',
+               email_user: '',
+               phone_user: '',
+               password_user: ''
+            },
+            is_disable_btn_modal: true,
+            is_modal_create: true,
+            index_modal_customer: 0
          },
          methods: {
             modify_customer: function(index_customer) {
-               this.is_disable_update_customer = true;
-               index_customer_update = index_customer;
-               this.data_customer_update = JSON.parse(JSON.stringify(this.data_customers[index_customer]));
+               this.is_disable_btn_modal = true;
+               this.is_modal_create = false;
+               this.index_modal_customer = index_customer;
                $('#box-modify-customer').modal({backdrop: 'static', keyboard: false});
             },
-            active_update_customer: function() {
-               this.is_disable_update_customer = false;
+            active_btn_modal: function() {
+               for (const key in this.modal_customer) {
+                  if(!this.modal_customer[key]) {
+                     console.log(key, ' esta vacío');
+                     return false;
+                  }
+               }
+               this.is_disable_btn_modal = false;
+            },
+            create_or_update_customer: function() {
+               if(this.is_disable_btn_modal) return;
+               if(!this.index_modal_customer) {
+                  this.create_customer();
+               } else {
+                  this.update_customer();
+               }
+            },
+            update_customer: function() {
+               $.post('../ajax/admin/updateUser.php', {
+                  'data_user': JSON.stringify(this.modal_customer)
+               },
+               function(data, status){
+                  if(status == 'success') {
+                     if(JSON.parse(data).status) {
+                        Vue.set(vm.data_customers, vm.index_customer,
+                           JSON.parse(JSON.stringify(vm.modal_customer)))
+                        create_notification('<strong>Exitoso</strong>: Se actualizo correctamente la información de '
+                           + vm.modal_customer.user_user, 'alert-sucess');
+                     }
+                  } else {
+                     create_notification('<strong>Error</strong>: No se pudo actualizar la información de '
+                     + vm.modal_customer.user_user, 'alert-danger');
+                  }
+                  $('#box-modify-customer').modal("hide");
+               }
+            );
+            },
+            remove_customer: function(index_customer) {
+               $.post('../ajax/admin/deleteUser.php',
+                  {id_user: this.data_customers[index_customer].id_user},
+                  function(data, status){
+                     if(status == 'success') {
+                        let data_parse = JSON.parse(data);
+                        if(data_parse.status) {
+                           create_notification('<strong>Exisitoso</strong>: Se elimino correctamente al usuario '+
+                           vm.data_customers[index_customer].user_user, 'alert-success');
+                           vm.data_customers.splice(index_customer, 1);
+                           return;
+                        }
+                     }
+                     create_notification('<strong>Error</strong>: No se pudo eliminar al usuario '+
+                        vm.data_customers[index_customer], 'alert-danger');
+                  }
+               );
+            },
+            fill_customer: function() {
+               this.is_disable_btn_modal = true;
+               this.is_modal_create = true;
+               $('#box-modify-customer').modal({backdrop: 'static', keyboard: false});
+            },
+            create_customer: function() {
+               $.post('../ajax/admin/createUser.php', {
+                     data_user: JSON.stringify(this.modal_customer)
+                  },
+                  function(data, status){
+                     if(status == 'success') {
+                        let parse_data = JSON.parse(data);
+                        if(parse_data.status) {
+                           $('#box-modify-customer').modal("hide");
+                           create_notification('Se registro el usuario ' + vm.modal_customer.user_user,
+                           'alert-success');
+                           return;
+                        } else if(parse_data.type == 'user_already_exists') {
+                           $('#box-modify-customer div.modal-body > div:first-child').after(
+                           '<p class="text-danger">Este usuario ya existe, especifique otro usuario</p>');
+                           return
+                        }
+                     }
+                     $('#box-modify-customer div.modal-body > div:first-child').after(
+                        '<p class="text-danger">Error yo se pudo registrar el usuario, vuelva a intentarlo</p>');
+                  }
+               );
+            },
+            update_salon: function() {
+               $.post('../ajax/admin/createOrUpdateRoom.php', {
+                  "data-salon": JSON.stringify(vm.data_salon)
+               },
+               function(data, status) {
+                  if (status == 'success') {
+                     let parse_data = JSON.parse(data);
+                     if (parse_data['status']) {
+                        let status_msg = 'actualizó correctamente la información del salón de eventos';
+                        if (parse_data['action'] == 'create') {
+                           vm.data_salon.t_room.id_saloon = parse_data.t_room;
+                           vm.data_salon.t_room.id_info = parse_data.t_info;
+                           vm.data_salon.t_direction.id_direction = parse_data.t_direction;
+                           vm.data_salon.t_schedule.id_schedule = parse_data.t_schedule;
+                           status_msg = 'registro correctamente el salón de eventos';
+                        }
+                        create_notification('<strong>Exitoso</strong> Se ' + status_msg, 'alert-success');
+                     } else {
+                        let status_msg = 'actualizar correctamente la información del salón de eventos\nError al actualizar datos en la tabla ' +
+                           parse_data['in_table'];
+                        if (parse_data['action'] == 'create')
+                           status_msg = 'registrar correctamente el salón de eventos\nError al registrar datos en la tabla' +
+                           parse_data['in_table'];
+                        create_notification('<strong>Error</strong>: No se pudo ' + status_msg, 'alert-danger');
+                     }
+                  }
+               }
+               );
+            },
+         },
+         computed: {
+            modal_data: function() {
+               if(this.is_modal_create) {
+                  this.modal_customer = {
+                     id_user: 0,
+                     user_user: '',
+                     name_user: '',
+                     pa_lastname_user: '',
+                     mo_lastname_user: '',
+                     email_user: '',
+                     phone_user: '',
+                     password_user: ''
+                  };
+                  return {
+                     title: "Agregue los datos para el ",
+                     strong: 'nuevo usuario',
+                     text_btn: "Crear usuario",
+                     style_user: {display: 'flex'}
+                  }
+               }
+               this.modal_customer = JSON.parse(JSON.stringify(
+                  this.data_customers[this.index_modal_customer]));
+               return {
+                  title: "Modificar información de ",
+                  strong: this.modal_customer.user_user,
+                  text_btn: "Actualizar",
+                  style_user: {display: 'none'}
+               }
             }
          }
       });
@@ -438,69 +607,6 @@ if (!isset($_SESSION['data_admin'])) {
                );
             }
          });
-         $('#btn-update-customer').click(function(){
-            if($(this).attr('class').indexOf('disabled') != -1) return;
-            $.post('../ajax/admin/updateUser.php', {
-                  'data_user': JSON.stringify(vm.data_customer_update)
-               },
-               function(data, status){
-                  if(status == 'success') {
-                     let data_parse = JSON.parse(data);
-                     if(data_parse.status) {
-                        vm.data_customers[index_customer_update] = JSON.parse(JSON.stringify(vm.data_customer_update));
-                        $('#customers').before('<div class="alert alert-success alert-dismissible fade show text-center"' +
-                           'role="alert"><strong>Exitoso</strong>: Se actualizo correctamente la información de '+
-                           vm.data_customer_update.user_user +'<button type="button" class="close" data-dismiss="alert"'+
-                           ' aria-label="close"><span aria-hidden="true">&times;</span></button>');
-                     }
-                  } else {
-                     $('#customers').before('<div class="alert alert-danger alert-dismissible fade show text-center"' +
-                     'role="alert"><strong>Error</strong>: No se pudo actualizar la información de '+
-                     vm.data_customer_update.user_user +'<button type="button" class="close" data-dismiss="alert"'+
-                     ' aria-label="close"><span aria-hidden="true">&times;</span></button>');
-                  }
-                  $('#box-modify-customer').modal("hide");
-               }
-            );
-         });
-
-         $('#update-salon').click(function() {
-            $.post('../ajax/admin/createOrUpdateRoom.php', {
-                  "data-salon": JSON.stringify(vm.data_salon)
-               },
-               function(data, status) {
-                  if (status == 'success') {
-                     let parse_data = JSON.parse(data);
-                     if (parse_data['status']) {
-                        let status_msg = 'actualizó correctamente la información del salón de eventos';
-                        if (parse_data['action'] == 'create') {
-                           vm.data_salon.t_room.id_saloon = parse_data.t_room;
-                           vm.data_salon.t_room.id_info = parse_data.t_info;
-                           vm.data_salon.t_direction.id_direction = parse_data.t_direction;
-                           vm.data_salon.t_schedule.id_schedule = parse_data.t_schedule;
-                           status_msg = 'registro correctamente el salón de eventos';
-                        }
-                        $('main.container-fluid').prepend(
-                           '<div class="alert alert-success alert-dismissible fade show text-center"' +
-                           'role="alert"><strong>Exitoso</strong>: Se ' + status_msg +
-                           '<button type="button" class="close" data-dismiss="alert" aria-label="close">' +
-                           '<span aria-hidden="true">&times;</span></button>');
-                     } else {
-                        let status_msg = 'actualizar correctamente la información del salón de eventos\nError al actualizar datos en la tabla' +
-                           parse_data['in_table'];
-                        if (parse_data['action'] == 'create')
-                           status_msg = 'registrar correctamente el salón de eventos\nError al registrar datos en la tabla' +
-                           parse_data['in_table'];
-                        $('main.container-fluid').prepend(
-                           '<div class="alert alert-error alert-dismissible fade show text-center"' +
-                           'role="alert"><strong>Error</strong>: No se pudo' + status_msg +
-                           '<button type="button" class="close" data-dismiss="alert" aria-label="close">' +
-                           '<span aria-hidden="true">&times;</span></button>');
-                     }
-                  }
-               }
-            );
-         });
       });
 
       function load_page(id_page) {
@@ -531,18 +637,21 @@ if (!isset($_SESSION['data_admin'])) {
          $(id_page_current).css('display', 'block');
       }
 
-      function show_or_hide_password(button, id_pass) {
-         let el = document.getElementById(id_pass);
-         if (el.type == 'password') {
-            el.type = 'text';
-            button.firstChild.nodeValue = 'Ocultar';
-         } else {
-            el.type = 'password';
-            button.firstChild.nodeValue = 'Ver';
-         }
+      function create_notification(message, type_notification) {
+         $('#customers').before('<div class="alert '+ type_notification +
+            ' alert-dismissible fade show text-center" role="alert">'+ message +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="close">'+
+            '<span aria-hidden="true">&times;</span></button>');
       }
 
-      function valide_equals_password(id_pass1, id_pass2) {}
+      function show_or_hide_password(id_button, id_input) {
+         $(id_button).toggleClass('fa-eye-slash fa-eye');
+
+         if ($(id_input).attr('type') == 'password')
+            $(id_input).attr('type', 'text');
+         else
+            $(id_input).attr('type', 'password');
+      }
    </script>
 </body>
 
