@@ -59,7 +59,7 @@ var vm = new Vue({
             this.year--;
          }
 
-         $.post("getReservations.php",
+         $.post("../ajax/getReservations.php",
             {year: this.year, month: this.month+1},
             function(data, status) {
                if(status == 'success') {

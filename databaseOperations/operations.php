@@ -102,8 +102,8 @@
          */
         public function select_date_reservations_for_month(string $year, string $month): string {
             $date_reservations = '{"value": false';
-            $this->querys = "SELECT DAY(date_reservation) as day,status_reservation as status FROM reservations ".
-                "WHERE YEAR(date_reservation)=$year AND MONTH(date_reservation)=$month";
+            $this->querys = "SELECT DAY(date_reservation_start) as day,status_reservation as status FROM reservations ".
+                "WHERE YEAR(date_reservation_start)=$year AND MONTH(date_reservation_start)=$month";
             $this->result = $this->connectDB->query($this->querys);
             if($this->result->num_rows > 0) {
                 $date_reservations = '{"value": true';
