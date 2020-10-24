@@ -358,52 +358,44 @@ if (!isset($_SESSION['data_admin'])) {
          </article>
       </section>
       <section id="personal-information" class="py-4 mt-3 px-1 px-sm-3 px-md-4 col-lg-9 mt-lg-0 px-lg-5" style="background: #eeeeee; display: none;">
-         <h3 class="text-center font-weight-bold">Administrador</h3>
-         <div class="form-group">
-            <label for="inf-lastname" class="font-weight-bold">Nombre completo</label>
-            <input v-bind:value="data_admin.name_user+' '+data_admin.pa_lastname_user+' '+data_admin.mo_lastname_user"
-               id="inf-lastname" type="text" readonly class="form-control" />
-         </div>
-         <div class="form-group">
-            <label for="inf-email" class="font-weight-bold">Email</label>
-            <input v-bind:value="data_admin.email_user"
-               id="inf-email" type="text" readonly class="form-control" />
-         </div>
-         <div class="form-group">
-            <label for="inf-tel" class="font-weight-bold">Teléfono</label>
-            <input v-bind:value="data_admin.phone_user"
-               id="inf-tel" type="text" readonly class="form-control" />
-         </div>
-         <div class="form-group">
-            <label for="inf-user" class="font-weight-bold">Usuario</label>
-            <input v-bind:value="data_admin.user_user"
-               id="inf-user" type="text" readonly class="form-control" />
-         </div>
-         <div class="form-group">
-            <label for="inf-pass" class="font-weight-bold">Contraseña</label>
-            <div class="input-group">
-               <input v-bind:value="data_admin.password_user"
-                  id="inf-pass" type="password" readonly class="form-control" />
-               <div class="input-group-append">
-                  <span class="btn btn-success" onclick="show_or_hide_password('#inf-show-pass', '#inf-pass')">
-                     <i class="fas fa-eye" id="inf-show-pass"></i>
-                  </span>
+         <h3 class="text-center font-weight-bold mb-3">Administrador</h3>
+         <div class="w-100 box-input">
+            <div class="form-group">
+               <label for="inf-lastname" class="font-weight-bold">Nombre completo</label>
+               <input v-bind:value="data_admin.name_user+' '+data_admin.pa_lastname_user+' '+data_admin.mo_lastname_user"
+                  id="inf-lastname" type="text" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+               <label for="inf-email" class="font-weight-bold">Email</label>
+               <input v-bind:value="data_admin.email_user"
+                  id="inf-email" type="text" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+               <label for="inf-tel" class="font-weight-bold">Teléfono</label>
+               <input v-bind:value="data_admin.phone_user"
+                  id="inf-tel" type="text" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+               <label for="inf-user" class="font-weight-bold">Usuario</label>
+               <input v-bind:value="data_admin.user_user"
+                  id="inf-user" type="text" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+               <label for="inf-pass" class="font-weight-bold">Contraseña</label>
+               <div class="input-group">
+                  <input v-bind:value="data_admin.password_user"
+                     id="inf-pass" type="password" readonly class="form-control" />
+                  <div class="input-group-append">
+                     <span class="btn btn-success" onclick="show_or_hide_password('#inf-show-pass', '#inf-pass')">
+                        <i class="fas fa-eye" id="inf-show-pass"></i>
+                     </span>
+                  </div>
                </div>
             </div>
          </div>
-         <form action="">
-            <div class="form-group">
-               <label for="inf-new-pass" class="font-weight-bold">Cambiar contraseña</label>
-               <input id="inf-new-pass" type="password" placeholder="contraseña nueva" required class="form-control" />
-            </div>
-            <div class="form-group">
-               <label for="inf-retry-pass" class="font-weight-bold">Repetir contraseña</label>
-               <input id="inf-retry-pass" type="password" placeholder="contraseña nueva" required class="form-control" />
-            </div>
-            <div class="w-100 d-flex justify-content-center">
-               <input type="submit" value="Actualizar" class="btn btn-primary" />
-            </div>
-         </form>
+         <div class="w-100">
+            <button type="button" class="btn btn-primary d-block mx-auto">Modificar información</button>
+         </div>
       </section>
    </main>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -460,7 +452,7 @@ if (!isset($_SESSION['data_admin'])) {
                function(data, status){
                   if(status == 'success') {
                      if(JSON.parse(data).status) {
-                        Vue.set(vm.data_customers, vm.index_customer,
+                        Vue.set(vm.data_customers, vm.index_modal_customer,
                            JSON.parse(JSON.stringify(vm.modal_customer)))
                         create_notification('<strong>Exitoso</strong>: Se actualizo correctamente la información de '
                            + vm.modal_customer.user_user, 'alert-success');
@@ -504,6 +496,7 @@ if (!isset($_SESSION['data_admin'])) {
                      if(status == 'success') {
                         let parse_data = JSON.parse(data);
                         if(parse_data.status) {
+                           vm.data_customers.unshift(JSON.parse(JSON.stringify(vm.modal_customer)));
                            $('#box-modify-customer').modal("hide");
                            create_notification('Se registro el usuario ' + vm.modal_customer.user_user,
                            'alert-success');
@@ -548,6 +541,11 @@ if (!isset($_SESSION['data_admin'])) {
                }
                );
             },
+            is_valid_password() {
+               if(/^\w+(\.|-|\w)*@\w+(\.|-|\w)*$/.test(this.modal_customer.email_user)) {
+                  
+               }
+            }
          },
          computed: {
             modal_data: function() {
