@@ -1,5 +1,8 @@
 <?php
-  session_start();
+
+use function PHPSTORM_META\type;
+
+session_start();
   if(isset($_SESSION['data_user'])){
     header("Location: /my/");
   }
@@ -31,20 +34,21 @@
       $_POST['email'],$_POST['phone'],$_POST['user'],$_POST['password']);
 
       if(!$response['status']) {
-        echo '<div class="alert alert-danger alert-dismissible fade show mb-3">'.
-          '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-          .$response['message'].'</div>';
+        $message_error = 'El usuario '.$_POST['user'].' ya existe, especifique otro usuario';
+        if($response['type'] == 'error') {
+          $message_error = 'Ocurrió un error al registrarte '.$_POST['name'].'. Por favor vuelve a intentarlo.';
+        }
+        echo '<div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">'.
+          "<strong>Error</strong>: $message_error".
+          '<button type="button" class="close" data-dismiss="alert" aria-label="close">'.
+          '<span aria-hidden="true">&times;</span></button></div>';
       } else {
-        $_SESSION['message-register'] = $response['message'];
+        $_SESSION['message-register'] = "¡Felicidades!".$_POST['name'].
+          ", has sido registrado exitosamente. Por favor inicia sesión";
         header('Location: /login/');
       }
     }
   ?>
-  <script>
-    $(document).ready(function(){
-      $('#name').val()
-    });
-  </script>
     <section class="mb-3 card no-gutters flex-md-row">
       <article class="col-md-4 img-background">
         <h2 class="text-white text-center">Unete a nuestra comunidad</h2>

@@ -85,6 +85,12 @@
       include('../partials/home/navigation.html');
    ?>
    <main class="container p-0 mt-2" id="app">
+      <div class="alert alert-info alert-dismissible fade show text-center" role="alert">
+         Para fin de otorgar el mejor servicio, usted puede reservar el salón 2 días después de hoy
+         <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
       <section id="date-price" class="row no-gutters mb-3">
          <article id="date" class="w-100 text-center pt-2 col-lg-5">
             <h5 class="mb-2 font-weight-bold">Seleccione la fecha</h5>
