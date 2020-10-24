@@ -122,9 +122,9 @@
                 $operations = new OperationBD();
                 $totalReservations = 0;
                 $results = $operations->getReservations(settype($_SESSION['data_user'][0], "integer"));
-                if ($results[0]->num_rows) {
-                  while ($row = $results[0]->fetch_assoc()) {
-                    $totalReservations += $row['total'];
+                if ($results->num_rows) {
+                  while ($row = $results->fetch_assoc()) {
+                    $totalReservations += $row['price_total'];
                     echo '<tr>';
                     echo '<td>';
                     echo $row['id_reservation'];
@@ -136,7 +136,7 @@
                     echo $row['date_reservation_start'];
                     echo '</td>';
                     echo '<td>';
-                    echo $row['total'];
+                    echo $row['price_total'];
                     echo '</td>';
                     echo '<td>';
                     echo '<a href="/my/modify" class="text-white text-decoration-none mb-2">

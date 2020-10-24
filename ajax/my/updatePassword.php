@@ -4,10 +4,12 @@
 
     $newpassword = json_decode($_POST['newpassword']);
     $oldpassword = json_decode($_POST['oldpassword']);
+    /*$newpassword = $_POST['newpassword'];
+    $oldpassword = $_POST['oldpassword'];*/
 
     require_once('../../databaseOperations/operations.php');
     $operations = new OperationBD();
-    $results = $operations->updatePasswordUser((int) ($_SESSION['data_user'][0]), $newpassword);
+    $results = $operations->updatePasswordUser((int) ($_SESSION['data_user'][0]),$newpassword);
     if(count($results)>1){
         $_SESSION['data_user'][8] = $newpassword;
     }else{
@@ -15,4 +17,5 @@
     }
     
     echo json_encode($newpassword);
+    ##echo json_encode($newpassword);
 ?>

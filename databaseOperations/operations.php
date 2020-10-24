@@ -32,13 +32,10 @@
         }
         public function getReservations($id){
             $result_return = "";
-            $this->querys = "SELECT reservations.id_reservation,reservations.type_event,reservations.date_reservation_start,
-                (reservations.price_total) AS 'total'
-                FROM reservations INNER JOIN folioServices ON
-                reservations.id_folio_services=folioServices.id_folio_services 
-                WHERE reservations.id_user='$id';";
+            $this->querys = "SELECT id_reservation,type_event,date_reservation_start,
+                price_total FROM reservations WHERE reservations.id_user='$id';";
             $this->result = $this->connectDB->query($this->querys);
-            $result_return = array($this->result);
+            $result_return = $this->result;
             $this->connectDB->close();
             return $result_return;
         }
@@ -52,13 +49,13 @@
             $this->connectDB->close();
             return $result_return;
         }
-        public function getDescription(){
+        public function getServices(){
             $result_return = "";
 
-            $this->querys = "SELECT description_saloon FROM room;";
+            $this->querys = "SELECT * FROM services ;";
             $this->result = $this->connectDB->query($this->querys);
-            $result_return = mysqli_fetch_array($this->result);
-            
+            $result_return = $this->result;
+
             $this->connectDB->close();
             return $result_return;
         }

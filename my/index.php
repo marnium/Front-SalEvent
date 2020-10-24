@@ -94,11 +94,11 @@ if (isset($_SESSION['data_admin'])) {
                   <div class="mt-2 d-flex flex-wrap justify-content-around">
                     <div class="mt-2">
                       <label for="change-password">Cambiar contraseña</label>
-                      <input type="password" id="change-password" class="form-control form-control mt-1" placeholder="Cambiar contraseña" required autofocus />
+                      <input type="password" name="change-password" id="change-password" class="form-control form-control mt-1" placeholder="Cambiar contraseña" required autofocus />
                     </div>
                     <div class="mt-2 ml-1">
                       <label for="confirm-password">Confirmar contraseña</label>
-                      <input type="password" id="confirm-password" class="form-control form-control mt-1" placeholder="Confirmar contraseña" required />
+                      <input type="password" name="confirm-password" id="confirm-password" class="form-control form-control mt-1" placeholder="Confirmar contraseña" required />
                     </div>
                   </div>
                 </form>
@@ -109,7 +109,7 @@ if (isset($_SESSION['data_admin'])) {
         </div>
       </div>
       <div class="mt-3 d-flex justify-content-center">
-        <button class="btn btn-primary bg-dark border-0" type="submit" form="form-user" onchange="showHint()">
+        <button class="btn btn-primary bg-dark border-0" type="submit" form="form-user" id="submit">
           Actualizar datos
         </button>
       </div>
