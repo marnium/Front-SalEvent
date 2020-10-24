@@ -18,12 +18,13 @@ if (!isset($_SESSION['data_admin'])) {
    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
    <title>Admin</title>
    <?php
-   // Data customers and salon
+   // Data customers, salon and info-admin
    include_once('../databaseOperations/operations.php');
    $operationDB = new OperationBD();
    echo "<script>var data_salon = JSON.parse('" .
       $operationDB->select_room_for_id(1) . "'); var data_customers = JSON.parse('".
-      $operationDB->select_user_type1()."');</script>";
+      $operationDB->select_user_type1(). "'); var data_admin = JSON.parse('" .
+      json_encode($_SESSION['data_admin'])."');</script>";
    ?>
    <style>
       .option-selected {
@@ -360,25 +361,29 @@ if (!isset($_SESSION['data_admin'])) {
          <h3 class="text-center font-weight-bold">Administrador</h3>
          <div class="form-group">
             <label for="inf-lastname" class="font-weight-bold">Nombre completo</label>
-            <input id="inf-lastname" type="text" value="<?php echo $_SESSION['data_admin'][2] . " "
-                                                            . $_SESSION['data_admin'][3] . " " . $_SESSION['data_admin'][4]; ?>" readonly class="form-control" />
+            <input v-bind:value="data_admin.name_user+' '+data_admin.pa_lastname_user+' '+data_admin.mo_lastname_user"
+               id="inf-lastname" type="text" readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-email" class="font-weight-bold">Email</label>
-            <input id="inf-email" type="text" value="<?php echo $_SESSION['data_admin'][5]; ?>" readonly class="form-control" />
+            <input v-bind:value="data_admin.email_user"
+               id="inf-email" type="text" readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-tel" class="font-weight-bold">Teléfono</label>
-            <input id="inf-tel" type="text" value="<?php echo $_SESSION['data_admin'][6]; ?>" readonly class="form-control" />
+            <input v-bind:value="data_admin.phone_user"
+               id="inf-tel" type="text" readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-user" class="font-weight-bold">Usuario</label>
-            <input id="inf-user" type="text" value="<?php echo $_SESSION['data_admin'][7]; ?>" readonly class="form-control" />
+            <input v-bind:value="data_admin.user_user"
+               id="inf-user" type="text" readonly class="form-control" />
          </div>
          <div class="form-group">
             <label for="inf-pass" class="font-weight-bold">Contraseña</label>
             <div class="input-group">
-               <input id="inf-pass" type="password" value="<?php echo $_SESSION['data_admin'][8]; ?>" readonly class="form-control" />
+               <input v-bind:value="data_admin.password_user"
+                  id="inf-pass" type="password" readonly class="form-control" />
                <div class="input-group-append">
                   <span class="btn btn-success" onclick="show_or_hide_password('#inf-show-pass', '#inf-pass')">
                      <i class="fas fa-eye" id="inf-show-pass"></i>
@@ -389,7 +394,7 @@ if (!isset($_SESSION['data_admin'])) {
          <form action="">
             <div class="form-group">
                <label for="inf-new-pass" class="font-weight-bold">Cambiar contraseña</label>
-               <input id="inf-new-pass" type="password" name="new_pass" placeholder="contraseña nueva" required class="form-control" />
+               <input id="inf-new-pass" type="password" placeholder="contraseña nueva" required class="form-control" />
             </div>
             <div class="form-group">
                <label for="inf-retry-pass" class="font-weight-bold">Repetir contraseña</label>
@@ -407,6 +412,7 @@ if (!isset($_SESSION['data_admin'])) {
       var vm = new Vue({
          el: "#app",
          data: {
+            data_admin: data_admin,
             data_salon: data_salon,
             data_customers: data_customers,
             modal_customer: {
@@ -441,7 +447,7 @@ if (!isset($_SESSION['data_admin'])) {
             },
             create_or_update_customer: function() {
                if(this.is_disable_btn_modal) return;
-               if(!this.index_modal_customer) {
+               if(this.is_modal_create) {
                   this.create_customer();
                } else {
                   this.update_customer();
@@ -457,7 +463,7 @@ if (!isset($_SESSION['data_admin'])) {
                         Vue.set(vm.data_customers, vm.index_customer,
                            JSON.parse(JSON.stringify(vm.modal_customer)))
                         create_notification('<strong>Exitoso</strong>: Se actualizo correctamente la información de '
-                           + vm.modal_customer.user_user, 'alert-sucess');
+                           + vm.modal_customer.user_user, 'alert-success');
                      }
                   } else {
                      create_notification('<strong>Error</strong>: No se pudo actualizar la información de '
@@ -547,7 +553,7 @@ if (!isset($_SESSION['data_admin'])) {
             modal_data: function() {
                if(this.is_modal_create) {
                   this.modal_customer = {
-                     id_user: 0,
+                     id_user: 1,
                      user_user: '',
                      name_user: '',
                      pa_lastname_user: '',
