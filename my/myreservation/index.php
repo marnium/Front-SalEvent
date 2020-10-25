@@ -1,14 +1,14 @@
 <?php
-  session_start();
-  if (!isset($_SESSION['data_user'])) {
-    header("Location: /home/");
-  }
-  if (isset($_SESSION['data_admin'])) {
-    header("Location: /admin/");
-  }
-  require_once('../../databaseOperations/operations.php');
-  $operations = new OperationBD();
-  $dataRoom = $operations->getDataRoom();
+session_start();
+if (!isset($_SESSION['data_user'])) {
+  header("Location: /home/");
+}
+if (isset($_SESSION['data_admin'])) {
+  header("Location: /admin/");
+}
+require_once('../../databaseOperations/operations.php');
+$operations = new OperationBD();
+$dataRoom = $operations->getDataRoom();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -87,8 +87,8 @@
             <div class="d-flex flex-wrap justify-content-between">
               <p class="mr-3 h5">Salon de eventos:</p>
               <p class="h5">
-                <?php  
-                  echo $dataRoom['name_saloon'];
+                <?php
+                echo $dataRoom['name_saloon'];
                 ?>
               </p>
             </div>
@@ -97,14 +97,15 @@
             <div class="d-flex flex-wrap justify-content-between">
               <p class="mr-3 h5">Descripcion:</p>
               <p class="h5">
-                <?php  
-                  echo $dataRoom['description_saloon'];
+                <?php
+                echo $dataRoom['description_saloon'];
                 ?>
               </p>
             </div>
           </div>
+          <div id="box-confirmpass" class="col-md-12 w-100 d-flex flex-wrap justify-content-center"></div>
           <div class="col-md-12 d-flex flex-wrap overflow-auto">
-            <table class="table table-striped">
+            <table class="table table-striped" id="tableReservations">
               <thead>
                 <tr>
                   <th>Id</th>
@@ -121,7 +122,7 @@
                 require_once('../../databaseOperations/operations.php');
                 $operations = new OperationBD();
                 $totalReservations = 0;
-                $results = $operations->getReservations(settype($_SESSION['data_user'][0], "integer"));
+                $results = $operations->getReservations(intval($_SESSION['data_user'][0]));
                 if ($results->num_rows) {
                   while ($row = $results->fetch_assoc()) {
                     $totalReservations += $row['price_total'];
@@ -146,7 +147,7 @@
                     </a>';
                     echo '</td>';
                     echo '<td>';
-                    echo '<button class="btn btn-primary bg-dark border-0">
+                    echo '<button class="btn btn-primary bg-dark border-0" onclick="deleteReservation(this)">
                       Eliminar
                     </button>';
                     echo '</td>';
@@ -166,7 +167,7 @@
           </div>
           <div class="col-md-10 d-flex flex-wrap justify-content-end">
             <p class="mr-3 h4">Total:</p>
-            <p class="text-danger h4"><?php echo $totalReservations ?></p>
+            <p class="text-danger h4" id="total"><?php echo $totalReservations ?></p>
           </div>
         </div>
       </div>
@@ -179,45 +180,57 @@
           </a>
         </div>
       </div>
-      <!--<div class="col-md-3 border border-dark mt-3 mb-1">
-          <div class="d-flex flex-column flex-wrap">
-            <div
-              class="d-flex flex-wrap justify-content-center mb-4 mt-4 w-100"
-            >
-              <a href="#" class="text-white text-decoration-none btn-block">
-                <button class="btn btn-primary bg-dark border-0 btn-block">
-                  Modificar
-                </button>
-              </a>
-            </div>
-            <div class="d-flex flex-wrap justify-content-center mb-4">
-              <a href="#" class="text-white text-decoration-none btn-block">
-                <button class="btn btn-primary bg-dark border-0 btn-block">
-                  Eliminar reserva
-                </button>
-              </a>
-            </div>
-            <div class="d-flex flex-wrap justify-content-center mb-4">
-              <a href="/my/calendar/" class="text-white text-decoration-none btn-block">
-                <button class="btn btn-primary bg-dark border-0 btn-block">
-                  Nueva reserva
-                </button>
-              </a>
-            </div>
-            <div class="d-flex flex-wrap justify-content-center mb-4">
-              <a href="#" class="text-white text-decoration-none btn-block">
-                <button class="btn btn-primary bg-dark border-0 btn-block">
-                  Ver evento
-                </button>
-              </a>
-            </div>
-          </div>
-        </div>-->
     </section>
   </main>
   <script>
     var date = new Date();
-    document.getElementById('showDate').innerHTML = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear();
+    document.getElementById('showDate').innerHTML = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+                var total;
+    function deleteReservation(cell) {
+      total = cell;
+      if (document.getElementById("msg-error-successful")) {
+        $("#msg-error-successful").remove();
+      }
+      $.ajax({
+          data: {
+            "id": JSON.stringify(cell.parentNode.parentNode.cells[0].innerHTML)
+          },
+          type: "post",
+          dataType: "json",
+          url: "../../ajax/my/deleteReservation.php",
+        })
+        .done(function(data, textStatus, jqXHR) {
+          
+          var totalRowSelected = cell.parentNode.parentNode.cells[3].innerHTML;
+          document.getElementById("total").innerHTML = 
+            (parseInt(document.getElementById("total").innerHTML)-
+            parseInt(totalRowSelected));
+          document.getElementById("tableReservations").deleteRow(cell.parentNode.parentNode.rowIndex);
+
+          if (!document.getElementById("msg-error-successful")) {
+            $("#box-confirmpass").append(
+              `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-success alert-dismissible fade show" role="alert">
+                        <small>¡Hecho! Se ha eliminado la reservacion con el id=`+data+`</small>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </p>`
+            );
+          }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          if (!document.getElementById("msg-error-successful")) {
+            $("#box-confirmpass").append(
+              `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+                        <small>¡Upps! Tu reservacion no fue eliminada</small>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </p>`
+            );
+          }
+        });
+    }
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>

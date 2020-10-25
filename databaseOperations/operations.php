@@ -33,7 +33,7 @@
         public function getReservations($id){
             $result_return = "";
             $this->querys = "SELECT id_reservation,type_event,date_reservation_start,
-                price_total FROM reservations WHERE reservations.id_user='$id';";
+                price_total FROM reservations WHERE id_user='$id';";
             $this->result = $this->connectDB->query($this->querys);
             $result_return = $this->result;
             $this->connectDB->close();
@@ -55,6 +55,15 @@
             $this->querys = "SELECT * FROM services ;";
             $this->result = $this->connectDB->query($this->querys);
             $result_return = $this->result;
+
+            $this->connectDB->close();
+            return $result_return;
+        }
+        public function deleteReservation($id){
+            $result_return = "not-successful";
+            if($this->connectDB->query("DELETE FROM reservations WHERE id_reservation=$id") === TRUE) {
+                $result_return = 'successful';
+            }
 
             $this->connectDB->close();
             return $result_return;

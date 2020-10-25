@@ -90,3 +90,10 @@ INSERT INTO selectedservices VALUES(1,1,2,30);
 INSERT INTO reservations VALUES(null,"boda",1,12312,"2020-10-25 13:00:00","2020-10-25 15:00:00",1,1,1);
 INSERT INTO reservations VALUES(null,"bautizo",1,12312,"2020-10-26 13:00:00","2020-10-26 15:00:00",1,1,1);
 INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",1,1,1);
+
+INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",3,1,1);
+
+INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
+INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
+INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
+INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);

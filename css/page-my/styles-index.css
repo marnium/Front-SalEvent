@@ -1,56 +1,3 @@
-
-#date {
-  background-color: #1b1c1c;
-  color: #eeeeee;
-}
-#month {
-  border-bottom: 2px solid #777e7e;
-}
-.box-state {
-  width: 15px;
-  height: 15px;
-  margin-right: 7px;
-}
-.row-cal {
-  margin-bottom: 15px;
-  margin-left: 15px;
-}
-.box-col-cal {
-  padding-right: 15px;
-}
-.col-cal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 50px;
-  background: #eeeeee;
-  color: #1b1c1c;
-  padding-bottom: 10px;
-}
-
-#cal div.btn.disabled {
-  background-color: purple;
-  border-color: purple;
-  opacity: 1;
-  cursor: not-allowed;
-}
-#cal div.btn.reservated {
-  background-color: #70A3ED;
-  border-color: #70A3ED;
-  opacity: 1;
-}
-#cal div.btn.on-hold {
-  background: #FCC70F;
-  border-color: #FCC70F;
-  opacity: 1;
-}
-#cal > div.row-cal:first-child {
-  justify-content: flex-end;
-}
-#price {
-  background-color: #eeeeee;
-}
 .option-selected {
   background-color: #eeeeee !important;
   color: black !important;
@@ -66,8 +13,62 @@ section {
 .client > .sticky-top {
   top: 90px;
 }
-.repair-page {
-  height: 86vh;
+#date {
+  background-color: #1B1C1C;
+  color: #EEEEEE;
+}
+#month {
+  border-bottom: 2px solid #777e7e;
+}
+.box-state {
+  width: 15px;
+  height: 15px;
+  margin-right: 7px;
+}
+.row-cal {
+  margin-bottom: 15px;
+  margin-left: 12px;
+}
+.box-col-cal {
+  padding-right: 12px;
+  width: 14.2857%;
+}
+.col-cal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  padding-bottom: 10px;
+  background: #EEEEEE;
+  color: #1B1C1C;
+  border-color: #EEEEEE;
+}
+#cal .btn.disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  background: #EEEEEE;
+  color: #1B1C1C;
+  border-color: #EEEEEE;
+}
+#cal div.btn.selected {
+  background-color: purple;
+  border-color: purple;
+}
+#cal div.btn.reservated {
+  background-color: #70A3ED;
+  border-color: #70A3ED;
+}
+#cal div.btn.on-hold {
+  background: #FCC70F;
+  border-color: #FCC70F;
+}
+#cal > div.row-cal:first-child {
+  justify-content: flex-end;
+}
+#price {
+  background-color: #EEEEEE;
 }
 
 @media only screen and (min-width: 992px) {

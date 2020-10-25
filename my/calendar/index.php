@@ -6,6 +6,9 @@ if (!isset($_SESSION['data_user'])) {
 if (isset($_SESSION['data_admin'])) {
   header("Location: /admin/");
 }
+if (isset($_SESSION['newReservation'])) {
+  header("Location: /my/book/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,8 +53,16 @@ if (isset($_SESSION['data_admin'])) {
         </a>
       </div>
     </div>
-    <section id="calendar" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3">
-      <div id="app" class="container-fluid calendar-fixed d-flex flex-wrap m-auto">
+    <section id="app" class="py-4 mt-3 px-0 col-lg-9 mt-lg-0 px-lg-3">
+      <div class="alert alert-info alert-dismissible fade show text-center" role="alert">
+        <p><strong>Para fin de otorgar el mejor servicio, usted puede reservar el salón 2 días
+            después de hoy</strong></p>
+        {{messague}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container-fluid calendar-fixed d-flex flex-wrap m-auto">
         <div class="col-md-8">
           <article id="date" class="w-100 text-center pt-2 col-lg-12 pb-4">
             <h5 class="mb-2 font-weight-bold">Seleccione la fecha</h5>
@@ -88,12 +99,8 @@ if (isset($_SESSION['data_admin'])) {
               <div style="background: purple;" class="box-state"></div>
               <p class="mb-0">Seleccionado</p>
             </div>
-            <div class="d-flex flex-wrap justify-content-center align-items-center mb-3">
-              <a href="/my/book/" class="text-white text-decoration-none">
-                <button type="submit" class="mt-4 btn btn-primary bg-dark border-0">
-                  Reservar este dia
-                </button>
-              </a>
+            <div :click="validateSelectedDate()"
+              class="d-flex flex-wrap justify-content-center align-items-center mb-3" v-html="button">
             </div>
           </article>
         </div>
