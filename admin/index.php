@@ -62,6 +62,16 @@ if (!isset($_SESSION['data_admin'])) {
          border-top-left-radius: 0;
          border-bottom-left-radius: 0;
       }
+      main input.error-input, main input.error-input:focus {
+         outline: none;
+         box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+         border: 1px solid red;
+      }
+      main input.success-input, main input.success-input:focus {
+         outline: none;
+         box-shadow: 0 0 0 0.2rem rgba(0, 255, 0, 0.4);
+         border: 1px solid green;
+      }
 
       main button[type=button].disabled {
          cursor: not-allowed;
@@ -167,42 +177,42 @@ if (!isset($_SESSION['data_admin'])) {
                         <div class="input-group-prepend">
                            <label for="bxm-user" class="input-group-text"><i class="fas fa-user-circle fa-lg"></i></label>
                         </div>
-                        <input v-model="modal_customer.user_user" v-on:change="active_btn_modal"
-                           type="text" id="bxm-user" class="form-control" placeholder="Usuario" maxlength="46" />
+                        <input v-model="modal_customer.user_user" v-on:input="is_valid_user"
+                           type="text" id="bxm-user" class="form-control" placeholder="Usuario" maxlength="45" />
                      </div>
                      <div class="form-group input-group flex-nowrap">
                         <div class="input-group-prepend">
                            <label for="bxm-name" class="input-group-text"><i class="fas fa-user-alt"></i></label>
                         </div>
                         <div class="d-flex flex-grow-1 flex-column">
-                           <input v-model="modal_customer.name_user" v-on:change="active_btn_modal"
-                              type="text" id="bxm-name" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Nombre" maxlength="46" />
-                           <input v-model="modal_customer.pa_lastname_user" v-on:change="active_btn_modal"
-                              type="text" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Apellido paterno" maxlength="46" />
-                           <input v-model="modal_customer.mo_lastname_user" v-on:change="active_btn_modal"
-                              type="text" class="form-control input-no-radius-tl-bl" placeholder="Apellido materno" maxlength="46" />
+                           <input v-model="modal_customer.name_user" v-on:input="is_valid_input('name_user')"
+                              type="text" id="bxm-name" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Nombre" maxlength="45" />
+                           <input v-model="modal_customer.pa_lastname_user" v-on:input="is_valid_input('pa_lastname_user')"
+                              type="text" class="form-control mb-2 input-no-radius-tl-bl" placeholder="Apellido paterno" maxlength="45" />
+                           <input v-model="modal_customer.mo_lastname_user" v-on:input="is_valid_input('mo_lastname_user')"
+                              type="text" class="form-control input-no-radius-tl-bl" placeholder="Apellido materno" maxlength="45" />
                         </div>
                      </div>
                      <div class="form-group input-group">
                         <div class="input-group-prepend">
                            <label for="bxm-email" class="input-group-text"><i class="fas fa-envelope"></i></label>
                         </div>
-                        <input v-model="modal_customer.email_user" v-on:change="active_btn_modal"
-                           type="email" id="bxm-email" class="form-control" placeholder="Email" maxlength="46">
+                        <input v-model="modal_customer.email_user" v-on:input="is_valid_email" v-on:change="onch_is_valid_email"
+                           type="email" id="bxm-email" class="form-control" placeholder="Email" maxlength="45">
                      </div>
                      <div class="form-group input-group">
                         <div class="input-group-prepend">
                            <label for="bxm-phone" class="input-group-text"><i class="fas fa-phone"></i></label>
                         </div>
-                        <input v-model="modal_customer.phone_user" v-on:change="active_btn_modal"
+                        <input v-model="modal_customer.phone_user" v-on:input="is_valid_input('phone_user')"
                            type="tel" id="bxm-phone" class="form-control" placeholder="Teléfono" maxlength="11">
                      </div>
                      <div class="form-group input-group">
                         <div class="input-group-prepend">
                            <label for="bxm-pass" class="input-group-text"><i class="fas fa-lock"></i></label>
                         </div>
-                        <input v-model="modal_customer.password_user" v-on:change="active_btn_modal"
-                           type="password" id="bxm-pass" class="form-control" placeholder="Contraseña" maxlength="46">
+                        <input v-model="modal_customer.password_user" v-on:input="is_valid_input('password_user')"
+                           type="password" id="bxm-pass" class="form-control" placeholder="Contraseña" maxlength="45">
                         <div class="input-group-append">
                            <span class="btn btn-success" onclick="show_or_hide_password('#bxm-show-pass', '#bxm-pass')">
                               <i class="fas fa-eye" id="bxm-show-pass"></i>
@@ -289,7 +299,8 @@ if (!isset($_SESSION['data_admin'])) {
                <article class="w-100 d-flex flex-wrap box-input">
                   <div class="w-100 d-flex flex-wrap form-group">
                      <label for="name_salon" class="pl-0 col-sm-4">Nombre salon:</label>
-                     <input v-model="data_salon.t_room.name_saloon" type="text" id="name_salon" class="form-control col-sm-8" />
+                     <input v-model="data_salon.t_room.name_saloon" type="text" maxlength="45"
+                        id="name_salon" class="form-control col-sm-8" />
                   </div>
                   <div class="w-100 d-flex flex-wrap form-group">
                      <label for="capacity" class="pl-0 col-sm-4">Capacidad:</label>
@@ -303,19 +314,23 @@ if (!isset($_SESSION['data_admin'])) {
                <article class="box-input">
                   <div class="w-100 d-flex flex-wrap form-group">
                      <label for="street" class="pl-0 col-sm-4">Calle:</label>
-                     <input v-model="data_salon.t_direction.street_direction" type="text" id="street" class="form-control col-sm-8" />
+                     <input v-model="data_salon.t_direction.street_direction" type="text" maxlength="45"
+                        id="street" class="form-control col-sm-8" />
                   </div>
                   <div class="w-100 d-flex flex-wrap form-group">
                      <label for="state" class="pl-0 col-sm-4">Estado:</label>
-                     <input v-model="data_salon.t_direction.state_direction" type="text" id="state" class="form-control col-sm-8" />
+                     <input v-model="data_salon.t_direction.state_direction" type="text" maxlength="45"
+                        id="state" class="form-control col-sm-8" />
                   </div>
                   <div class="w-100 d-flex flex-wrap form-group">
                      <label for="municip" class="pl-0 col-sm-4">Municipio:</label>
-                     <input v-model="data_salon.t_direction.municipality_direction" type="text" id="municip" class="form-control col-sm-8" />
+                     <input v-model="data_salon.t_direction.municipality_direction" type="text" maxlength="45"
+                        id="municip" class="form-control col-sm-8" />
                   </div>
                   <div class="w-100 d-flex flex-wrap">
                      <label for="suburb" class="pl-0 col-sm-4">Colonia:</label>
-                     <input v-model="data_salon.t_direction.suburb_direction" type="text" id="suburb" class="form-control col-sm-8" />
+                     <input v-model="data_salon.t_direction.suburb_direction" type="text" maxlength="45"
+                        id="suburb" class="form-control col-sm-8" />
                   </div>
                </article>
             </div>
@@ -324,31 +339,38 @@ if (!isset($_SESSION['data_admin'])) {
                   <h4 class="text-center">Días de laboración</h4>
                   <div class="form-group form-check">
                      <label for="monday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.monday" true-value="Y" false-value="N" type="checkbox" id="monday" class="form-check-input" />Lunes</label>
+                        <input v-model="data_salon.t_schedule.monday" true-value="Y" false-value="N"
+                           type="checkbox" id="monday" class="form-check-input" />Lunes</label>
                   </div>
                   <div class="form-group form-check">
                      <label for="tuesday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.tuesday" true-value="Y" false-value="N" type="checkbox" id="tuesday" class="form-check-input" />Martes</label>
+                        <input v-model="data_salon.t_schedule.tuesday" true-value="Y" false-value="N"
+                           type="checkbox" id="tuesday" class="form-check-input" />Martes</label>
                   </div>
                   <div class="form-group form-check">
                      <label for="wednesday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.wednesday" true-value="Y" false-value="N" type="checkbox" id="wednesday" class="form-check-input" />Miércoles</label>
+                        <input v-model="data_salon.t_schedule.wednesday" true-value="Y" false-value="N"
+                           type="checkbox" id="wednesday" class="form-check-input" />Miércoles</label>
                   </div>
                   <div class="form-group form-check">
                      <label for="thursday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.thursday" true-value="Y" false-value="N" type="checkbox" id="thursday" class="form-check-input" />Jueves</label>
+                        <input v-model="data_salon.t_schedule.thursday" true-value="Y" false-value="N"
+                           type="checkbox" id="thursday" class="form-check-input" />Jueves</label>
                   </div>
                   <div class="form-group form-check">
                      <label for="friday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.friday" true-value="Y" false-value="N" type="checkbox" id="friday" class="form-check-input" />Viernes</label>
+                        <input v-model="data_salon.t_schedule.friday" true-value="Y" false-value="N"
+                           type="checkbox" id="friday" class="form-check-input" />Viernes</label>
                   </div>
                   <div class="form-group form-check">
                      <label for="saturday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.saturday" true-value="Y" false-value="N" type="checkbox" id="saturday" class="form-check-input" />Sabado</label>
+                        <input v-model="data_salon.t_schedule.saturday" true-value="Y" false-value="N"
+                           type="checkbox" id="saturday" class="form-check-input" />Sabado</label>
                   </div>
                   <div class="form-group form-check">
                      <label for="sunday" class="form-check-label">
-                        <input v-model="data_salon.t_schedule.sunday" true-value="Y" false-value="N" type="checkbox" id="sunday" class="form-check-input" />Domingo</label>
+                        <input v-model="data_salon.t_schedule.sunday" true-value="Y" false-value="N"
+                           type="checkbox" id="sunday" class="form-check-input" />Domingo</label>
                   </div>
                </article>
             </div>
@@ -417,25 +439,29 @@ if (!isset($_SESSION['data_admin'])) {
                phone_user: '',
                password_user: ''
             },
-            is_disable_btn_modal: true,
             is_modal_create: true,
-            index_modal_customer: 0
+            index_modal_customer: 0,
+            state_inputs_modal: {
+               name_user: false,
+               user_user: false,
+               pa_lastname_user: false,
+               mo_lastname_user: false,
+               email_user: false,
+               phone_user: false,
+               password_user: false
+            },
+            user_already_exists: {
+               state: false,
+               value: ''
+            },
+            is_active_success_email: false
          },
          methods: {
             modify_customer: function(index_customer) {
-               this.is_disable_btn_modal = true;
-               this.is_modal_create = false;
                this.index_modal_customer = index_customer;
+               this.is_modal_create = false;
+               this.restart_modal();
                $('#box-modify-customer').modal({backdrop: 'static', keyboard: false});
-            },
-            active_btn_modal: function() {
-               for (const key in this.modal_customer) {
-                  if(!this.modal_customer[key]) {
-                     console.log(key, ' esta vacío');
-                     return false;
-                  }
-               }
-               this.is_disable_btn_modal = false;
             },
             create_or_update_customer: function() {
                if(this.is_disable_btn_modal) return;
@@ -484,8 +510,8 @@ if (!isset($_SESSION['data_admin'])) {
                );
             },
             fill_customer: function() {
-               this.is_disable_btn_modal = true;
                this.is_modal_create = true;
+               this.restart_modal();
                $('#box-modify-customer').modal({backdrop: 'static', keyboard: false});
             },
             create_customer: function() {
@@ -502,9 +528,11 @@ if (!isset($_SESSION['data_admin'])) {
                            'alert-success');
                            return;
                         } else if(parse_data.type == 'user_already_exists') {
-                           $('#box-modify-customer div.modal-body > div:first-child').after(
-                           '<p class="text-danger">Este usuario ya existe, especifique otro usuario</p>');
-                           return
+                           vm.user_already_exists.state = true;
+                           vm.user_already_exists.value = vm.modal_customer.user_user;
+                           vm.state_inputs_modal.user_user = false;
+                           create_error_user_modal();
+                           return;
                         }
                      }
                      $('#box-modify-customer div.modal-body > div:first-child').after(
@@ -541,25 +569,101 @@ if (!isset($_SESSION['data_admin'])) {
                }
                );
             },
-            is_valid_password() {
-               if(/^\w+(\.|-|\w)*@\w+(\.|-|\w)*$/.test(this.modal_customer.email_user)) {
-                  
+            is_valid_user: function() {
+               if(this.modal_customer.user_user) {
+                  if(this.is_modal_create) {
+                     if(this.user_already_exists.state) {
+                        if(this.user_already_exists.value == this.modal_customer.user_user) {
+                           this.state_inputs_modal.user_user = false;
+                           create_error_user_modal();
+                           return;
+                        }
+                        $('#bxm-error-user').remove();
+                     }
+                     this.state_inputs_modal.user_user = true;
+                     return;
+                  } else if(this.data_customers[this.index_modal_customer].user_user != 
+                     this.modal_customer.user_user) {
+                        this.is_disable_btn_modal = false;
+                        return;
+                  }
                }
+               this.state_inputs_modal.user_user = false;
+            },
+            is_valid_email: function() {
+               if(/^\w+(\.|-|\w)*@\w+(\.|-|\w)*$/.test(this.modal_customer.email_user)) {
+                  if(this.is_modal_create) {
+                     // Para modal create: pintar de verde y activar input emial
+                     $('#bxm-email').removeClass('error-input').addClass('success-input');
+                     this.is_active_success_email = true;
+                     this.state_inputs_modal.email_user = true;
+                     return;
+                  } else if(this.data_customers[this.index_modal_customer].email_user != 
+                     this.modal_customer.email_user) {
+                        // Para modal update: pintar de verde el email, se modifico y es correcto el cambio.
+                        // activar botón de actualización.
+                        $('#bxm-email').removeClass('error-input').addClass('success-input');
+                        this.is_disable_btn_modal = false;
+                        return;
+                  }
+                  // Para modal update: no hay cambios despintar el input y
+                  // colocar el input en estado incorrecto(solo para desactivar el botón).
+                  $('#bxm-email').removeClass('success-input').removeClass('error-input');
+                  this.state_inputs_modal.email_user = false;
+                  return;
+               }
+               /*Para modal create: Si, y solo sí, el input ha sido correcto una vez y esta vez es incorrecto,
+               colocar input en estado incorrecto y pintar de color rojo. */
+               if(this.is_modal_create) {
+                  if(this.is_active_success_email) {
+                     this.state_inputs_modal.email_user = false;
+                     $('#bxm-email').removeClass('success-input').addClass('error-input');
+                     this.is_active_success_email = false;
+                  }
+                  return;
+               }
+               /**
+               Para modal update: Pintar de rojo si la contraseña es incorrecta y se haya modificado */
+               if(this.data_customers[this.index_modal_customer].email_user != 
+                  this.modal_customer.email_user) {
+                  this.state_inputs_modal.email_user = false;
+                  $('#bxm-email').removeClass('success-input').addClass('error-input');
+               }
+            },
+            onch_is_valid_email: function() {
+               if(!/^\w+(\.|-|\w)*@\w+(\.|-|\w)*$/.test(this.modal_customer.email_user)) {
+                  $('#bxm-email').addClass('error-input');
+               }
+            },
+            is_valid_input: function(key) {
+               if(this.modal_customer[key]) {
+                  if(this.is_modal_create) {
+                     this.state_inputs_modal[key] = true;
+                     return;
+                  } else if(this.data_customers[this.index_modal_customer][key] != 
+                     this.modal_customer[key]) {
+                        this.is_disable_btn_modal = false;
+                        return;
+                  }
+               }
+               this.state_inputs_modal[key] = false;
+            },
+            restart_modal: function() {
+               if(this.is_modal_create) {
+                  this.modal_customer = {id_user: 1, user_user: '', name_user: '',
+                     pa_lastname_user: '', mo_lastname_user: '', email_user: '', phone_user: '',
+                     password_user: ''};
+               } else {
+                  this.modal_customer = JSON.parse(JSON.stringify(
+                  this.data_customers[this.index_modal_customer]));
+               }
+               this.is_disable_btn_modal = true;
+               this.is_active_success_email = false;
             }
          },
          computed: {
             modal_data: function() {
                if(this.is_modal_create) {
-                  this.modal_customer = {
-                     id_user: 1,
-                     user_user: '',
-                     name_user: '',
-                     pa_lastname_user: '',
-                     mo_lastname_user: '',
-                     email_user: '',
-                     phone_user: '',
-                     password_user: ''
-                  };
                   return {
                      title: "Agregue los datos para el ",
                      strong: 'nuevo usuario',
@@ -567,13 +671,24 @@ if (!isset($_SESSION['data_admin'])) {
                      style_user: {display: 'flex'}
                   }
                }
-               this.modal_customer = JSON.parse(JSON.stringify(
-                  this.data_customers[this.index_modal_customer]));
                return {
                   title: "Modificar información de ",
                   strong: this.modal_customer.user_user,
                   text_btn: "Actualizar",
                   style_user: {display: 'none'}
+               }
+            },
+            is_disable_btn_modal: {
+               get: function(){
+                  for (const key in this.state_inputs_modal) {
+                     if(!this.state_inputs_modal[key]) return true;
+                  }
+                  return false;
+               },
+               set: function(new_state) {
+                  for (const key in this.state_inputs_modal) {
+                     this.state_inputs_modal[key] = !new_state;
+                  }
                }
             }
          }
@@ -611,6 +726,12 @@ if (!isset($_SESSION['data_admin'])) {
                );
             }
          });
+         $('#box-modify-customer').on('hidden.bs.modal', function(){
+            if(document.getElementById('bxm-error-user')) {
+               $('#bxm-error-user').remove();
+            }
+            $('#bxm-email').removeClass('error-input').removeClass('success-input');
+         });
       });
 
       function load_page(id_page) {
@@ -646,6 +767,11 @@ if (!isset($_SESSION['data_admin'])) {
             ' alert-dismissible fade show text-center" role="alert">'+ message +
             '<button type="button" class="close" data-dismiss="alert" aria-label="close">'+
             '<span aria-hidden="true">&times;</span></button>');
+      }
+
+      function create_error_user_modal() {
+         $('#box-modify-customer div.modal-body > div:first-child').after(
+         '<p id="bxm-error-user" class="text-danger">Este usuario ya existe, especifique otro usuario</p>');
       }
 
       function show_or_hide_password(id_button, id_input) {
