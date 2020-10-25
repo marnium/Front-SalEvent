@@ -86,6 +86,8 @@
             if($this->connectDB->query($this->querys) === FALSE) {
                 $query_status['status'] = false;
                 $query_status['type'] = 'error';
+            } else {
+                $query_status['id_user'] = $this->connectDB->insert_id;
             }
             $this->connectDB->close();
             return $query_status;
@@ -299,7 +301,7 @@
             $this->connectDB->close();
             return json_encode($value_return);
         }
-        public function update_user_type1($data) {
+        public function update_user($data) {
             $value_return = '{"status": false}';
             $this->querys = "UPDATE user SET name_user='".$data['name_user']."',pa_lastname_user='".
                 $data['pa_lastname_user']."',mo_lastname_user='".$data['mo_lastname_user']."',email_user='".
@@ -313,7 +315,7 @@
         }
         public function remove_user_type1($id_user) {
             $value_return = '{"status": false}';
-            if($this->connectDB->query("DELETE FROM user WHERE id_user=$id_user") === TRUE) {
+            if($this->connectDB->query("DELETE FROM user WHERE type_user=1 AND id_user=$id_user") === TRUE) {
                 $value_return = '{"status": true}';
             }
             return $value_return;
