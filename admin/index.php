@@ -158,8 +158,8 @@ if (!isset($_SESSION['data_admin'])) {
                         <td>{{ customer.name_user }}</td>
                         <td>{{ customer.pa_lastname_user }}</td>
                         <td>{{ customer.mo_lastname_user }}</td>
-                        <td>{{ customer.phone_user }}</td>
                         <td>{{ customer.email_user }}</td>
+                        <td>{{ customer.phone_user }}</td>
                         <td>
                            <button v-on:click="modify_customer(index)" type="button" class="btn btn-primary">Modificar</button>
                         </td>
@@ -565,7 +565,7 @@ if (!isset($_SESSION['data_admin'])) {
                            vm.modal_customer.id_user = parse_data.id_user;
                            vm.data_customers.unshift(JSON.parse(JSON.stringify(vm.modal_customer)));
                            $('#box-modify-customer').modal("hide");
-                           create_notification('<strong>Exitoso</strong>Se registro el usuario '
+                           create_notification('<strong>Exitoso</strong>: Se registro el usuario '
                               + vm.modal_customer.user_user, 'alert-success', 'customers');
                            return;
                         } else if (parse_data.type == 'user_already_exists') {
@@ -615,81 +615,59 @@ if (!isset($_SESSION['data_admin'])) {
             },
             is_valid_user: function() {
                if(this.modal_customer.user_user) {
-                  if(this.is_modal_create) {
-                     if(this.user_already_exists.state) {
-                        if(this.user_already_exists.value == this.modal_customer.user_user) {
-                           this.state_inputs_modal.user_user = false;
-                           create_error_user_modal();
-                           return;
-                        }
-                        $('#bxm-error-user').remove();
-                     }
-                     this.state_inputs_modal.user_user = true;
-                     return;
-                  } else if(this.is_modal_update_admin) {
-                     if(this.data_admin.user_user !=  this.modal_customer.user_user) {
-                        this.is_disable_btn_modal = false;
+                  if(this.user_already_exists.state) {
+                     if(this.user_already_exists.value == this.modal_customer.user_user) {
+                        this.state_inputs_modal.user_user = false;
+                        create_error_user_modal();
                         return;
                      }
-                  } else if(this.data_customers[this.index_modal_customer].user_user != 
-                     this.modal_customer.user_user) {
-                        this.is_disable_btn_modal = false;
-                        return;
+                     $('#bxm-error-user').remove();
                   }
+                  this.state_inputs_modal.user_user = true;
+               } else {
+                  this.state_inputs_modal.user_user = false;
                }
-               this.state_inputs_modal.user_user = false;
             },
             is_valid_email: function() {
                if (/^\w+(\.|-|\w)*@\w+(\.|-|\w)*$/.test(this.modal_customer.email_user)) {
                   if (this.is_modal_create) {
-                     // Para modal create: pintar de verde y activar input emial
                      $('#bxm-email').removeClass('error-input').addClass('success-input');
                      this.is_active_success_email = true;
                      this.state_inputs_modal.email_user = true;
-                     return;
                   } else if(this.is_modal_update_admin) {
                      if (this.data_admin.email_user != this.modal_customer.email_user) {
-                        // Para modal update: pintar de verde el email, se modifico y es correcto el cambio.
-                        // activar botón de actualización.
                         $('#bxm-email').removeClass('error-input').addClass('success-input');
-                        this.is_disable_btn_modal = false;
-                        return;
+                     } else {
+                        $('#bxm-email').removeClass('success-input').removeClass('error-input');
                      }
-                  } else if (this.data_customers[this.index_modal_customer].email_user !=
-                     this.modal_customer.email_user) {
-                     // Para modal update: pintar de verde el email, se modifico y es correcto el cambio.
-                     // activar botón de actualización.
-                     $('#bxm-email').removeClass('error-input').addClass('success-input');
-                     this.is_disable_btn_modal = false;
-                     return;
+                     if (this.is_valid_for_update(this.modal_customer, this.data_admin)) {
+                        this.is_disable_btn_modal = false;
+                     } else {
+                        this.is_disable_btn_modal = true;
+                     }
+                  } else {
+                     if (this.data_customers[this.index_modal_customer].email_user !=
+                        this.modal_customer.email_user) {
+                           $('#bxm-email').removeClass('success-input').addClass('error-input');
+                     } else {
+                        $('#bxm-email').removeClass('success-input').removeClass('error-input');
+                     }
+                     if (this.is_valid_for_update(this.modal_customer,
+                        this.data_customers[this.index_modal_customer])) {
+                           this.is_disable_btn_modal = false;
+                     } else {
+                        this.is_disable_btn_modal = true;
+                     }
                   }
-                  // Para modal update: no hay cambios despintar el input y
-                  // colocar el input en estado incorrecto(solo para desactivar el botón).
-                  $('#bxm-email').removeClass('success-input').removeClass('error-input');
+               } else {
                   this.state_inputs_modal.email_user = false;
-                  return;
-               }
-               /*Para modal create: Si, y solo sí, el input ha sido correcto una vez y esta vez es incorrecto,
-               colocar input en estado incorrecto y pintar de color rojo. */
-               if (this.is_modal_create) {
-                  if (this.is_active_success_email) {
-                     this.state_inputs_modal.email_user = false;
+                  if (this.is_modal_create) {
+                     if (this.is_active_success_email) {
                         $('#bxm-email').removeClass('success-input').addClass('error-input');
                         this.is_active_success_email = false;
-                  }
-                  return;
-               } else if(this.is_modal_update_admin) {
-                  if (this.data_admin.email_user != this.modal_customer.email_user) {
-                     this.state_inputs_modal.email_user = false;
-                     $('#bxm-email').removeClass('success-input').addClass('error-input');
+                     }
                      return;
                   }
-               }
-               /**
-               Para modal update: Pintar de rojo si la contraseña es incorrecta y se haya modificado */
-               if (this.data_customers[this.index_modal_customer].email_user !=
-                  this.modal_customer.email_user) {
-                  this.state_inputs_modal.email_user = false;
                   $('#bxm-email').removeClass('success-input').addClass('error-input');
                }
             },
@@ -703,16 +681,17 @@ if (!isset($_SESSION['data_admin'])) {
                   if(this.is_modal_create) {
                      this.state_inputs_modal[key] = true;
                      return;
-                  } else if(this.is_modal_create) {
-                     if(this.data_admin != this.modal_customer[key]) {
-                           this.is_disable_btn_modal = false;
-                           return;
+                  } else if(this.is_modal_update_admin) {
+                     if(this.is_valid_for_update(this.modal_customer, this.data_admin)) {
+                        this.is_disable_btn_modal = false;
+                        return;
                      }
-                  } else if(this.data_customers[this.index_modal_customer][key] != 
-                     this.modal_customer[key]) {
+                  } else if(this.is_valid_for_update(this.modal_customer,
+                     this.data_customers[this.index_modal_customer])) {
                         this.is_disable_btn_modal = false;
                         return;
                   }
+                  this.is_disable_btn_modal = true;
                }
                this.state_inputs_modal[key] = false;
             },
@@ -736,6 +715,24 @@ if (!isset($_SESSION['data_admin'])) {
                }
                this.is_disable_btn_modal = true;
                this.is_active_success_email = false;
+            },
+            is_valid_for_update: function(data_copy, data_origin) {
+               let everyone_has_data = true;
+               let there_is_modification = false;
+               for (const key in data_copy) {
+                  if(!data_copy[key]) {
+                     everyone_has_data = false;
+                     break;
+                  }
+               }
+               if(everyone_has_data) {
+                  for (const key in data_copy) {
+                     if(data_copy[key] != data_origin[key]) {
+                        there_is_modification = true;
+                     }
+                  }
+               }
+               return everyone_has_data && there_is_modification;
             }
          },
          computed: {
