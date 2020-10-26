@@ -40,23 +40,9 @@
     <title>SallEvent</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-      <div class="container logo">
-        <a class="navbar-brand" href="/my/">
-          <img
-            src="../../img/home/logo.png"
-            class="fas fa-link"
-            height="50px"
-          />
-          SallEvent
-        </a>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/home/">Cerrar Sesion</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <?php
+    include('../../partials/my/navigation-options.php');
+  ?>
 
     <main
       class="container-fluid d-flex flex-wrap justify-content-around m-auto"
