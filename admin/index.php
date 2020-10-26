@@ -17,15 +17,6 @@ if (!isset($_SESSION['data_admin'])) {
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
    <title>Admin</title>
-   <?php
-   // Data customers, salon and info-admin
-   include_once('../databaseOperations/operations.php');
-   $operationDB = new OperationBD();
-   echo "<script>var data_salon = JSON.parse('" .
-      $operationDB->select_room_for_id(1) . "'); var data_customers = JSON.parse('" .
-      $operationDB->select_user_type1() . "'); var data_admin = JSON.parse('" .
-      json_encode($_SESSION['data_admin']) . "');</script>";
-   ?>
    <style>
       .option-selected {
          background-color: #eeeeee !important;
@@ -419,6 +410,15 @@ if (!isset($_SESSION['data_admin'])) {
          </article>
       </section>
    </main>
+   <?php
+      // Data customers, salon and info-admin
+      include_once('../databaseOperations/operations.php');
+      $operationDB = new OperationBD();
+      echo "<script>var data_salon = JSON.parse('" .
+         $operationDB->select_room_for_id(1) . "'); var data_customers = JSON.parse('" .
+         $operationDB->select_user_type1() . "'); var data_admin = JSON.parse('" .
+         json_encode($_SESSION['data_admin']) . "');</script>";
+   ?>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
    <script>

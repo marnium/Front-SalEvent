@@ -1,3 +1,9 @@
+<?php
+  if(isset($_POST['closeSession'])){
+    session_destroy();
+    header("Location: /home/");
+  }
+?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container logo">
       <button class="navbar-toggler mr-3" type="button" data-toggle="collapse" data-target="#nav-left">
@@ -17,10 +23,3 @@
       </ul>
   </div>
 </nav>
-<?php
-  if(isset($_POST['closeSession'])){
-    session_start();
-    session_destroy();
-    header("Location: /home/");
-  }
-?>
