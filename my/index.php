@@ -6,6 +6,9 @@ if (!isset($_SESSION['data_user'])) {
 if (isset($_SESSION['data_admin'])) {
   header("Location: /admin/");
 }
+if (isset($_SESSION['newReservation'])) {
+  header("Location: /my/book/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

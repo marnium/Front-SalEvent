@@ -1,99 +1,210 @@
 <?php
-  session_start();
-  if(!isset($_SESSION['data_user'])){
-    header("Location: /home/");
+session_start();
+if (!isset($_SESSION['data_user'])) {
+  header("Location: /home/");
+}
+if (isset($_SESSION['data_admin'])) {
+  header("Location: /admin/");
+}
+if (!isset($_SESSION['newReservation'])) {
+  header("Location: /my/");
+}
+if (isset($_POST['returnToCalendar'])) {
+  unset($_SESSION['newReservation']);
+  header("Location: /my/calendar/");
+}
+
+$messague = "";
+
+if (isset($_POST['reserveDay'])) {
+  require_once('../../databaseOperations/operations.php');
+  $operations = new OperationBD();
+
+  $validateReservation = $operations->validateReservation($_SESSION['newReservation'][0] . "-" .
+    $_SESSION['newReservation'][1] . "-" . $_SESSION['newReservation'][2]);
+
+  if ($validateReservation->num_rows) {
+    $messague = 'Mientras usted rellenaba los datos alguien mas ya reservo el dia';
+  } else {
+    if (!empty($_POST["values"]) && is_array($_POST["values"])) {
+
+      $typeEvent = ($_POST['values'][0] == "other") ? ($_POST['values'][1]) : ($_POST['values'][0]);
+
+      $startHour = ($_POST['values'][0] == "other") ?
+        (($_POST['values'][3] == "am") ? $_POST['values'][2] : intval($_POST['values'][2]) + 12) : (($_POST['values'][2] == "am") ? $_POST['values'][1] : intval($_POST['values'][1]) + 12);
+      switch ($startHour) {
+        case 12:
+        case 24:
+          $startHour = $startHour - 12;
+          break;
+      }
+
+      $finalHour = ($_POST['values'][0] == "other") ?
+        (($_POST['values'][5] == "am") ? $_POST['values'][4] : intval($_POST['values'][4]) + 12) : (($_POST['values'][4] == "am") ? $_POST['values'][3] : intval($_POST['values'][3]) + 12);
+      switch ($finalHour) {
+        case 12:
+        case 24:
+          $finalHour = $finalHour - 12;
+          break;
+      }
+
+      $priceByHour = $operations->pricebyHour();
+
+      if ($priceByHour->num_rows) {
+        $priceByHour = ($finalHour - $startHour) *
+          floatval(($priceByHour->fetch_assoc())['price_hour']);
+
+        $services = $operations->getServicesWithoutClosingBD();
+        $totalServices = 0;
+        if ($services->num_rows) {
+
+          while ($row = $services->fetch_assoc()) {
+            if (intval($_POST[strval($row['id_service'])]) != 0) {
+              $totalServices += $_POST[$row['id_service']] * floatval($row['price']);
+            }
+          }
+
+          $resultsCreateFolio = $operations->createFolioServices($totalServices);
+
+          $services = $operations->getServicesWithoutClosingBD();
+          while ($row = $services->fetch_assoc()) {
+            if (intval($_POST[strval($row['id_service'])]) != 0) {
+              $operations->addSelectedServices(
+                $row['id_service'],
+                $resultsCreateFolio,
+                $_POST[strval($row['id_service'])],
+                (floatval($row['price'])) * intval($_POST[$row['id_service']])
+              );
+            }
+          }
+
+          $dateStart = $_SESSION['newReservation'][0] . "-" . $_SESSION['newReservation'][1] . "-" .
+            $_SESSION['newReservation'][2] . " " . $startHour . ":00:00";
+
+          $dateEnd = $_SESSION['newReservation'][0] . "-" . $_SESSION['newReservation'][1] . "-" .
+            $_SESSION['newReservation'][2] . " " . $finalHour . ":00:00";
+
+          $operations->addReservation(
+            $typeEvent,
+            $priceByHour + $totalServices,
+            $dateStart,
+            $dateEnd,
+            intval($_SESSION['data_user'][0]),
+            $resultsCreateFolio
+          );
+          $operations->closeConnection();
+        }
+      }
+    }
   }
-  if(isset($_SESSION['data_admin'])){
-    header("Location: /admin/");
-  }
+  unset($_SESSION['newReservation']);
+} else {
+  header("Location: /my/book/");
+}
+if(isset($_POST['modify'])){
+  
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-      crossorigin="anonymous"
-    />
-    <title>SallEvent</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <title>SallEvent</title>
+</head>
+
+<body>
   <?php
-    include('../../partials/my/navigation-options.php');
+  include('../../partials/my/navigation-options.php');
   ?>
-    <main class="container-fluid mt-3">
-      <div
-        class="container-fluid d-flex flex-wrap justify-content-around border border-dark"
-      >
-        <section class="col-md-4">
-          <div class="col-md-12">
-            <h2 class="text-center">Evento: boda</h2>
-          </div>
-          <div class="d-flex flex-column flex-wrap mt-4 pt-4">
-            <div class="d-flex flex-wrap justify-content-around mb-3">
-              <p>Horas contratadas</p>
-              <p class="text-danger">8</p>
-            </div>
-            <div class="d-flex flex-wrap justify-content-around mb-3">
-              <p>Hora inicio:</p>
-              <p class="text-danger">10:00 AM</p>
-            </div>
-            <div class="d-flex flex-wrap justify-content-around mb-3">
-              <p>Hora final:</p>
-              <p class="text-danger">18:00 PM</p>
-            </div>
-          </div>
-        </section>
-        <section class="col-md-4">
-          <div class="col-md-12">
-            <h2 class="text-center">Datos del cliente</h2>
-          </div>
-          <div class="d-flex flex-column flex-wrap mt-4 pt-4">
-            <div class="d-flex flex-wrap justify-content-around mb-3">
-              <p>Nombre completo:</p>
-              <p>Mikel</p>
-            </div>
-            <div class="d-flex flex-wrap justify-content-around mb-3">
-              <p>Email:</p>
-              <p>example@example.com</p>
-            </div>
-            <div class="d-flex flex-wrap justify-content-around mb-3">
-              <p>Telefono:</p>
-              <p>123 123 1212</p>
-            </div>
-          </div>
-        </section>
-        <section class="col-md-12">
-          <div class="d-flex flex-column flex-wrap mt-4 pt-4">
-            <div class="d-flex flex-wrap mb-3">
-              <p class="mr-4">Total a pagar:</p>
-              <p class="text-danger">10, 000</p>
-            </div>
-            <div class="d-flex flex-wrap mb-3">
-              <p class="mr-4">Estatus:</p>
-              <p class="text-danger">En espera</p>
-            </div>
-          </div>
-        </section>
+  <main class="container-fluid mt-3">
+    <div class="container-fluid d-flex flex-wrap justify-content-around border border-dark">
+      <div class="col-md-12">
+        <?php
+        if ($messague != "") {
+          echo '<p id="msg-error-successful" class="mb-0 mt-2 d-flex flex-wrap justify-content-center
+                alert alert-warning">
+                Vaya! ' . $messague . '
+                </p>';
+        }
+        ?>
       </div>
-      <div class="container-fluid d-flex flex-wrap justify-content-around mt-3">
-        <a href="/my/book" class="text-white text-decoration-none mb-2">
-          <button class="btn btn-primary bg-dark border-0">Regresar</button>
-        </a>
-        <a href="/my/myreservation/" class="text-white text-decoration-none mb-2">
-          <button class="btn btn-primary bg-dark border-0">
-            Ver estado del evento
-          </button>
-        </a>
-        <a href="/my/modify" class="text-white text-decoration-none mb-2">
-          <button class="btn btn-primary bg-dark border-0">
-            Modificar
-          </button>
-        </a>
-      </div>
-    </main>
-  </body>
+      <section class="col-md-4">
+        <div class="col-md-12">
+          <h2 class="text-center">Evento: boda</h2>
+        </div>
+        <div class="d-flex flex-column flex-wrap mt-4 pt-4">
+          <div class="d-flex flex-wrap justify-content-around mb-3">
+            <p>Horas contratadas</p>
+            <p class="text-danger">
+              <?php 
+                echo $finalHour-$startHour;
+              ?></p>
+          </div>
+          <div class="d-flex flex-wrap justify-content-around mb-3">
+            <p>Hora inicio:</p>
+            <p class="text-danger">
+              <?php
+                echo ($startHour<12) ? $startHour." AM" : $startHour." PM";
+              ?>
+            </p>
+          </div>
+          <div class="d-flex flex-wrap justify-content-around mb-3">
+            <p>Hora final:</p>
+            <p class="text-danger">
+              <?php
+                echo ($finalHour<12) ? $finalHour." AM" : $finalHour." PM";
+              ?></p>
+          </div>
+        </div>
+      </section>
+      <section class="col-md-4">
+        <div class="col-md-12">
+          <h2 class="text-center">Datos del cliente</h2>
+        </div>
+        <div class="d-flex flex-column flex-wrap mt-4 pt-4">
+          <div class="d-flex flex-wrap justify-content-around mb-3">
+            <p>Nombre completo:</p>
+            <p> <?php echo $_SESSION["data_user"][2]?> </p>
+          </div>
+          <div class="d-flex flex-wrap justify-content-around mb-3">
+            <p>Email:</p>
+            <p><?php echo $_SESSION["data_user"][5];  ?></p>
+          </div>
+          <div class="d-flex flex-wrap justify-content-around mb-3">
+            <p>Telefono:</p>
+            <p><?php echo $_SESSION["data_user"][6];  ?></p>
+          </div>
+        </div>
+      </section>
+      <section class="col-md-12">
+        <div class="d-flex flex-column flex-wrap mt-4 pt-4">
+          <div class="d-flex flex-wrap mb-3">
+            <p class="mr-4">Total a pagar:</p>
+            <p class="text-danger"><?php echo $priceByHour + $totalServices; ?></p>
+          </div>
+          <div class="d-flex flex-wrap mb-3">
+            <p class="mr-4">Estatus:</p>
+            <p class="text-danger">En espera</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="container-fluid d-flex flex-wrap justify-content-around mt-3">
+      <form method="POST">
+        <button type="submit" class="btn btn-primary bg-dark mr-3 pl-2 pr-2 border-0" name="returnToCalendar">
+          Regresar
+        </button>
+      </form>
+      <form method="POST">
+        <button type="submit" class="btn btn-primary bg-dark border-0" name="modify">
+          Modificar
+        </button>
+      </form>
+    </div>
+  </main>
+</body>
+
 </html>

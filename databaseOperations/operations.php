@@ -68,6 +68,69 @@
             $this->connectDB->close();
             return $result_return;
         }
+        public function pricebyHour(){
+            $this->result = "";
+
+            $this->querys = "SELECT price_hour FROM room WHERE id_saloon='1' ;";
+            $this->result = $this->connectDB->query($this->querys);
+
+            return $this->result;
+        }
+        public function getPriceServices($id){
+            $this->result = "";
+
+            $this->querys = "SELECT price FROM services WHERE id_service='$id';";
+            $this->result = $this->connectDB->query($this->querys);
+
+            return $this->result;
+        }
+        public function closeConnection(){
+            $this->connectDB->close();
+        }
+        public function createFolioServices($total){
+            $this->result = "";
+
+            $this->querys = "INSERT INTO folioServices VALUES(null,$total);";
+            if($this->connectDB->query($this->querys) === TRUE){
+                $this->result = $this->connectDB->insert_id;
+            }
+
+            return $this->result; 
+        }
+        public function validateReservation($dateToReserve){
+            $this->result = "";
+
+            $this->querys= "select * from reservations where".
+                " date_reservation_start>='$dateToReserve 00:00:00' and ".
+                "date_reservation_start<='$dateToReserve 23:59:59';";
+            $this->result = $this->connectDB->query($this->querys);
+            
+            return $this->result;
+        }
+        public function getServicesWithoutClosingBD(){
+            $result_return = "";
+
+            $this->querys = "SELECT * FROM services ;";
+            $this->result = $this->connectDB->query($this->querys);
+            $result_return = $this->result;
+
+            return $result_return;
+        }
+        public function addSelectedServices($id_service,$id_folio_services,$amount_service,
+            $total_service){
+
+            $this->querys = "INSERT INTO selectedservices VALUES($id_service, ".
+                " $id_folio_services, $amount_service, $total_service);";
+            $this->connectDB->query($this->querys);
+
+        }
+        public function addReservation($typeEvent,$priceTotal,$dateReservationStart,
+            $dateReservationEnd,$idUser,$idFolioServices){
+            $this->querys = "INSERT INTO reservations VALUES(null,'$typeEvent', ".
+                "0, $priceTotal, '$dateReservationStart', '$dateReservationEnd', ".
+                "$idUser,$idFolioServices,1);";
+            $this->connectDB->query($this->querys);  
+        }
         /**
          * This method adds a record for a user in the user table.
          */
