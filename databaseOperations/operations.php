@@ -293,8 +293,9 @@
             $room['name_saloon'] = $this->connectDB->real_escape_string($room['name_saloon']);
             $room['capacity_saloon'] = $this->connectDB->real_escape_string($room['capacity_saloon']);
             $room['description_saloon'] = $this->connectDB->real_escape_string($room['description_saloon']);
+            $room['price_hour'] = $this->connectDB->real_escape_string($room['price_hour']);
             $this->querys = "INSERT INTO room VALUES(null,'".$room['name_saloon']."',".$room['capacity_saloon'].",'".
-                $room['description_saloon']."',$id_info_room)";
+                $room['description_saloon']."',".$room['price_hour'].",$id_info_room)";
             if($this->connectDB->query($this->querys) === FALSE) {
                 $value_return .= '"room"}';
                 return $value_return;
@@ -341,10 +342,12 @@
             // Update room
             $room['name_saloon'] = $this->connectDB->real_escape_string($room['name_saloon']);
             $room['capacity_saloon'] = $this->connectDB->real_escape_string($room['capacity_saloon']);
+            $room['price_hour'] = $this->connectDB->real_escape_string($room['price_hour']);
             $room['description_saloon'] = $this->connectDB->real_escape_string($room['description_saloon']);
             $room['id_saloon'] = $this->connectDB->real_escape_string($room['id_saloon']);
             $this->querys = "UPDATE room SET name_saloon='".$room['name_saloon']."',capacity_saloon=".
-                $room['capacity_saloon'].",description_saloon='".$room['description_saloon'].
+                $room['capacity_saloon'].",price_hour=".$room['price_hour'].
+                ",description_saloon='".$room['description_saloon'].
                 "' WHERE id_saloon=".$room['id_saloon'];
             if($this->connectDB->query($this->querys) === FALSE) {
                 $value_return .= '"room"}';
@@ -362,7 +365,7 @@
             $data_salon['t_schedule'] = array('id_schedule'=>0,'sunday'=>'N','monday'=>'N',
                 'tuesday'=>'N', 'wednesday'=>'N', 'thursday'=>'N', 'friday'=>'N', 'saturday'=>'N');
             $data_salon['t_room'] = array('id_saloon'=>0, 'name_saloon'=>'','capacity_saloon'=>'',
-                'description_saloon'=>'', 'id_info'=>0);
+                'price_hour'=>0,'description_saloon'=>'', 'id_info'=>0);
             $id_direction = 0;
             $id_schedule = 0;
             // Select room
@@ -464,7 +467,7 @@
             $value_return = '{"status": false, "type": "faillure"}';
             $id_user = $this->connectDB->real_escape_string($id_user);
             //If exists reservations
-            $this->querys = "SELECT id_reservations FROM reservations WHERE id_user=$id_user AND NOW()<date_reservation_start";
+            $this->querys = "SELECT id_reservations FROM reservations WHERE id_user=$id_user AND NOW()<date_reservation_end";
             if($this->connectDB->query($this->querys)->num_rows > 0) {
                 $value_return = '{"status": false, "type": "exists_reservations"';
             }
@@ -478,8 +481,8 @@
          */
         public function select_reservations_conf() {
             $value_return = [];
-            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
-                "email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,user_user,pa_lastname_user,".
+                "mo_lastname_user,phone_user,email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
                 " AND room.id_saloon = reservations.id_room) WHERE status_reservation=1";
             $this->result = $this->connectDB->query($this->querys);
             if($this->result->num_rows > 0) {
@@ -495,8 +498,8 @@
          */
         public function select_reservations_unconf() {
             $value_return = [];
-            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
-                "email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,pa_lastname_user,user_user".
+                "mo_lastname_user,phone_user,email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
                 " AND room.id_saloon = reservations.id_room) WHERE status_reservation=0";
             $this->result = $this->connectDB->query($this->querys);
             if($this->result->num_rows > 0) {
