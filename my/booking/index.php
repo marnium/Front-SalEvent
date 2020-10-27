@@ -133,7 +133,7 @@ if(isset($_POST['modify'])){
       </div>
       <section class="col-md-4">
         <div class="col-md-12">
-          <h2 class="text-center">Evento: boda</h2>
+          <h2 class="text-center">Evento: <?php echo $typeEvent; ?></h2>
         </div>
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
           <div class="d-flex flex-wrap justify-content-around mb-3">

@@ -158,6 +158,32 @@
             
             return $this->result;
         }
+        public function getValueService($idService,$folioService){
+            $this->querys = "SELECT amount_service".
+                " FROM selectedservices WHERE id_folio_services=$folioService AND ".
+                "id_service=$idService;";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows){
+                if($row = $this->result->fetch_assoc()){
+                    $this->result = $row['amount_service'];
+                }
+            }else{
+                $this->result = "";
+            }
+            
+            return $this->result;
+        }
+        public function updateFolioServices($folio,$newTotal){
+            $this->querys = "UPDATE folioServices SET total_services=$newTotal ".
+                "WHERE id_folio_services=$folio ;";
+            $this->connectDB->query($this->querys);
+        }
+        public function updateReservations($typeEvent,$priceTotal,$dateStart,$dateEnd,$id){
+            $this->querys = "UPDATE reservations SET type_event='$typeEvent', ".
+                "price_total=$priceTotal, date_reservation_start='$dateStart', ".
+                "date_reservationd_end='$dateEnd' WHERE id_reservation=$id ;";
+            $this->connectDB->query($this->querys);
+        }
         /**
          * This method adds a record for a user in the user table.
          */
