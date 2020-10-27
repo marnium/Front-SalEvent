@@ -135,8 +135,12 @@ if (!isset($_SESSION['data_admin'])) {
                      </div>
                      <div class="col-md-6">
                         <p>
+                           <span class="font-weight-bold">Usuario:</span>
+                           <span>{{reserv.user_user}}</span>
+                        </p>
+                        <p>
                            <span class="font-weight-bold">Nombre del cliente:</span>
-                           <span>{{reserv.name_user}}</span>
+                           <span>{{reserv.name_user}} {{reserv.pa_lastname_user}} {{reserv.mo_lastname_user}}</span>
                         </p>
                         <p>
                            <span class="font-weight-bold">No. Teléfonico:</span>
@@ -170,8 +174,12 @@ if (!isset($_SESSION['data_admin'])) {
                      </div>
                      <div class="col-md-6">
                         <p>
+                           <span class="font-weight-bold">Usuario:</span>
+                           <span>{{reserv.user_user}}</span>
+                        </p>
+                        <p>
                            <span class="font-weight-bold">Nombre del cliente:</span>
-                           <span>{{reserv.name_user}}</span>
+                           <span>{{reserv.name_user}} {{reserv.pa_lastname_user}} {{reserv.mo_lastname_user}}</span>
                         </p>
                         <p>
                            <span class="font-weight-bold">No. Teléfonico:</span>
@@ -240,6 +248,10 @@ if (!isset($_SESSION['data_admin'])) {
                      <div class="w-100 d-flex flex-wrap form-group">
                         <label for="capacity" class="pl-0 col-sm-4">Capacidad:</label>
                         <input v-model="data_salon.t_room.capacity_saloon" type="number" min="0" id="capacity" class="form-control col-sm-8" />
+                     </div>
+                     <div class="w-100 d-flex flex-wrap form-group">
+                        <label for="price_hour" class="pl-0 col-sm-4">Precio por hora:</label>
+                        <input v-model="data_salon.t_room.price_hour" type="number" min="0" id="price_hour" class="form-control col-sm-8" />
                      </div>
                      <div class="w-100 d-flex flex-wrap">
                         <label for="description_salon" class="pl-0 col-sm-4">Descripción del salón:</label>
@@ -438,7 +450,8 @@ if (!isset($_SESSION['data_admin'])) {
       $operationDB->get_total_reservations() . "'); var data_salon = JSON.parse('" .
       $operationDB->select_room_for_id(1) . "'); var data_customers = JSON.parse('" .
       $operationDB->select_user_type1() . "'); var data_admin = JSON.parse('" .
-      json_encode($_SESSION['data_admin']) . "'); var data_services = JSON.parse('" .
+      $operationDB->select_data_admin($_SESSION['data_admin']['id_user']) .
+      "'); var data_services = JSON.parse('" .
       $operationDB->select_services() . "');</script>";
    $operationDB->closeConnection();
    ?>

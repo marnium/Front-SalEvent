@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 if(isset($_POST['select_reservations'])) {
       require_once('../../databaseOperations/operations.php');
       $operations = new OperationBD();

@@ -128,10 +128,14 @@ var vm = new Vue({
                         vm.data_customers[index_customer].user_user, 'alert-success', 'customers');
                      vm.data_customers.splice(index_customer, 1);
                      return;
+                  } else if(data_parse.type = 'exists_reservations') {
+                     create_notification('<strong>Warning</strong>: ' + vm.data_customers[index_customer].user_user
+                     + ' tiene reservaciones sin concluir. No se puede eliminado', 'alert-warning', 'customers');
+                     return;
                   }
                }
                create_notification('<strong>Error</strong>: No se pudo eliminar al usuario ' +
-                  vm.data_customers[index_customer], 'alert-danger', 'customers');
+                  vm.data_customers[index_customer].user_user, 'alert-danger', 'customers');
             }
          );
       },
@@ -337,7 +341,6 @@ var vm = new Vue({
             function(data, status) {
                if(status == 'success') {
                   let data_parse = JSON.parse(data);
-                  console.log(data_parse);
                   if(data_parse.type == 'all') {
                      vm.data_reservations.confirmed = data_parse.confirmed;
                      vm.data_reservations.unconfirmed = data_parse.unconfirmed;
@@ -600,6 +603,7 @@ function create_notification(message, type_notification, section) {
       '<button type="button" class="close" data-dismiss="alert" aria-label="close">' +
       '<span aria-hidden="true">&times;</span></button>');
    setTimeout(function() {
+      console.log('Eliminando notificación en:', alert);
       if(document.querySelector(alert))
          $(alert).alert('close');
    }, 6000);

@@ -7,6 +7,7 @@
         function __construct() {
             require_once('connect.php');
             $this->connectDB = ConectionDB::get_connection();
+            $this->connectDB->set_charset('utf8');
         }
         
         public function consultUser($user, $password){
@@ -188,15 +189,23 @@
         }
         /**
          * This method adds a record for a user in the user table.
+         * -----Validation for sql injection.-----
          */
         public function create_user($name_user, $pa_lastname_user, $mo_lastname_user,
             $email_user, $phone_user, $user_user, $password_user): array {
+            $user_user = $this->connectDB->real_escape_string($user_user);
             if($this->user_exists($user_user)) {
                 $query_status['status'] = false;
                 $query_status['type'] = 'user_already_exists';
                 $this->connectDB->close();
                 return $query_status;
             }
+            $name_user = $this->connectDB->real_escape_string($name_user);
+            $pa_lastname_user = $this->connectDB->real_escape_string($pa_lastname_user);
+            $mo_lastname_user = $this->connectDB->real_escape_string($mo_lastname_user);
+            $email_user = $this->connectDB->real_escape_string($email_user);
+            $phone_user = $this->connectDB->real_escape_string($phone_user);
+            $password_user = $this->connectDB->real_escape_string($password_user);
             $this->querys = "INSERT INTO user VALUES(null,1,'$name_user','$pa_lastname_user','$mo_lastname_user','$email_user',".
                 "'$phone_user','$user_user','$password_user')";
 
@@ -222,8 +231,11 @@
         /**
          * This method returns the date reservations
          * for month indicated by $month in $year
+         * -----Validation for sql injection.------
          */
         public function select_date_reservations_for_month(string $year, string $month): string {
+            $year = $this->connectDB->real_escape_string($year);
+            $month = $this->connectDB->real_escape_string($month);
             $date_reservations = '{"value": false';
             $this->querys = "SELECT DAY(date_reservation_start) as day,status_reservation as status FROM reservations ".
                 "WHERE YEAR(date_reservation_start)=$year AND MONTH(date_reservation_start)=$month";
@@ -241,6 +253,7 @@
         }
         /**
          * This method adds or update room
+         * -----Validation for sql injection.------
          */
         public function create_or_update_room($room, $schedule, $direction): string {
             $value_return = null;
@@ -254,16 +267,25 @@
         /**
          * This method checks if the room indicated by $id_room
          * exists in the table room.
+         * -----Validation for sql injection.------
          */
-        public function room_exists(int $id_rom): bool {
-            if($this->connectDB->query("SELECT id_saloon FROM room WHERE id_saloon='$id_rom'")->num_rows > 0) {
+        public function room_exists(string $id_room): bool {
+            $id_room = $this->connectDB->real_escape_string($id_room);
+            if($this->connectDB->query("SELECT id_saloon FROM room WHERE id_saloon='$id_room'")->num_rows > 0) {
                 return true;
             }
             return false;
         }
+        /**
+         * -----Validation for sql injection.------
+         */
         public function create_room($room, $schedule, $direction): string {
             $value_return = '{action: "create","status": false, "in_table": ';
             // Create direcction
+            $direction['street_direction'] = $this->connectDB->real_escape_string($direction['street_direction']);
+            $direction['state_direction'] = $this->connectDB->real_escape_string($direction['state_direction']);
+            $direction['municipality_direction'] = $this->connectDB->real_escape_string($direction['municipality_direction']);
+            $direction['suburb_direction'] = $this->connectDB->real_escape_string($direction['suburb_direction']);
             $this->querys = "INSERT INTO direction VALUES(null,'".$direction['street_direction']."','".
                 $direction['state_direction']."','".$direction['municipality_direction']."','".
                 $direction['suburb_direction']."')";
@@ -273,6 +295,13 @@
             }
             $direction['id_direction'] = $this->connectDB->insert_id;
             // Create schedule
+            $schedule['sunday'] = $this->connectDB->real_escape_string($schedule['sunday']);
+            $schedule['monday'] = $this->connectDB->real_escape_string($schedule['monday']);
+            $schedule['tuesday'] = $this->connectDB->real_escape_string($schedule['tuesday']);
+            $schedule['wednesday'] = $this->connectDB->real_escape_string($schedule['wednesday']);
+            $schedule['thursday'] = $this->connectDB->real_escape_string($schedule['thursday']);
+            $schedule['friday'] = $this->connectDB->real_escape_string($schedule['friday']);
+            $schedule['saturday'] = $this->connectDB->real_escape_string($schedule['saturday']);
             $this->querys = "INSERT INTO schedule VALUES(null,'".$schedule['sunday']."','".
                 $schedule['monday']."','".$schedule['tuesday']."','".$schedule['wednesday']."','".
                 $schedule['thursday']."','".$schedule['friday']."','".$schedule['saturday']."')";
@@ -289,8 +318,12 @@
             }
             $id_info_room = $this->connectDB->insert_id;
             // Create room
+            $room['name_saloon'] = $this->connectDB->real_escape_string($room['name_saloon']);
+            $room['capacity_saloon'] = $this->connectDB->real_escape_string($room['capacity_saloon']);
+            $room['description_saloon'] = $this->connectDB->real_escape_string($room['description_saloon']);
+            $room['price_hour'] = $this->connectDB->real_escape_string($room['price_hour']);
             $this->querys = "INSERT INTO room VALUES(null,'".$room['name_saloon']."',".$room['capacity_saloon'].",'".
-                $room['description_saloon']."',$id_info_room)";
+                $room['description_saloon']."',".$room['price_hour'].",$id_info_room)";
             if($this->connectDB->query($this->querys) === FALSE) {
                 $value_return .= '"room"}';
                 return $value_return;
@@ -300,9 +333,17 @@
                 $direction['id_direction'].',"t_schedule":'.$schedule["id_schedule"].
                 ',"t_room":'.$room['id_saloon'].',"t_info":'.$id_info_room.'}';
         }
+        /**
+         * -----Validation for sql injection.------
+         */
         public function update_room($room, $schedule, $direction): string {
             $value_return = '{action: "update","status": false, "in_table": ';
             // Update direcction
+            $direction['street_direction'] = $this->connectDB->real_escape_string($direction['street_direction']);
+            $direction['state_direction'] = $this->connectDB->real_escape_string($direction['state_direction']);
+            $direction['municipality_direction'] = $this->connectDB->real_escape_string($direction['municipality_direction']);
+            $direction['suburb_direction'] = $this->connectDB->real_escape_string($direction['suburb_direction']);
+            $direction['id_direction'] = $this->connectDB->real_escape_string($direction['id_direction']);
             $this->querys = "UPDATE direction SET street_direction='".$direction['street_direction']."',state_direction='".
                 $direction['state_direction']."',municipality_direction='".$direction['municipality_direction'].
                 "',suburb_direction='".$direction['suburb_direction']."' WHERE id_direction=".$direction['id_direction'];
@@ -311,6 +352,14 @@
                 return $value_return;
             }
             // Update schedule
+            $schedule['sunday'] = $this->connectDB->real_escape_string($schedule['sunday']);
+            $schedule['monday'] = $this->connectDB->real_escape_string($schedule['monday']);
+            $schedule['tuesday'] = $this->connectDB->real_escape_string($schedule['tuesday']);
+            $schedule['wednesday'] = $this->connectDB->real_escape_string($schedule['wednesday']);
+            $schedule['thursday'] = $this->connectDB->real_escape_string($schedule['thursday']);
+            $schedule['friday'] = $this->connectDB->real_escape_string($schedule['friday']);
+            $schedule['saturday'] = $this->connectDB->real_escape_string($schedule['saturday']);
+            $schedule['id_schedule'] = $this->connectDB->real_escape_string($schedule['id_schedule']);
             $this->querys = "UPDATE schedule SET sunday='".$schedule['sunday']."',monday='".$schedule['monday']."',tuesday='".
                 $schedule['tuesday']."',wednesday='".$schedule['wednesday']."',thursday='".$schedule['thursday'].
                 "',friday='".$schedule['friday']."',saturday='".$schedule['saturday']."' WHERE id_schedule=".$schedule['id_schedule'];
@@ -319,8 +368,14 @@
                 return $value_return;
             }
             // Update room
+            $room['name_saloon'] = $this->connectDB->real_escape_string($room['name_saloon']);
+            $room['capacity_saloon'] = $this->connectDB->real_escape_string($room['capacity_saloon']);
+            $room['price_hour'] = $this->connectDB->real_escape_string($room['price_hour']);
+            $room['description_saloon'] = $this->connectDB->real_escape_string($room['description_saloon']);
+            $room['id_saloon'] = $this->connectDB->real_escape_string($room['id_saloon']);
             $this->querys = "UPDATE room SET name_saloon='".$room['name_saloon']."',capacity_saloon=".
-                $room['capacity_saloon'].",description_saloon='".$room['description_saloon'].
+                $room['capacity_saloon'].",price_hour=".$room['price_hour'].
+                ",description_saloon='".$room['description_saloon'].
                 "' WHERE id_saloon=".$room['id_saloon'];
             if($this->connectDB->query($this->querys) === FALSE) {
                 $value_return .= '"room"}';
@@ -338,7 +393,7 @@
             $data_salon['t_schedule'] = array('id_schedule'=>0,'sunday'=>'N','monday'=>'N',
                 'tuesday'=>'N', 'wednesday'=>'N', 'thursday'=>'N', 'friday'=>'N', 'saturday'=>'N');
             $data_salon['t_room'] = array('id_saloon'=>0, 'name_saloon'=>'','capacity_saloon'=>'',
-                'description_saloon'=>'', 'id_info'=>0);
+                'price_hour'=>0,'description_saloon'=>'', 'id_info'=>0);
             $id_direction = 0;
             $id_schedule = 0;
             // Select room
@@ -376,9 +431,11 @@
         /**
          * This method selects the users that match
          * the MySQL pattern %$user%
+         * -----Validation for sql injection.------
          */
         public function select_user_for_user(string $user) {
             $value_return['value'] = false;
+            $user = $this->connectDB->real_escape_string($user);
             $this->querys = "SELECT id_user,name_user,pa_lastname_user,mo_lastname_user,email_user,phone_user,user_user,password_user".
                 " FROM user WHERE type_user=1 AND user_user LIKE '%$user%' LIMIT 15";
             $this->result = $this->connectDB->query($this->querys);
@@ -410,9 +467,17 @@
         }
         /**
          * This method update user (client and admin) in table user.
+         * -----Validation for sql injection.------
          */
         public function update_user($data) {
             $value_return = '{"status": false}';
+            $data['name_user'] = $this->connectDB->real_escape_string($data['name_user']);
+            $data['pa_lastname_user'] = $this->connectDB->real_escape_string($data['pa_lastname_user']);
+            $data['mo_lastname_user'] = $this->connectDB->real_escape_string($data['mo_lastname_user']);
+            $data['email_user'] = $this->connectDB->real_escape_string($data['email_user']);
+            $data['phone_user'] = $this->connectDB->real_escape_string($data['phone_user']);
+            $data['password_user'] = $this->connectDB->real_escape_string($data['password_user']);
+            $data['id_user'] = $this->connectDB->real_escape_string($data['id_user']);
             $this->querys = "UPDATE user SET name_user='".$data['name_user']."',pa_lastname_user='".
                 $data['pa_lastname_user']."',mo_lastname_user='".$data['mo_lastname_user']."',email_user='".
                 $data['email_user']."',phone_user='".$data['phone_user']."',password_user='".$data['password_user'].
@@ -424,9 +489,16 @@
         }
         /**
          * This method delete user (only client) in table user.
+         * -----Validation for sql injection.------
          */
         public function remove_user_type1($id_user) {
-            $value_return = '{"status": false}';
+            $value_return = '{"status": false, "type": "faillure"}';
+            $id_user = $this->connectDB->real_escape_string($id_user);
+            //If exists reservations
+            $this->querys = "SELECT id_reservations FROM reservations WHERE id_user=$id_user AND NOW()<date_reservation_end";
+            if($this->connectDB->query($this->querys)->num_rows > 0) {
+                $value_return = '{"status": false, "type": "exists_reservations"';
+            }
             if($this->connectDB->query("DELETE FROM user WHERE type_user=1 AND id_user=$id_user") === TRUE) {
                 $value_return = '{"status": true}';
             }
@@ -437,8 +509,8 @@
          */
         public function select_reservations_conf() {
             $value_return = [];
-            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
-                "email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,user_user,pa_lastname_user,".
+                "mo_lastname_user,phone_user,email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
                 " AND room.id_saloon = reservations.id_room) WHERE status_reservation=1";
             $this->result = $this->connectDB->query($this->querys);
             if($this->result->num_rows > 0) {
@@ -454,8 +526,8 @@
          */
         public function select_reservations_unconf() {
             $value_return = [];
-            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
-                "email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,pa_lastname_user,user_user".
+                "mo_lastname_user,phone_user,email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
                 " AND room.id_saloon = reservations.id_room) WHERE status_reservation=0";
             $this->result = $this->connectDB->query($this->querys);
             if($this->result->num_rows > 0) {
@@ -468,9 +540,11 @@
         }
         /**
          * This method update status reservation to confirmed.
+         * -----Validation for sql injection.------
          */
         public function confirm_reservation($id_reservation) {
             $value_return = '{"status": false}';
+            $id_reservation = $this->connectDB->real_escape_string($id_reservation);
             $this->querys = "UPDATE reservations SET status_reservation=1 WHERE id_reservation=$id_reservation";
             if($this->connectDB->query($this->querys) === TRUE) {
                 $value_return = '{"status": true}';
@@ -503,8 +577,13 @@
             }
             return json_encode($value_return);
         }
+        /**
+         * This method select services for name
+         * -----Validation for sql injection.------
+         */
         public function select_services_for_name(string $name_service) {
             $value_return['value'] = false;
+            $name_service = $this->connectDB->real_escape_string($name_service);
             $this->querys = "SELECT * FROM services WHERE name_service LIKE '%$name_service%' LIMIT 15";
             $this->result = $this->connectDB->query($this->querys);
             if($this->result->num_rows > 0) {
@@ -516,8 +595,15 @@
             }
             return json_encode($value_return);
         }
+        /**
+         * This method create a service; only for admin
+         * -----Validation for sql injection.------
+         */
         public function create_service($data) {
             $value_return['status'] = false;
+            $data['name_service'] = $this->connectDB->real_escape_string($data['name_service']);
+            $data['price'] = $this->connectDB->real_escape_string($data['price']);
+            $data['detail'] = $this->connectDB->real_escape_string($data['detail']);
             $this->querys = "INSERT INTO services VALUES(null,'".$data['name_service']."',".
                 $data['price'].",'".$data['detail']."')";
             if($this->connectDB->query($this->querys) === TRUE) {
@@ -526,14 +612,34 @@
             }
             return json_encode($value_return);
         }
+        /**
+         * This method update a service; only for admin
+         * -----Validation for sql injection.------
+         */
         public function update_service($data) {
             $value_return = '{"status": false}';
+            $data['name_service'] = $this->connectDB->real_escape_string($data['name_service']);
+            $data['price'] = $this->connectDB->real_escape_string($data['price']);
+            $data['detail'] = $this->connectDB->real_escape_string($data['detail']);
+            $data['id_service'] = $this->connectDB->real_escape_string($data['id_service']);
             $this->querys = "UPDATE services SET name_service='".$data['name_service']."',price=".
                 $data['price'].",detail='".$data['detail']."' WHERE id_service=".$data['id_service'];
             if($this->connectDB->query($this->querys) === TRUE) {
                 $value_return = '{"status": true}';
             }
             return $value_return;
+        }
+        public function select_data_admin(int $id_user) {
+            $value_return = array('id_user'=>1, 'name_user'=>'', 'pa_lastname_user'=>'', 'mo_lastname_user'=>'',
+                'email_user'=>'','phone_user'=>'','user_user'=>'admin','password_user'=>'');
+            $this->querys = "SELECT id_user,name_user,pa_lastname_user,mo_lastname_user,email_user,phone_user,user_user,password_user".
+                " FROM user WHERE type_user=0 AND id_user=$id_user";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                $value_return = $this->result->fetch_assoc();
+                $this->result->free();
+            }
+            return json_encode($value_return);
         }
     }
 ?>

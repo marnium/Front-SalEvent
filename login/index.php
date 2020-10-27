@@ -99,10 +99,7 @@
         if(count($results>0)){
           switch($results['type_user']){
             case '0':
-              $_SESSION['data_admin'] = array('id_user'=>$results['id_user'],'name_user'=>$results['name_user'],
-                'pa_lastname_user'=>$results['pa_lastname_user'],'mo_lastname_user'=>$results['mo_lastname_user'],
-                'email_user'=>$results['email_user'],'phone_user'=>$results['phone_user'],'user_user'=>$results['user_user'],
-                'password_user'=>$results['password_user']);
+              $_SESSION['data_admin'] = array('id_user'=>$results['id_user'],'name_user'=>$results['name_user']);
               header('Location: /admin/');
             break;
             case '1':
