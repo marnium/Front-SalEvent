@@ -60,10 +60,15 @@ if ($resultReservation->num_rows) {
     $folioServices = $row['id_folio_services'];
 
     $idRervation = $row['id_reservation'];
+
+    if($statusReservation==1){
+      unset($_SESSION['modifyReservation']);
+      header("Location: /my/myreservation/");
+    }
   }
 } else {
-  //unset($_SESSION['modifyReservation']);
-  //header("Location: /my/myreservation/");
+  unset($_SESSION['modifyReservation']);
+  header("Location: /my/myreservation/");
 }
 
 if (isset($_POST['updateReservation'])) {
@@ -107,7 +112,7 @@ if (isset($_POST['updateReservation'])) {
           }
         }
 
-        $newOperations->updateFolioServices(intval($folioServices),$totalServices);        
+        echo $newOperations->updateFolioServices(intval($folioServices),$totalServices);        
 
         $newOperations->deleteFolioServices(intval($folioServices));
         $services = $newOperations->getServicesWithoutClosingBD();
@@ -125,20 +130,21 @@ if (isset($_POST['updateReservation'])) {
         $dateStart = $startDateYYmmDD." ".$startHour.":00:00";
 
         $dateEnd = $endDateYYmmDD." ".$finalHour.":00:00";
+        echo $idRervation;
 
-        $newOperations->updateReservations(
+        echo $newOperations->updateReservations(
           $typeEventToForm,
           $priceByHour + $totalServices,
           $dateStart,
           $dateEnd,
-          $idRervation
+          intval($idRervation)
         );
         $newOperations->closeConnection();
       }
     }
   }
-  //unset($_SESSION['modifyReservation']);
-  //header("Location: /my/myreservation/");
+  unset($_SESSION['modifyReservation']);
+  header("Location: /my/myreservation/");
 }
 
 
@@ -272,10 +278,10 @@ if (isset($_POST['updateReservation'])) {
             <div class="d-flex flex-wrap justify-content-between" id="boxservices">
               <?php
               require_once('../../databaseOperations/operations.php');
-              $operations = new OperationBD();
-              $services = $operations->getServicesWithoutClosingBD();
-              if ($services->num_rows) {
-                while ($row = $services->fetch_assoc()) {
+              $operationsServices = new OperationBD();
+              $getServices = $operationsServices->getServicesWithoutClosingBD();
+              if ($getServices->num_rows) {
+                while ($row = $getServices->fetch_assoc()) {
                   echo '
                       <div class="col-md-4 mb-2 d-flex flex-wrap justify-content-center">
                         <label for="';
@@ -288,7 +294,7 @@ if (isset($_POST['updateReservation'])) {
                   echo '" id="';
                   echo $row['id_service'];
                   echo '" class="mb-1" value="';
-                  $amount_service = $operations->getValueService(
+                  $amount_service = $operationsServices->getValueService(
                     intval($row['id_service']),
                     intval($folioServices)
                   );
@@ -297,7 +303,7 @@ if (isset($_POST['updateReservation'])) {
                       </div>';
                 }
               }
-              $operations->closeConnection();
+              $operationsServices->closeConnection();
               ?>
 
             </div>

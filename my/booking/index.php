@@ -84,7 +84,7 @@ if (isset($_POST['reserveDay'])) {
           $dateEnd = $_SESSION['newReservation'][0] . "-" . $_SESSION['newReservation'][1] . "-" .
             $_SESSION['newReservation'][2] . " " . $finalHour . ":00:00";
 
-          $operations->addReservation(
+          $idReservation = $operations->addReservation(
             $typeEvent,
             $priceByHour + $totalServices,
             $dateStart,
@@ -102,7 +102,7 @@ if (isset($_POST['reserveDay'])) {
   header("Location: /my/book/");
 }
 if(isset($_POST['modify'])){
-  
+  header("Location: /my/myreservation/");
 }
 ?>
 <!DOCTYPE html>
@@ -200,12 +200,12 @@ if(isset($_POST['modify'])){
     <div class="container-fluid d-flex flex-wrap justify-content-around mt-3">
       <form method="POST">
         <button type="submit" class="btn btn-primary bg-dark mr-3 pl-2 pr-2 border-0" name="returnToCalendar">
-          Regresar
+          Aceptar y salir
         </button>
       </form>
       <form method="POST">
         <button type="submit" class="btn btn-primary bg-dark border-0" name="modify">
-          Modificar
+          Ver la lista
         </button>
       </form>
     </div>

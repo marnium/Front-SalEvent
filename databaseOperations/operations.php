@@ -144,10 +144,16 @@
         }
         public function addReservation($typeEvent,$priceTotal,$dateReservationStart,
             $dateReservationEnd,$idUser,$idFolioServices){
+
+            $this->return = "";
             $this->querys = "INSERT INTO reservations VALUES(null,'$typeEvent', ".
                 "0, $priceTotal, '$dateReservationStart', '$dateReservationEnd', ".
                 "$idUser,$idFolioServices,1);";
-            $this->connectDB->query($this->querys);  
+            if($this->connectDB->query($this->querys)==TRUE){
+                $this->result = $this->connectDB->insert_id;
+            }  
+
+            return $this->result;
         }
         public function getInformationReservation($idReservation,$idUser){
             $this->querys = "SELECT * FROM reservations WHERE id_reservation=$idReservation".
@@ -181,7 +187,7 @@
         public function updateReservations($typeEvent,$priceTotal,$dateStart,$dateEnd,$id){
             $this->querys = "UPDATE reservations SET type_event='$typeEvent', ".
                 "price_total=$priceTotal, date_reservation_start='$dateStart', ".
-                "date_reservationd_end='$dateEnd' WHERE id_reservation=$id ;";
+                "date_reservation_end='$dateEnd' WHERE id_reservation=$id ;";
             $this->connectDB->query($this->querys);
         }
         /**
