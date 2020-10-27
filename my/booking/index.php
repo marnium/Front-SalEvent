@@ -102,7 +102,7 @@ if (isset($_POST['reserveDay'])) {
   header("Location: /my/book/");
 }
 if(isset($_POST['modify'])){
-  
+  header("Location: /my/myreservation/");
 }
 ?>
 <!DOCTYPE html>
@@ -133,7 +133,7 @@ if(isset($_POST['modify'])){
       </div>
       <section class="col-md-4">
         <div class="col-md-12">
-          <h2 class="text-center">Evento: boda</h2>
+          <h2 class="text-center">Evento: <?php echo $typeEvent; ?></h2>
         </div>
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
           <div class="d-flex flex-wrap justify-content-around mb-3">
@@ -200,12 +200,12 @@ if(isset($_POST['modify'])){
     <div class="container-fluid d-flex flex-wrap justify-content-around mt-3">
       <form method="POST">
         <button type="submit" class="btn btn-primary bg-dark mr-3 pl-2 pr-2 border-0" name="returnToCalendar">
-          Regresar
+          Aceptar y salir
         </button>
       </form>
       <form method="POST">
         <button type="submit" class="btn btn-primary bg-dark border-0" name="modify">
-          Modificar
+          Ver la lista
         </button>
       </form>
     </div>

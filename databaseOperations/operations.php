@@ -145,10 +145,12 @@
         }
         public function addReservation($typeEvent,$priceTotal,$dateReservationStart,
             $dateReservationEnd,$idUser,$idFolioServices){
+
             $this->querys = "INSERT INTO reservations VALUES(null,'$typeEvent', ".
                 "0, $priceTotal, '$dateReservationStart', '$dateReservationEnd', ".
                 "$idUser,$idFolioServices,1);";
-            $this->connectDB->query($this->querys);  
+            $this->connectDB->query($this->querys);
+
         }
         public function getInformationReservation($idReservation,$idUser){
             $this->querys = "SELECT * FROM reservations WHERE id_reservation=$idReservation".
@@ -158,6 +160,32 @@
             $this->connectDB->close();
             
             return $this->result;
+        }
+        public function getValueService($idService,$folioService){
+            $this->querys = "SELECT amount_service".
+                " FROM selectedservices WHERE id_folio_services=$folioService AND ".
+                "id_service=$idService;";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows){
+                if($row = $this->result->fetch_assoc()){
+                    $this->result = $row['amount_service'];
+                }
+            }else{
+                $this->result = "";
+            }
+            
+            return $this->result;
+        }
+        public function updateFolioServices($folio,$newTotal){
+            $this->querys = "UPDATE folioServices SET total_services=$newTotal ".
+                "WHERE id_folio_services=$folio ;";
+            $this->connectDB->query($this->querys);
+        }
+        public function updateReservations($typeEvent,$priceTotal,$dateStart,$dateEnd,$id){
+            $this->querys = "UPDATE reservations SET type_event='$typeEvent', ".
+                "price_total=$priceTotal, date_reservation_start='$dateStart', ".
+                "date_reservation_end='$dateEnd' WHERE id_reservation=$id ;";
+            $this->connectDB->query($this->querys);
         }
         /**
          * This method adds a record for a user in the user table.
