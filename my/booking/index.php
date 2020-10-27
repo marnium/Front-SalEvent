@@ -167,7 +167,12 @@ if(isset($_POST['modify'])){
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
           <div class="d-flex flex-wrap justify-content-around mb-3">
             <p>Nombre completo:</p>
-            <p> <?php echo $_SESSION["data_user"][2]?> </p>
+            <p> 
+              <?php 
+                echo $_SESSION["data_user"][2]." ".$_SESSION["data_user"][3]." ".
+                  $_SESSION["data_user"][4]
+              ?> 
+            </p>
           </div>
           <div class="d-flex flex-wrap justify-content-around mb-3">
             <p>Email:</p>

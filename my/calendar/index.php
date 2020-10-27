@@ -9,6 +9,12 @@ if (isset($_SESSION['data_admin'])) {
 if (isset($_SESSION['newReservation'])) {
   header("Location: /my/book/");
 }
+if (isset($_SESSION['viewStatus'])) {
+  header("Location: /my/reservation/");
+}
+if (isset($_SESSION['modifyReservation'])) {
+  header("Location: /my/modify/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

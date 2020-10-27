@@ -60,14 +60,14 @@ if (isset($_POST['returnToCalendar'])) {
             </div>
             <select id="event" class="custom-select mb-3" name="values[]">
               <option value="" selected hidden>Seleccione una opción</option>
-              <option value="graduation">Graduacion</option>
-              <option value="wedding">Boda</option>
-              <option value="christening">Bautizo</option>
-              <option value="communion">Comunion</option>
-              <option value="confirmation">Confirmacion</option>
-              <option value="birthday">Cumpleaños</option>
-              <option value="fifteen years">Quince años</option>
-              <option value="meeting">Reunion</option>
+              <option value="Graduacion">Graduacion</option>
+              <option value="Boda">Boda</option>
+              <option value="Bautizo">Bautizo</option>
+              <option value="Comunion">Comunion</option>
+              <option value="Confirmacion">Confirmacion</option>
+              <option value="Cumpleaños">Cumpleaños</option>
+              <option value="Quince años">Quince años</option>
+              <option value="Reunion">Reunion</option>
               <option value="other">Otro</option>
             </select>
           </div>

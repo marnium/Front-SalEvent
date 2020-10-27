@@ -6,7 +6,7 @@
 
     require_once('../../databaseOperations/operations.php');
     $operations = new OperationBD();
-    $results = $operations->deleteReservation($id);
+    $results = $operations->deleteReservation($id,intval($_SESSION['data_user'][0]));
     if($results == "not-successful"){
         $id = "Fatal: error";
     }

@@ -9,6 +9,37 @@
   if (isset($_SESSION['newReservation'])) {
     header("Location: /my/book/");
   }
+  if (!isset($_SESSION['viewStatus'])) {
+    header("Location: /my/myreservation/");
+  }
+  if(isset($_POST['returnToMyReservations'])){
+    unset($_SESSION['viewStatus']);
+    header("Location: /my/myreservation/");
+  }
+  require_once('../../databaseOperations/operations.php');
+  $operations = new OperationBD();
+
+  $resultQuery = $operations->getInformationReservation(
+    intval($_SESSION['viewStatus']),intval($_SESSION['data_user'][0]));
+
+  if($resultQuery->num_rows){
+    if ($row = $resultQuery->fetch_assoc()) {
+
+      $startDate = 
+        substr( (explode(" ",$row['date_reservation_start']))[1],0,2 );
+      $endDate = 
+        substr( (explode(" ",$row['date_reservation_end']))[1],0,2 );
+
+      $statusReservation = $row['status_reservation'];
+
+      $priceTotal = $row['price_total'];
+
+      $typeEvent = $row['type_event'];
+    }
+  
+  }else{
+    unset($_SESSION['viewStatus']);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,20 +64,36 @@
       >
         <section class="col-md-4">
           <div class="col-md-12">
-            <h2 class="text-center">Evento: boda</h2>
+            <h2 class="text-center">Evento: 
+              <?php
+                echo $typeEvent;
+              ?>
+            </h2>
           </div>
           <div class="d-flex flex-column flex-wrap mt-4 pt-4">
             <div class="d-flex flex-wrap justify-content-around mb-3">
               <p>Horas contratadas</p>
-              <p class="text-danger">8</p>
+              <p class="text-danger">
+              <?php
+                  echo $endDate-$startDate;
+                ?>
+              </p>
             </div>
             <div class="d-flex flex-wrap justify-content-around mb-3">
               <p>Hora inicio:</p>
-              <p class="text-danger">10:00 AM</p>
+              <p class="text-danger">
+                <?php
+                  echo ($startDate<12) ? $startDate." AM" : $startDate." PM";
+                ?>
+              </p>
             </div>
             <div class="d-flex flex-wrap justify-content-around mb-3">
               <p>Hora final:</p>
-              <p class="text-danger">18:00 PM</p>
+              <p class="text-danger">
+              <?php
+                  echo ($endDate<12) ? $endDate." AM" : $endDate." PM";
+                ?>
+              </p>
             </div>
           </div>
         </section>
@@ -57,15 +104,20 @@
           <div class="d-flex flex-column flex-wrap mt-4 pt-4">
             <div class="d-flex flex-wrap justify-content-around mb-3">
               <p>Nombre completo:</p>
-              <p>Mikel</p>
+              <p>
+              <?php 
+                echo $_SESSION["data_user"][2]." ".$_SESSION["data_user"][3]." ".
+                  $_SESSION["data_user"][4]
+              ?> 
+              </p>
             </div>
             <div class="d-flex flex-wrap justify-content-around mb-3">
               <p>Email:</p>
-              <p>example@example.com</p>
+              <p><?php echo $_SESSION["data_user"][5];  ?></p>
             </div>
             <div class="d-flex flex-wrap justify-content-around mb-3">
               <p>Telefono:</p>
-              <p>123 123 1212</p>
+              <p><?php echo $_SESSION["data_user"][6];  ?></p>
             </div>
           </div>
         </section>
@@ -73,24 +125,25 @@
           <div class="d-flex flex-column flex-wrap mt-4 pt-4">
             <div class="d-flex flex-wrap mb-3">
               <p class="mr-4">Total a pagar:</p>
-              <p class="text-danger">10, 000</p>
+              <p class="text-danger"><?php echo $priceTotal; ?></p>
             </div>
             <div class="d-flex flex-wrap mb-3">
               <p class="mr-4">Estatus:</p>
-              <p class="text-danger">En espera</p>
+              <p class="text-danger">
+                <?php 
+                  echo ($statusReservation==0) ? 'En espera' : 'Confirmada';
+                ?>
+              </p>
             </div>
           </div>
         </section>
       </div>
       <div class="container-fluid d-flex flex-wrap justify-content-around mt-3">
-        <a href="/my/myreservation" class="text-white text-decoration-none mb-2">
-          <button class="btn btn-primary bg-dark border-0">Regresar</button>
-        </a>
-        <a href="/my/myreservation/" class="text-white text-decoration-none mb-2">
-          <button class="btn btn-primary bg-dark border-0">
-            Ver estado del evento
+        <form method="POST">
+          <button type="submit" name="returnToMyReservations" class="btn btn-primary bg-dark border-0">
+            Regresar
           </button>
-        </a>
+        </form>
         <a href="/my/modify" class="text-white text-decoration-none mb-2">
           <button class="btn btn-primary bg-dark border-0">
             Modificar

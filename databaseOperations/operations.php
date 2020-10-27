@@ -59,14 +59,32 @@
             $this->connectDB->close();
             return $result_return;
         }
-        public function deleteReservation($id){
+        public function deleteReservation($id,$idUser){
             $result_return = "not-successful";
-            if($this->connectDB->query("DELETE FROM reservations WHERE id_reservation=$id") === TRUE) {
+            $folio = $this->getFolioServices($id,$idUser);
+            if($this->connectDB->query("DELETE FROM reservations WHERE id_reservation=$id".
+            " AND id_user=$idUser;") === TRUE) {
+                $this->connectDB->query("DELETE FROM folioServices WHERE id_folio_services=$folio;");
                 $result_return = 'successful';
             }
 
             $this->connectDB->close();
             return $result_return;
+        }
+        public function getFolioServices($id,$idUser){
+            $folio = "";
+            $this->querys = $this->connectDB->query("SELECT * FROM reservations".
+                " WHERE id_reservation=$id AND id_user=$idUser;");
+            if($this->querys->num_rows){
+                if($row = $this->querys->fetch_assoc()){
+                    $this->deleteFolioServices($row['id_folio_services']);
+                    $folio = $row['id_folio_services'];
+                }
+            }
+            return $folio;
+        }
+        public function deleteFolioServices($folio){
+            $this->connectDB->query("DELETE FROM selectedservices WHERE id_folio_services=$folio;");
         }
         public function pricebyHour(){
             $this->result = "";
@@ -130,6 +148,15 @@
                 "0, $priceTotal, '$dateReservationStart', '$dateReservationEnd', ".
                 "$idUser,$idFolioServices,1);";
             $this->connectDB->query($this->querys);  
+        }
+        public function getInformationReservation($idReservation,$idUser){
+            $this->querys = "SELECT * FROM reservations WHERE id_reservation=$idReservation".
+                " AND id_user=$idUser;";
+            $this->result = $this->connectDB->query($this->querys);
+
+            $this->connectDB->close();
+            
+            return $this->result;
         }
         /**
          * This method adds a record for a user in the user table.
