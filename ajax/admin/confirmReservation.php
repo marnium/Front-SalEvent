@@ -1,8 +1,8 @@
 <?php
-   if(isset($_POST['data_user'])) {
+   if(isset($_POST['id_reservation'])) {
       require_once('../../databaseOperations/operations.php');
       $operations = new OperationBD();
-      echo $operations->update_user(json_decode($_POST['data_user'], true));
+      echo $operations->confirm_reservation($_POST['id_reservation']);
       $operations->closeConnection();
    }
 ?>

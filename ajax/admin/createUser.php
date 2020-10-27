@@ -7,5 +7,6 @@
          $data_user['pa_lastname_user'], $data_user['mo_lastname_user'],
          $data_user['email_user'], $data_user['phone_user'],
          $data_user['user_user'], $data_user['password_user']));
+      $operations->closeConnection();
    }
 ?>
