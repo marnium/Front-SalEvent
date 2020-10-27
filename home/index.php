@@ -34,48 +34,44 @@
       <img src="../img/home/content-carousel/img-1.jpg" 
         class="img-responsive d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <h5>Espacioso y cómodo</h5>
+        <p>¡Nuestro lobby extremadamente versátil es muy útil para cualquier fiesta!</p>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../img/home/content-carousel/img-2.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h5>Agrega nuestro lobby a cualquier evento</h5>
+        <p>¡Cree una atmósfera profesional en el instante en que lleguen sus invitados!</p>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../img/home/content-carousel/img-3.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <h5>¡Somos el lugar perfecto para tu fiesta!</h5>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../img/home/content-carousel/img-4.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <h5>¡Alquile nuestro hermoso lugar para su ocasión especial!</h5>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../img/home/content-carousel/img-5.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <h5>¡Impresione a sus clientes con una presentación profesional!</h5>
       </div>
     </div>
     <div class="carousel-item">
       <img src="../img/home/content-carousel/img-6.jpg" 
         class="d-block w-100" alt="..." height="500px">
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <h5>¡Contamos con salas grandes y salas de reuniones pequeñas para reuniones de cualquier tamaño, reuniones corporativas, talleres, conferencias y eventos comunitarios!</h5>
       </div>
     </div>
   </div>
@@ -95,9 +91,10 @@
       <img src="../img/home/content-down/img-webiste.jpg" class="card-img" alt="...">
     </div>
     <div class="col-md-6">
-        <p class="border-top border-left border-bottom p-2 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam cum aperiam, sint commodi asperiores esse modi iste ad corrupti quia unde exercitationem voluptates nam itaque? Labore illum cum eum inventore.
-        Voluptatem adipisci necessitatibus ad doloribus et eveniet quasi doloremque animi voluptate ipsum. Odio culpa eos eum saepe pariatur maxime explicabo consectetur accusantium, nihil amet repellendus provident eaque deleniti aperiam non!
-        Repellat consequatur laborum reprehenderit quibusdam! Obcaecati magni vitae provident mollitia unde similique impedit nostrum velit, ut accusantium corporis omnis corrupti accusamus. Culpa non distinctio aspernatur, nam fuga error porro ab!
+        <p class="border-top border-left border-bottom p-2 text-justify">
+          Preparamos banquetes y ofrecemos nuestros servicios para encantar a todos los comensales y clientes.
+          Siempre compartiendo juntos grandes experiencias, Pará cualquier ocasión; desde una boda, aniversario, fiesta de cumpleaños... hasta una reunión corporativa,
+          taller, conferencia, evento comunitario o reunión de clase, ¡nuestro espacio para eventos y lugar para fiestas seguramente lo complacerá!
         </p>
     </div>
   </div>
@@ -105,9 +102,10 @@
   <div class="row p-2 d-flex justify-content-between">
     
     <div class="col-md-6">
-        <p class="border-top border-left border-bottom p-2 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam cum aperiam, sint commodi asperiores esse modi iste ad corrupti quia unde exercitationem voluptates nam itaque? Labore illum cum eum inventore.
-        Voluptatem adipisci necessitatibus ad doloribus et eveniet quasi doloremque animi voluptate ipsum. Odio culpa eos eum saepe pariatur maxime explicabo consectetur accusantium, nihil amet repellendus provident eaque deleniti aperiam non!
-        Repellat consequatur laborum reprehenderit quibusdam! Obcaecati magni vitae provident mollitia unde similique impedit nostrum velit, ut accusantium corporis omnis corrupti accusamus. Culpa non distinctio aspernatur, nam fuga error porro ab!
+        <p class="border-top border-left border-bottom p-2 text-justify">
+          Festeja navidad y Año Nuevo con un menú que te va a encantar.
+          Tenemos contacto con los mejores chef o cocineros de la región los cuales te ofrecen un extenso menú con distintos platillos para tus momentos especiales.
+          Todos los platillos incluyen entradas, plato fuerte y un extenso menú de postres para que puedas disfrutar no solo de un ambiente rico sino de un sabor que hará tus eventos aún más deliciosos.
         </p>
     </div>
     <div class="col-md-4">
@@ -120,9 +118,11 @@
       <img src="../img/home/content-down/img-wedding-guests.jpg" class="card-img" alt="...">
     </div>
     <div class="col-md-6">
-        <p class="border-top border-left border-bottom p-2 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam cum aperiam, sint commodi asperiores esse modi iste ad corrupti quia unde exercitationem voluptates nam itaque? Labore illum cum eum inventore.
-        Voluptatem adipisci necessitatibus ad doloribus et eveniet quasi doloremque animi voluptate ipsum. Odio culpa eos eum saepe pariatur maxime explicabo consectetur accusantium, nihil amet repellendus provident eaque deleniti aperiam non!
-        Repellat consequatur laborum reprehenderit quibusdam! Obcaecati magni vitae provident mollitia unde similique impedit nostrum velit, ut accusantium corporis omnis corrupti accusamus. Culpa non distinctio aspernatur, nam fuga error porro ab!
+        <p class="border-top border-left border-bottom p-2 text-justify">
+          Celebra con nosotros esa ocasión especial, contamos con meseros y un extenso menú de cubiertos y
+          accesorios para que te sientas lo más cómodo y a pases un rato muy agradable.
+          El personal estará pendiente y a la orden en todo momento para que no descuides a tus invitados y
+          captures esos momentos especiales.
         </p>
     </div>
   </div>
@@ -130,10 +130,10 @@
   <div class="row p-2 d-flex justify-content-between">
     
     <div class="col-md-6">
-        <p class="border-top border-left border-bottom p-2 text-justify">
-         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil odio totam temporibus, nesciunt quos doloremque culpa magni laudantium, fugiat consequuntur deserunt nemo maxime expedita delectus fuga iste ullam quod dicta?
-         Molestias maiores, eveniet nihil omnis provident ducimus autem id mollitia velit adipisci modi eligendi neque consequuntur aliquid laudantium, aspernatur molestiae nesciunt dolor deserunt architecto impedit! Sequi libero mollitia eos incidunt!
-         Est quo veritatis maiores, ut ipsum reprehenderit, laborum in quam sit a aperiam, voluptatibus aliquam provident facere obcaecati pariatur quasi cumque molestiae vitae! Molestiae itaque maxime voluptatibus delectus quod soluta.
+        <p class="border-top border-left border-bottom p-2 text-justify">¿Te gustaría animar tu evento?, tenemos contacto cercano con grupos de la región,
+          así como dj profesionales y cronistas de eventos de todo tipo, que garantizan un servicio 100% confiable y amigable. Los precios son muy accesibles
+          ya que tenemos un convenio con ellos y puedas tener una diversión garantizada. El servicio incluye equipo profesional de sonido, iluminación profesional
+          hasta por 5 horas o lo que dure tu evento si tú lo deseas que harán esos momentos inolvidables.
         </p>
     </div>
     <div class="col-md-4">

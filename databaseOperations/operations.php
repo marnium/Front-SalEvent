@@ -526,7 +526,7 @@
          */
         public function select_reservations_unconf() {
             $value_return = [];
-            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,pa_lastname_user,user_user".
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,pa_lastname_user,user_user,".
                 "mo_lastname_user,phone_user,email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
                 " AND room.id_saloon = reservations.id_room) WHERE status_reservation=0";
             $this->result = $this->connectDB->query($this->querys);

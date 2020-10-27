@@ -603,7 +603,6 @@ function create_notification(message, type_notification, section) {
       '<button type="button" class="close" data-dismiss="alert" aria-label="close">' +
       '<span aria-hidden="true">&times;</span></button>');
    setTimeout(function() {
-      console.log('Eliminando notificación en:', alert);
       if(document.querySelector(alert))
          $(alert).alert('close');
    }, 6000);
