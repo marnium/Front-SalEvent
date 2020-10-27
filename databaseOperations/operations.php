@@ -320,5 +320,58 @@
             }
             return $value_return;
         }
+        public function select_reservations_conf() {
+            $value_return = [];
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
+                "email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
+                " AND room.id_saloon = reservations.id_room) WHERE status_reservation=1";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                while($row = $this->result->fetch_assoc()) {
+                    $value_return[] = $row;
+                }
+                $this->result->free();
+            }
+            $this->connectDB->close();
+            return $value_return;
+        }
+        public function select_reservations_unconf() {
+            $value_return = [];
+            $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
+                "email_user,name_saloon FROM reservations INNER JOIN(user,room) ON (user.id_user = reservations.id_user".
+                " AND room.id_saloon = reservations.id_room) WHERE status_reservation=0";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                while($row = $this->result->fetch_assoc()) {
+                    $value_return[] = $row;
+                }
+                $this->result->free();
+            }
+            $this->connectDB->close();
+            return $value_return;
+        }
+        public function confirm_reservation($id_reservation) {
+            $value_return = '{"status": false}';
+            $this->querys = "UPDATE reservations SET status_reservation=1 WHERE id_reservation=$id_reservation";
+            if($this->connectDB->query($this->querys) === TRUE) {
+                $value_return = '{"status": true}';
+            }
+            $this->connectDB->close();
+            return $value_return;
+        }
+        /**
+         * Warning: This method does not close conecction
+         */
+        public function get_total_reservations() {
+            $this->querys = "SELECT id_reservation FROM reservations WHERE status_reservation=0";
+            $this->result = $this->connectDB->query($this->querys);
+            $value_return['unconfirmed'] = $this->result->num_rows;
+            $this->result->free();
+            $this->querys = "SELECT id_reservation FROM reservations WHERE status_reservation=1";
+            $this->result = $this->connectDB->query($this->querys);
+            $value_return['confirmed'] = $this->result->num_rows;
+            $this->result->free();
+            return json_encode($value_return);
+        }
     }
 ?>
