@@ -58,7 +58,7 @@ if (isset($_POST['returnToCalendar'])) {
             <div class="input-group-prepend mb-3">
               <label for="event" class="h6 mt-2 mr-2">Evento:</label>
             </div>
-            <select id="event" class="custom-select mb-3" name="values[]">
+            <select id="event" class="custom-select mb-3" name="values[]" required>
               <option value="" selected hidden>Seleccione una opción</option>
               <option value="Graduacion">Graduacion</option>
               <option value="Boda">Boda</option>
@@ -75,7 +75,7 @@ if (isset($_POST['returnToCalendar'])) {
             <div class="d-flex flex-column flex-wrap">
               <div class="mt-2 d-flex flex-wrap justify-content-center">
                 <label for="start-time" class="mr-2 mt-1">Hr inicio:</label>
-                <input type="number" name="values[]" id="start-time" class="mb-1" min="1" max="12" />
+                <input type="number" name="values[]" id="start-time" class="mb-1" min="1" max="12" required />
                 <select class="ml-2 selected mb-1" name="values[]" id="start-time-select">
                   <option value="am">AM</option>
                   <option value="pm">PM</option>
@@ -83,7 +83,7 @@ if (isset($_POST['returnToCalendar'])) {
               </div>
               <div class="mt-2 d-flex flex-wrap justify-content-center">
                 <label for="final-time" class="mr-2 mt-1">Hr final:</label>
-                <input type="number" name="values[]" id="final-time" class="mb-1" min="1" max="12" />
+                <input type="number" name="values[]" id="final-time" class="mb-1" min="1" max="12" required />
                 <select class="ml-2 selected mb-1" name="values[]" id="final-time-select">
                   <option value="am">AM</option>
                   <option value="pm">PM</option>
@@ -113,7 +113,7 @@ if (isset($_POST['returnToCalendar'])) {
                   echo $row['id_service'];
                   echo '" id="';
                   echo $row['id_service'];
-                  echo '" class="mb-1" min="0"  />
+                  echo '" class="mb-1" min="0" required  />
                       </div>';
                 }
               }

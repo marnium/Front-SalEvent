@@ -247,7 +247,7 @@ if (isset($_POST['updateReservation'])) {
             <div class="d-flex flex-column flex-wrap">
               <div class="mt-2 d-flex flex-wrap justify-content-center">
                 <label for="start-time" class="mr-2 mt-1">Hr inicio:</label>
-                <input type="number" name="values[]" id="start-time" class="mb-1" min="1" max="12" value="<?php echo $startDate; ?>" />
+                <input type="number" name="values[]" id="start-time" class="mb-1" min="1" max="12" value="<?php echo $startDate; ?>" required />
                 <select class="ml-2 selected mb-1" name="values[]" id="start-time-select">
                   <option value="am" <?php
                                       echo ($timeAcronymStart == "am") ? "selected" : "";
@@ -259,7 +259,7 @@ if (isset($_POST['updateReservation'])) {
               </div>
               <div class="mt-2 d-flex flex-wrap justify-content-center">
                 <label for="final-time" class="mr-2 mt-1">Hr final:</label>
-                <input type="number" name="values[]" id="final-time" class="mb-1" min="1" max="12" value="<?php echo $endDate; ?>" />
+                <input type="number" name="values[]" id="final-time" class="mb-1" min="1" max="12" value="<?php echo $endDate; ?>" required />
                 <select class="ml-2 selected mb-1" name="values[]" id="final-time-select">
                   <option value="am" <?php
                                       echo ($timeAcronymEnd == "am") ? "selected" : "";
@@ -299,7 +299,7 @@ if (isset($_POST['updateReservation'])) {
                     intval($folioServices)
                   );
                   echo ($amount_service != "") ? $amount_service : '0';
-                  echo '"  />
+                  echo '" required />
                       </div>';
                 }
               }
