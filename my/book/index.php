@@ -6,6 +6,13 @@ if (!isset($_SESSION['data_user'])) {
 if (isset($_SESSION['data_admin'])) {
   header("Location: /admin/");
 }
+if (!isset($_SESSION['newReservation'])) {
+  header("Location: /my/calendar");
+}
+if (isset($_POST['returnToCalendar'])) {
+  unset($_SESSION['newReservation']);
+  header("Location: /my/calendar/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,39 +44,30 @@ if (isset($_SESSION['data_admin'])) {
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container logo">
-      <a class="navbar-brand" href="/my/">
-        <img src="../../img/home/logo.png" class="fas fa-link" height="50px" />
-        SallEvent
-      </a>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/home/">Cerrar Sesion</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <?php
+  include('../../partials/my/navigation-options.php');
+  ?>
 
   <main class="container-fluid d-flex flex-wrap justify-content-around m-auto">
     <h1 class="col-md-12">Reservar:</h1>
     <section class="col-md-7 border border-dark">
+      <div id="box-confirmpass" class="col-md-12 d-flex flex-wrap justify-content-center"></div>
       <form action="/my/booking/" id="form-book" method="POST">
         <div class="d-flex flex-row flex-wrap">
           <div class="col-md-12 input-group mb-2 mt-2" id="eventother">
             <div class="input-group-prepend mb-3">
               <label for="event" class="h6 mt-2 mr-2">Evento:</label>
             </div>
-            <select id="event" class="custom-select mb-3" name="event">
+            <select id="event" class="custom-select mb-3" name="values[]">
               <option value="" selected hidden>Seleccione una opción</option>
-              <option value="graduation">Graduacion</option>
-              <option value="wedding">Boda</option>
-              <option value="christening">Bautizo</option>
-              <option value="communion">Comunion</option>
-              <option value="confirmation">Confirmacion</option>
-              <option value="birthday">Cumpleaños</option>
-              <option value="fifteen years">Quince años</option>
-              <option value="meeting">Reunion</option>
+              <option value="Graduacion">Graduacion</option>
+              <option value="Boda">Boda</option>
+              <option value="Bautizo">Bautizo</option>
+              <option value="Comunion">Comunion</option>
+              <option value="Confirmacion">Confirmacion</option>
+              <option value="Cumpleaños">Cumpleaños</option>
+              <option value="Quince años">Quince años</option>
+              <option value="Reunion">Reunion</option>
               <option value="other">Otro</option>
             </select>
           </div>
@@ -77,16 +75,16 @@ if (isset($_SESSION['data_admin'])) {
             <div class="d-flex flex-column flex-wrap">
               <div class="mt-2 d-flex flex-wrap justify-content-center">
                 <label for="start-time" class="mr-2 mt-1">Hr inicio:</label>
-                <input type="number" name="start-time" id="start-time" class="mb-1" min="1" max="12" />
-                <select class="ml-2 selected mb-1" name="start-time-select" id="selectsTimetableStart">
+                <input type="number" name="values[]" id="start-time" class="mb-1" min="1" max="12" />
+                <select class="ml-2 selected mb-1" name="values[]" id="start-time-select">
                   <option value="am">AM</option>
                   <option value="pm">PM</option>
                 </select>
               </div>
               <div class="mt-2 d-flex flex-wrap justify-content-center">
                 <label for="final-time" class="mr-2 mt-1">Hr final:</label>
-                <input type="number" name="final-time" id="final-time" class="mb-1" min="1" max="12" />
-                <select class="ml-2 selected mb-1" name="final-time-select" id="selectsTimetableEnd">
+                <input type="number" name="values[]" id="final-time" class="mb-1" min="1" max="12" />
+                <select class="ml-2 selected mb-1" name="values[]" id="final-time-select">
                   <option value="am">AM</option>
                   <option value="pm">PM</option>
                 </select>
@@ -107,15 +105,15 @@ if (isset($_SESSION['data_admin'])) {
                   echo '
                       <div class="col-md-4 mb-2 d-flex flex-wrap justify-content-center">
                         <label for="';
-                  echo $row['name_service'];
+                  echo $row['id_service'];
                   echo '" class="mr-2 mt-1">';
                   echo $row['name_service'] . ":";
                   echo '</label>
                         <input type="number" name="';
-                  echo $row['name_service'];
+                  echo $row['id_service'];
                   echo '" id="';
-                  echo $row['name_service'];
-                  echo '"class="mb-1" min="0"  />
+                  echo $row['id_service'];
+                  echo '" class="mb-1" min="0"  />
                       </div>';
                 }
               }
@@ -158,103 +156,33 @@ if (isset($_SESSION['data_admin'])) {
     <section class="col-md-12 d-flex flex-wrap justify-content-around mt-4">
       <div class="d-flex flex-wrap justify-content-around mb-2">
         <i class="bx bxs-cart-add icon-size mr-2"></i>
-        <button type="submit" class="btn btn-primary bg-dark mr-3 mb-2 border-0" form="form-book">
+        <button type="submit" class="btn btn-primary bg-dark mr-3 mb-2 border-0" 
+          form="form-book" name="reserveDay">
           Reservar dia
         </button>
         <button class="btn btn-primary bg-dark mr-3 mb-2 border-0" onclick="quote()">
           Cotizar
         </button>
-        <button type="reset" class="btn btn-primary bg-dark mr-3 mb-2 border-0" form="form-book">
+        <button type="reset" class="btn btn-primary bg-dark mr-3 mb-2 border-0" form="form-book" onclick="restore()">
           Limpiar
         </button>
       </div>
       <div class="d-flex flex-wrap justify-content-around mb-2 repair-size">
-        <a type="reset" href="/my/calendar" class="text-white text-decoration-none">
-          <button class="btn btn-primary bg-dark mr-3 pl-2 pr-2 border-0">
+        <form method="POST">
+          <button type="submit" class="btn btn-primary bg-dark mr-3 pl-2 pr-2 border-0" name="returnToCalendar">
             Regresar
           </button>
-        </a>
+        </form>
         <div class="div">
           <label for="total" class="mt-2 mr-2">Total:</label>
-          <input type="number" id="total" name="total" value="0" min="0" />
+          <input type="number" id="total" name="total" value="0" min="0" disabled />
         </div>
       </div>
     </section>
   </main>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  <script>
-    $(document).ready(function() {
-      $("#event").change(function() {
-        if ($("#event").val() === "other") {
-          $("#eventother").append(
-            `<div id="boxotheranother" class="col-md-8 mb-2 d-flex flex-wrap justify-content-center mb-3">
-                <label for="writeanother" class="mr-2 mt-1">Mencionelo: </label>
-                <input type="text" name="writeanother" 
-                  id="writeanother" class="mb-1" min="0"  />
-              </div>`
-          );
-        } else {
-          if ($("#boxotheranother").length != 0) {
-            $("#boxotheranother").remove();
-          }
-        }
-      });
-      $("#form-book").submit(function() {
-        //validar seleccion de evento
-        if ($("#boxotheranother").length != 0) {
-          if ($("#writeanother").val() === "") {
-            showMessage();
-            return false;
-          }
-        } else {
-          if ($("#event").val() == "") {
-            showMessage();
-            return false;
-          }
-        }
-
-        if (!validateTime("#start-time")) { return false; };
-        if (!validateTime("#final-time")) { return false; };
-
-        //return false;
-      });
-    });
-
-    function validateTime(id) {
-      band = true;
-      if (isNaN($(id).val()) || ($(id).val().replace(" ", "").trim() == "")) {
-        showMessage();
-        band = false;
-      } else {
-        if ((($(id).val()) % 1 != 0) || ($(id).val() < 1) || ($(id).val() > 12)) {
-          showMessage();
-          band = false;
-        }
-      }
-      return band;
-    }
-    function validateService(id){
-      band = true;
-      if (isNaN($(id).val()) || ($(id).val().replace(" ", "").trim() == "")) {
-        showMessage();
-        band = false;
-      } else {
-        if ((($(id).val()) % 1 != 0) || ($(id).val() < 1)) {
-          showMessage();
-          band = false;
-        }
-      }
-      return band;
-    }
-    function showMessage() {
-      console.log('error');
-    }
-
-    function isNumber() {
-
-    }
-  </script>
+  <script src="../../js/my/book.js"></script>
 </body>
 
 </html>

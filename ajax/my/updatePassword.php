@@ -4,8 +4,6 @@
 
     $newpassword = json_decode($_POST['newpassword']);
     $oldpassword = json_decode($_POST['oldpassword']);
-    /*$newpassword = $_POST['newpassword'];
-    $oldpassword = $_POST['oldpassword'];*/
 
     require_once('../../databaseOperations/operations.php');
     $operations = new OperationBD();
@@ -17,5 +15,4 @@
     }
     
     echo json_encode($newpassword);
-    ##echo json_encode($newpassword);
 ?>

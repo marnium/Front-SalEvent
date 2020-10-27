@@ -6,6 +6,15 @@ if (!isset($_SESSION['data_user'])) {
 if (isset($_SESSION['data_admin'])) {
   header("Location: /admin/");
 }
+if (isset($_SESSION['newReservation'])) {
+  header("Location: /my/book/");
+}
+if (isset($_SESSION['viewStatus'])) {
+  header("Location: /my/reservation/");
+}
+if (isset($_SESSION['modifyReservation'])) {
+  header("Location: /my/modify/");
+}
 require_once('../../databaseOperations/operations.php');
 $operations = new OperationBD();
 $dataRoom = $operations->getDataRoom();
@@ -140,8 +149,7 @@ $dataRoom = $operations->getDataRoom();
                     echo $row['price_total'];
                     echo '</td>';
                     echo '<td>';
-                    echo '<a href="/my/modify" class="text-white text-decoration-none mb-2">
-                      <button class="btn btn-primary bg-dark border-0">
+                    echo '<button class="btn btn-primary bg-dark border-0" onclick="modidyReservation(this)">
                         Modificar
                       </button>
                     </a>';
@@ -152,11 +160,9 @@ $dataRoom = $operations->getDataRoom();
                     </button>';
                     echo '</td>';
                     echo '<td>';
-                    echo '<a href="/my/reservation" class="text-white text-decoration-none mb-2">
-                      <button href="as" class="btn btn-primary bg-dark border-0">
+                    echo '<button class="btn btn-primary bg-dark border-0" onclick="viewStatus(this)">
                         Estado
-                      </button>
-                    </a>';
+                      </button>';
                     echo '</td>';
                     echo '</tr>';
                   }
@@ -185,9 +191,37 @@ $dataRoom = $operations->getDataRoom();
   <script>
     var date = new Date();
     document.getElementById('showDate').innerHTML = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-                var total;
+    function modidyReservation(cell){
+      $.ajax({
+          data: {
+            "id": JSON.stringify(cell.parentNode.parentNode.cells[0].innerHTML)
+          },
+          type: "post",
+          dataType: "json",
+          url: "../../ajax/my/modifyReservation.php",
+        })
+        .done(function(data, textStatus, jqXHR) {
+          document.location.reload();
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+        });
+    }
+    function viewStatus(cell){
+      $.ajax({
+          data: {
+            "id": JSON.stringify(cell.parentNode.parentNode.cells[0].innerHTML)
+          },
+          type: "post",
+          dataType: "json",
+          url: "../../ajax/my/viewStatus.php",
+        })
+        .done(function(data, textStatus, jqXHR) {
+          document.location.reload();
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+        });
+    }
     function deleteReservation(cell) {
-      total = cell;
       if (document.getElementById("msg-error-successful")) {
         $("#msg-error-successful").remove();
       }

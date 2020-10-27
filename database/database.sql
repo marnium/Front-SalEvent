@@ -80,20 +80,4 @@ INSERT INTO user VALUES(null,0,"Mario","Perez","Ruiz","mario_123@hotmail.com","9
 INSERT INTO direction VALUES(null,"Siloe","oaxaca","Pochutla","12");
 INSERT INTO schedule values(null,'Y','Y','Y','Y','Y','Y','Y');
 INSERT INTO info_room VALUES(null,1,1);
-INSERT INTO room VALUES(null,"SallEvent",1000,"salon bien chido",100,1);
-INSERT INTO services VALUES(null,"Silla",10,"Blancos");
-INSERT INTO services VALUES(null,"Mesas",10,"Blancos");
-INSERT INTO services VALUES(null,"Lonas",10,"Blancos");
-INSERT INTO services VALUES(null,"SOnido",10,"Blancos");
-INSERT INTO folioServices VALUES(null,500);
-INSERT INTO selectedservices VALUES(1,1,2,30);
-INSERT INTO reservations VALUES(null,"boda",1,12312,"2020-10-25 13:00:00","2020-10-25 15:00:00",1,1,1);
-INSERT INTO reservations VALUES(null,"bautizo",1,12312,"2020-10-26 13:00:00","2020-10-26 15:00:00",1,1,1);
-INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",1,1,1);
-
-INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",3,1,1);
-
-INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
-INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
-INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
-INSERT INTO reservations VALUES(null,"bautizo",1,12,"2020-10-27 06:00:00","2020-10-27 09:00:00",4,1,1);
+INSERT INTO room VALUES(null,"SallEvent",1000,"salon San Pedro Pochutla",100,1);
