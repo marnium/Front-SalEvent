@@ -145,15 +145,11 @@
         public function addReservation($typeEvent,$priceTotal,$dateReservationStart,
             $dateReservationEnd,$idUser,$idFolioServices){
 
-            $this->return = "";
             $this->querys = "INSERT INTO reservations VALUES(null,'$typeEvent', ".
                 "0, $priceTotal, '$dateReservationStart', '$dateReservationEnd', ".
                 "$idUser,$idFolioServices,1);";
-            if($this->connectDB->query($this->querys)==TRUE){
-                $this->result = $this->connectDB->insert_id;
-            }  
+            $this->connectDB->query($this->querys);
 
-            return $this->result;
         }
         public function getInformationReservation($idReservation,$idUser){
             $this->querys = "SELECT * FROM reservations WHERE id_reservation=$idReservation".

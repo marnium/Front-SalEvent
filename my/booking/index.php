@@ -84,7 +84,7 @@ if (isset($_POST['reserveDay'])) {
           $dateEnd = $_SESSION['newReservation'][0] . "-" . $_SESSION['newReservation'][1] . "-" .
             $_SESSION['newReservation'][2] . " " . $finalHour . ":00:00";
 
-          $idReservation = $operations->addReservation(
+          $operations->addReservation(
             $typeEvent,
             $priceByHour + $totalServices,
             $dateStart,
