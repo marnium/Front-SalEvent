@@ -76,6 +76,13 @@ CREATE TABLE IF NOT EXISTS reservations(
     FOREIGN KEY (id_folio_services) REFERENCES folioServices(id_folio_services),
     FOREIGN KEY (id_room) REFERENCES room(id_saloon)
 ) ENGINE InnoDB;
+CREATE TABLE IF NOT EXISTS contac(
+    id_contac INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    phone VARCHAR(11) NOT NULL,
+    messague TEXT NOT NULL
+) ENGINE InnoDB;
 INSERT INTO user VALUES(null,0,"Mario","Perez","Ruiz","mario_123@hotmail.com","9581231234","admin","admin");
 INSERT INTO direction VALUES(null,"Siloe","oaxaca","Pochutla","12");
 INSERT INTO schedule values(null,'Y','Y','Y','Y','Y','Y','Y');

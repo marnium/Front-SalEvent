@@ -138,11 +138,52 @@ if (isset($_SESSION['data_admin'])) {
    ?>
 
    <script>
-      function validateData(){
-         
-      }
+      
       $(document).ready(function() {
-         
+         $("#form-contact").submit(function() {
+            /*if (!validateData()) {
+               showMessage("Corrija o rellene todos los campos");
+            } else {*/
+               $.ajax({
+                     data: {
+                        "fullName": JSON.stringify($("#full_name").val()),
+                        "email": JSON.stringify($("#email").val()),
+                        "telphone": JSON.stringify($("#telphone").val()),
+                        "msg": JSON.stringify($("#msg").val())
+                     },
+                     type: "post",
+                     dataType: "json",
+                     url: "../ajax/sendMessageContac.php",
+                  })
+                  .done(function(data, textStatus, jqXHR) {
+
+                     if (!document.getElementById("msg-error-successful")) {
+                        $("#box-confirmpass").append(
+                           `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-success alert-dismissible fade show" role="alert">
+                        <small>Se ha enviado tu mensaje</small>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </p>`
+                        );
+                     }
+                  })
+                  .fail(function(jqXHR, textStatus, errorThrown) {
+
+                     if (!document.getElementById("msg-error-successful")) {
+                        $("#box-confirmpass").append(
+                           `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+                        <small>¡Upps! No se envio tu mensaje</small>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </p>`
+                        );
+                     }
+                  });
+            /*}
+            return false;*/
+         });
       });
    </script>
 </body>
