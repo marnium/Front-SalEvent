@@ -128,6 +128,9 @@ var vm = new Vue({
                         vm.data_customers[index_customer].user_user, 'alert-success', 'customers');
                      vm.data_customers.splice(index_customer, 1);
                      return;
+                  } else if(data_parse.type = 'exists_reservations') {
+                     create_notification('<strong>Warning</strong>: ' + vm.data_customers[index_customer]
+                     + ' tiene reservaciones sin concluir. No se puede eliminado', 'alert-warning', 'customers');
                   }
                }
                create_notification('<strong>Error</strong>: No se pudo eliminar al usuario ' +

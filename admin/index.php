@@ -438,7 +438,8 @@ if (!isset($_SESSION['data_admin'])) {
       $operationDB->get_total_reservations() . "'); var data_salon = JSON.parse('" .
       $operationDB->select_room_for_id(1) . "'); var data_customers = JSON.parse('" .
       $operationDB->select_user_type1() . "'); var data_admin = JSON.parse('" .
-      json_encode($_SESSION['data_admin']) . "'); var data_services = JSON.parse('" .
+      $operationDB->select_data_admin($_SESSION['data_admin']['id_user']) .
+      "'); var data_services = JSON.parse('" .
       $operationDB->select_services() . "');</script>";
    $operationDB->closeConnection();
    ?>
