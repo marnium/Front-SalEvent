@@ -179,14 +179,11 @@
             } else {
                 $query_status['id_user'] = $this->connectDB->insert_id;
             }
-            $this->connectDB->close();
             return $query_status;
         }
         /**
          * This method checks if the user indicated by $user
          * exists in the user table.
-         * Warning: the method does not close the connection
-         * to the database.
          */
         public function user_exists(string $user): bool {
             if($this->connectDB->query("SELECT id_user FROM user WHERE user_user='$user'")->num_rows > 0) {
@@ -224,15 +221,11 @@
             } else {
                 $value_return = $this->create_room($room, $schedule, $direction);
             }
-            $this->connectDB->close();
-
             return $value_return;
         }
         /**
          * This method checks if the room indicated by $id_room
          * exists in the table room.
-         * Warning: the method does not close the connection
-         * to the database.
          */
         public function room_exists(int $id_rom): bool {
             if($this->connectDB->query("SELECT id_saloon FROM room WHERE id_saloon='$id_rom'")->num_rows > 0) {
@@ -310,8 +303,6 @@
         /**
          * This method selects el room indicated by
          * $id_rom.
-         * Warning: the method does not close the connection
-         * to the database.
          */
         public function select_room_for_id(int $id_room) {
             $data_salon['t_direction'] = array('id_direction'=>0,'street_direction'=>'',
@@ -370,7 +361,6 @@
                 }
                 $this->result->free();
             }
-            $this->connectDB->close();
             return json_encode($value_return);
         }
         /**
@@ -388,9 +378,11 @@
                 }
                 $this->result->free();
             }
-            $this->connectDB->close();
             return json_encode($value_return);
         }
+        /**
+         * This method update user (client and admin) in table user.
+         */
         public function update_user($data) {
             $value_return = '{"status": false}';
             $this->querys = "UPDATE user SET name_user='".$data['name_user']."',pa_lastname_user='".
@@ -400,9 +392,11 @@
             if($this->connectDB->query($this->querys) === TRUE) {
                 $value_return = '{"status": true}';
             }
-            $this->connectDB->close();
             return $value_return;
         }
+        /**
+         * This method delete user (only client) in table user.
+         */
         public function remove_user_type1($id_user) {
             $value_return = '{"status": false}';
             if($this->connectDB->query("DELETE FROM user WHERE type_user=1 AND id_user=$id_user") === TRUE) {
@@ -410,6 +404,9 @@
             }
             return $value_return;
         }
+        /**
+         * This method select the reservations in status confirmed.
+         */
         public function select_reservations_conf() {
             $value_return = [];
             $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
@@ -422,9 +419,11 @@
                 }
                 $this->result->free();
             }
-            $this->connectDB->close();
             return $value_return;
         }
+        /**
+         * This methos select the reservations in status unconfirmed.
+         */
         public function select_reservations_unconf() {
             $value_return = [];
             $this->querys = "SELECT id_reservation,date_reservation_start,name_user,phone_user,".
@@ -437,20 +436,21 @@
                 }
                 $this->result->free();
             }
-            $this->connectDB->close();
             return $value_return;
         }
+        /**
+         * This method update status reservation to confirmed.
+         */
         public function confirm_reservation($id_reservation) {
             $value_return = '{"status": false}';
             $this->querys = "UPDATE reservations SET status_reservation=1 WHERE id_reservation=$id_reservation";
             if($this->connectDB->query($this->querys) === TRUE) {
                 $value_return = '{"status": true}';
             }
-            $this->connectDB->close();
             return $value_return;
         }
         /**
-         * Warning: This method does not close conecction
+         * This method return total reservations {'confirmed', 'unconfirmed'}.
          */
         public function get_total_reservations() {
             $this->querys = "SELECT id_reservation FROM reservations WHERE status_reservation=0";
@@ -462,6 +462,50 @@
             $value_return['confirmed'] = $this->result->num_rows;
             $this->result->free();
             return json_encode($value_return);
+        }
+        public function select_services() {
+            $value_return = [];
+            $this->querys = "SELECT * FROM services LIMIT 15";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                while($row = $this->result->fetch_assoc()) {
+                    $value_return[] = $row;
+                }
+                $this->result->free();
+            }
+            return json_encode($value_return);
+        }
+        public function select_services_for_name(string $name_service) {
+            $value_return['value'] = false;
+            $this->querys = "SELECT * FROM services WHERE name_service LIKE '%$name_service%' LIMIT 15";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                $value_return['value'] = true;
+                while($row = $this->result->fetch_assoc()) {
+                    $value_return['data_services'][] = $row;
+                }
+                $this->result->free();
+            }
+            return json_encode($value_return);
+        }
+        public function create_service($data) {
+            $value_return['status'] = false;
+            $this->querys = "INSERT INTO services VALUES(null,'".$data['name_service']."',".
+                $data['price'].",'".$data['detail']."')";
+            if($this->connectDB->query($this->querys) === TRUE) {
+                $value_return['status'] = true;
+                $value_return['id_service'] = $this->connectDB->insert_id;
+            }
+            return json_encode($value_return);
+        }
+        public function update_service($data) {
+            $value_return = '{"status": false}';
+            $this->querys = "UPDATE services SET name_service='".$data['name_service']."',price=".
+                $data['price'].",detail='".$data['detail']."' WHERE id_service=".$data['id_service'];
+            if($this->connectDB->query($this->querys) === TRUE) {
+                $value_return = '{"status": true}';
+            }
+            return $value_return;
         }
     }
 ?>

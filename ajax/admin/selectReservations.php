@@ -19,5 +19,6 @@ if(isset($_POST['select_reservations'])) {
          $data_reser['unconfirmed'] = $operations->select_reservations_unconf();
          echo json_encode($data_reser);
       }
+      $operations->closeConnection();
    }
 ?>

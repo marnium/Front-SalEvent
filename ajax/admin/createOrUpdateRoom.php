@@ -5,5 +5,6 @@
       $data_salon = json_decode($_POST['data-salon'], true);
       echo $operationDB->create_or_update_room($data_salon['t_room'], 
          $data_salon['t_schedule'], $data_salon['t_direction']);
+      $operationDB->closeConnection();
    }
 ?>

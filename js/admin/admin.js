@@ -37,6 +37,15 @@ var vm = new Vue({
          unconfirmed: []
       },
       total_reservations: total_reservations,
+      data_services: data_services,
+      modal_service: {
+         id_service: 1,
+         name_service: '',
+         price: 0,
+         detail: ''
+      },
+      is_modal_service_create: true,
+      index_service: 0
    },
    methods: {
       modify_admin: function() {
@@ -58,15 +67,14 @@ var vm = new Vue({
                      vm.data_admin = JSON.parse(JSON.stringify(vm.modal_customer));
                      create_notification('<strong>Exitoso</strong>: Se actualizo correctamente tu información',
                         'alert-success', 'personal-information');
-                     $('#box-modify-customer').modal("hide");
                      return;
                   }
                }
                create_notification('<strong>Error</strong>: No se pudo actualizar tu información',
                   'alert-danger', 'personal-information');
-               $('#box-modify-customer').modal("hide");
             }
          );
+         $('#box-modify-customer').modal("hide");
       },
       modify_customer: function(index_customer) {
          this.is_modal_create = false;
@@ -99,15 +107,14 @@ var vm = new Vue({
                         JSON.parse(JSON.stringify(vm.modal_customer)))
                      create_notification('<strong>Exitoso</strong>: Se actualizo correctamente la información de ' +
                         vm.modal_customer.user_user, 'alert-success', 'customers');
-                     $('#box-modify-customer').modal("hide");
                      return;
                   }
                }
                create_notification('<strong>Error</strong>: No se pudo actualizar la información de ' +
                   vm.modal_customer.user_user, 'alert-danger', 'customers');
-               $('#box-modify-customer').modal("hide");
             }
          );
+         $('#box-modify-customer').modal("hide");
       },
       remove_customer: function(index_customer) {
          $.post('../ajax/admin/deleteUser.php', {
@@ -158,6 +165,7 @@ var vm = new Vue({
                      return;
                   }
                }
+               $('#box-modify-customer').modal("hide");
                create_notification('<strong>Error</strong>: No se pudo registrar el usuario; conexión fallida',
                   'alert-danger', 'customers');
             }
@@ -190,8 +198,8 @@ var vm = new Vue({
                      create_notification('<strong>Error</strong>: No se pudo ' + status_msg, 'alert-danger', 'salon');
                      return;
                   }
-                  create_notification('<strong>Error</strong>: Conexión fallida');
                }
+               create_notification('<strong>Error</strong>: Conexión fallida');
             }
          );
       },
@@ -378,6 +386,74 @@ var vm = new Vue({
                }
             }
          );
+      },
+      fill_service: function() {
+         this.is_modal_service_create = true;
+         this.restart_modal_service();
+         $('#box-services').modal({
+            backdrop: 'static',
+            keyboard: false
+         });
+      },
+      create_or_update_service: function() {
+         if(this.is_modal_service_create)
+            this.create_service();
+         else
+            this.update_service();
+      },
+      create_service: function() {
+         $.post('../ajax/admin/createService.php',
+            {'data_service': JSON.stringify(this.modal_service)},
+            function(data, status) {
+               if(status == 'success') {
+                  let data_parse = JSON.parse(data);
+                  if(data_parse.status) {
+                     vm.modal_service.id_service = data_parse.id_service;
+                     vm.data_services.unshift(JSON.parse(JSON.stringify(vm.modal_service)));
+                     create_notification('<strong>Exitoso</strong>: Se registro correctamente el servicio',
+                        'alert-success', 'services');
+                     return;
+                  }
+               }
+               create_notification('<strong>Error</strong>: No se pudo registrar el servicio',
+                  'alert-danger', 'services');
+            }
+         );
+         $('#box-services').modal("hide");
+      },
+      modify_service: function(index_service) {
+         this.index_service = index_service;
+         this.is_modal_service_create = false;
+         this.restart_modal_service();
+         $('#box-services').modal({
+            backdrop: 'static',
+            keyboard: false
+         });
+      },
+      update_service: function() {
+         $.post('../ajax/admin/updateService.php',
+            {'data_service': JSON.stringify(this.modal_service)},
+            function(data, status) {
+               if(status == 'success') {
+                  if(JSON.parse(data).status) {
+                     Vue.set(vm.data_services, vm.index_service,
+                        JSON.parse(JSON.stringify(vm.modal_service)));
+                     create_notification('<strong>Exitoso</strong>: Se ha actualizdo la información del servicio',
+                        'alert-success', 'services');
+                     return;
+                  }
+               }
+               create_notification('<strong>Error</strong>: No se pudo actualizar la información del servicio',
+                  'alert-danger', 'services');
+            }
+         );
+         $('#box-services').modal("hide");
+      },
+      restart_modal_service: function() {
+         if(this.is_modal_service_create)
+            this.modal_service = {id_service: 1, name_service: '', price: 0, detail: ''}
+         else
+            this.modal_service = JSON.parse(JSON.stringify(this.data_services[this.index_service]));
       }
    },
    computed: {
@@ -413,8 +489,22 @@ var vm = new Vue({
                this.state_inputs_modal[key] = !new_state;
             }
          }
+      },
+      modal_data_service: function() {
+         if (this.is_modal_service_create) {
+            return {
+               title: "Agregue los datos para el ",
+               strong: 'nuevo servicio',
+               text_btn: "Crear servicio",
+            }
+         }
+         return {
+            title: "Modificar información del servicio: ",
+            strong: this.modal_service.name_service,
+            text_btn: "Actualizar",
+         }
       }
-   }
+   },
 });
 
 var id_page_current = '#customers';
@@ -432,7 +522,7 @@ $(document).ready(function() {
    $('#customers > div > h4').text(c_date.getDate() + '/' + (c_date.getMonth() + 1) +
       '/' + c_date.getFullYear());
    $('#search-customers').on('input', function() {
-      if ($(this).val()) {
+      //if ($(this).val()) {
          $.post('../ajax/admin/selectUserForUser.php', {
                user: $(this).val()
             },
@@ -447,13 +537,31 @@ $(document).ready(function() {
                }
             }
          );
-      }
+      //}
    });
    $('#box-modify-customer').on('hidden.bs.modal', function() {
       if (document.getElementById('bxm-error-user')) {
          $('#bxm-error-user').remove();
       }
       $('#bxm-email').removeClass('error-input').removeClass('success-input');
+   });
+   $('#search-services').on('input', function() {
+      //if ($(this).val()) {
+         $.post('../ajax/admin/selectServiceForName.php', {
+               'name_service': $(this).val()
+            },
+            function(data, status) {
+               if (status == 'success') {
+                  let parse_data = JSON.parse(data);
+                  if (parse_data.value) {
+                     vm.data_services = parse_data.data_services;
+                  } else {
+                     vm.data_services = [];
+                  }
+               }
+            }
+         );
+      //}
    });
 });
 
