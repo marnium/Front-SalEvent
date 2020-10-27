@@ -139,7 +139,7 @@ function restore() {
 
 function quote() {
     if (validateForm()) {
-        var finalhourstarthour, finalhour;
+        var finalhour;
 
         starthour = (($("#start-time-select").val()).toLowerCase() == "am") ?
             parseInt($("#start-time").val()) :
