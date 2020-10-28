@@ -6,21 +6,21 @@ Esta aplicación fue realizada con el proposito de realizar reservaciones de un 
 - **Usuario Administrador**:Este tipo de usuario es el encargado de administrar los eventos/acciones que suceden en la aplicacion web modificar/eliminar.
 
 # CAPTURAS DE PANTALLA DE LA APLICACIÓN WEB (VISTAS GENERALES)
-![Home](IMGRD/Home.PNG)
-![ServF](IMGRD/ServiciosOut.PNG)
-![Contact](IMGRD/Contactus.PNG)
+![Home](IMGRD/Home.png)
+![ServF](IMGRD/ServiciosOut.png)
+![Contact](IMGRD/Contactus.png)
 
 ## LOGIN
  - **Usuario**: `admin`
  - **Contraseña**: `admin`
 
-![Loggin](IMGRD/Loggin.PNG)
+![Loggin](IMGRD/Loggin.png)
 
 ## AREA CLIENTES VISTA ADMINISTRADOR
  - **Boton Modificar**: `Edita y actualiza los datos de los clientes en la BD`
  - **Boton Eliminar**: `Elimina  el registro del cliente seleccionado`
 
-![Clientes](IMGRD/Clientes.PNG)
+![Clientes](IMGRD/Clientes.png)
 
 
 ## AREA RESERVACIONES VISTA ADMINISTRADOR
@@ -28,25 +28,25 @@ Esta aplicación fue realizada con el proposito de realizar reservaciones de un 
 
  - **Boton Buscar**: `Busca las reservaciones ya realizadas en la app, por filtro de "no paga", "pagada", "todas"`
 
-![Reservacion](IMGRD/Reservaciones.PNG)
+![Reservacion](IMGRD/Reservaciones.png)
 
 ## AREA SERVICIOS VISTA ADMINISTRADOR
  - **Barra de busqueda**: `Permite realizar busquedas de servicios dados de alta en la app`
 
  - **Tabla servicios**: `Nos permite agregar  multiples servicios a nuestros salones`
 
-![Servicio](IMGRD/Servicios.PNG)
+![Servicio](IMGRD/Servicios.png)
 
 
 ## AREA SALON VISTA ADMINISTRADOR
  - **Descripción general**: `Nos Permite Modificar y Actualizar los datos e informacion de los salones disponibles en la App`
 
 
-![Salon](IMGRD/Salon.PNG)
+![Salon](IMGRD/Salon.png)
 
 
 ## AREA DATOS PERSONALES VISTA ADMINISTRADOR
  - **Descripción general**: `Nos Permite Modificar y Actualizar los datos e informacion del administrador actual disponible en la App`
 
 
-![Datos](IMGRD/Datos.PNG)
+![Datos](IMGRD/Datos.png)
