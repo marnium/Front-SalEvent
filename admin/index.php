@@ -446,13 +446,13 @@ if (!isset($_SESSION['data_admin'])) {
    // Data customers, salon and info-admin
    include_once('../databaseOperations/operations.php');
    $operationDB = new OperationBD();
-   echo "<script>var total_reservations = JSON.parse('" .
-      $operationDB->get_total_reservations() . "'); var data_salon = JSON.parse('" .
-      $operationDB->select_room_for_id(1) . "'); var data_customers = JSON.parse('" .
-      $operationDB->select_user_type1() . "'); var data_admin = JSON.parse('" .
-      $operationDB->select_data_admin($_SESSION['data_admin']['id_user']) .
-      "'); var data_services = JSON.parse('" .
-      $operationDB->select_services() . "');</script>";
+   echo "<script>var total_reservations = JSON.parse('".
+      addslashes($operationDB->get_total_reservations())."'); var data_salon = JSON.parse('".
+      addslashes($operationDB->select_room_for_id(1))."'); var data_customers = JSON.parse('".
+      addslashes($operationDB->select_user_type1())."'); var data_admin = JSON.parse('".
+      addslashes($operationDB->select_data_admin($_SESSION['data_admin']['id_user'])).
+      "'); var data_services = JSON.parse('".
+      addslashes($operationDB->select_services())."');</script>";
    $operationDB->closeConnection();
    ?>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

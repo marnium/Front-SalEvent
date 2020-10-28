@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 session_start();
   if(isset($_SESSION['data_user'])){
     header("Location: /my/");
@@ -27,23 +24,24 @@ session_start();
   ?>
   <main class="container p-4 mt-2">
   <?php
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['user'], $_POST['password'], $_POST['name'], $_POST['pa_lastname'],
+      $_POST['mo_lastname'], $_POST['email'], $_POST['phone'])) {
       require_once('../databaseOperations/operations.php');
       $operationDB = new OperationBD();
       $response = $operationDB->create_user($_POST['name'],$_POST['pa_lastname'],$_POST['mo_lastname'],
       $_POST['email'],$_POST['phone'],$_POST['user'],$_POST['password']);
 
       if(!$response['status']) {
-        $message_error = 'El usuario '.$_POST['user'].' ya existe, especifique otro usuario';
+        $message_error = 'El usuario '.htmlspecialchars($_POST['user']).' ya existe, especifique otro usuario';
         if($response['type'] == 'error') {
-          $message_error = 'Ocurrió un error al registrarte '.$_POST['name'].'. Por favor vuelve a intentarlo.';
+          $message_error = 'Ocurrió un error al registrarte '.htmlspecialchars($_POST['name']).'. Por favor vuelve a intentarlo.';
         }
         echo '<div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">'.
           "<strong>Error</strong>: $message_error".
           '<button type="button" class="close" data-dismiss="alert" aria-label="close">'.
           '<span aria-hidden="true">&times;</span></button></div>';
       } else {
-        $_SESSION['message-register'] = "¡Felicidades!".$_POST['name'].
+        $_SESSION['message-register'] = "¡Felicidades! ".htmlspecialchars($_POST['name']).
           ", has sido registrado exitosamente. Por favor inicia sesión";
         header('Location: /login/');
       }
@@ -115,12 +113,12 @@ session_start();
   <script src="../js/register.js"></script>
   <?php
     if(isset($response) && !$response['status']) {
-      echo '<script>$(document).ready(function(){$("#name").val("'.$_POST['name'].'");'.
-        '$("#pa_lastname").val("'.$_POST['pa_lastname'].'");'.
-        '$("#mo_lastname").val("'.$_POST['mo_lastname'].'");'.
-        '$("#user").val("'.$_POST['user'].'");'.
-        '$("#email").val("'.$_POST['email'].'");'.
-        '$("#phone").val("'.$_POST['phone'].'");});</script>';
+      echo '<script>$(document).ready(function(){$("#name").val("'.addslashes($_POST['name']).'");'.
+        '$("#pa_lastname").val("'.addslashes($_POST['pa_lastname']).'");'.
+        '$("#mo_lastname").val("'.addslashes($_POST['mo_lastname']).'");'.
+        '$("#user").val("'.addslashes($_POST['user']).'");'.
+        '$("#email").val("'.addslashes($_POST['email']).'");'.
+        '$("#phone").val("'.addslashes($_POST['phone']).'");});</script>';
     }
   ?>
 </body>
