@@ -711,5 +711,25 @@
             }
             return json_encode($value_return);
         }
+        public function select_data_footer() {
+            $value_return['direction']['street_direction'] = '';
+            $value_return['direction']['suburb_direction'] = '';
+            $value_return['direction']['municipality_direction'] = '';
+            $value_return['contact']['email_user'] = '';
+            $value_return['contact']['phone_user'] = '';
+            $this->querys = "SELECT street_direction,suburb_direction,municipality_direction FROM direction WHERE id_direction=1";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                $value_return['direction'] = $this->result->fetch_assoc();
+                $this->result->free();
+            }
+            $this->querys = "SELECT email_user,phone_user FROM user WHERE id_user=1";
+            $this->result = $this->connectDB->query($this->querys);
+            if($this->result->num_rows > 0) {
+                $value_return['contact'] = $this->result->fetch_assoc();
+                $this->result->free();
+            }
+            return $value_return;
+        }
     }
 ?>

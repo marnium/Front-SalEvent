@@ -135,7 +135,7 @@ if (isset($_SESSION['data_admin'])) {
       </section>
    </main>
    <?php
-   include('../partials/home/footer.html');
+   include('../partials/home/footer.php');
    ?>
 
    <script>
