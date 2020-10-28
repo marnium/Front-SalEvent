@@ -76,14 +76,12 @@
                     placeholder="Contraseña" required
                   />
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-block-4 mt-4 pr-4 pl-4" 
+                <button type="submit" class="btn btn-lg btn-primary btn-block-4 mt-4 pr-4 pl-4 mb-4" 
                    name="send"
                 >
                   Acceder
                 </button>
-                <div class="mt-4 pt-4 mb-4 pb-4">
-                  <a href="#" class="mt-4">Olvido su nombre o contraseña</a>
-                </div>
+                <div class="mt-4 pt-4 mb-4 pb-4"></div>
               </form>
             </div>
           </div>

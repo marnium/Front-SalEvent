@@ -24,7 +24,7 @@ sudo apt install mysql-server php apache2 libapache2-mod-php php-mysql
 _**NOTA**: XAAMP realiza de forma automatica la instalación de estos programas_
 
 ### Instalación 🔧
-* Mover o clonar el proyecto a la ruta donde apunte su servidor
+* Clonar el repositorio y apuntar la ruta del servidor web al directorio generado por la clonación del repositorio (todo esto con el fin de no tener problemas con las rutas)
 * Ejecutar el script **database/database.sql**
 
 En el CLI de MySQL:
