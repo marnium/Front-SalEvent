@@ -90,6 +90,11 @@ if (isset($_SESSION['data_admin'])) {
       #price {
          background-color: #EEEEEE;
       }
+
+      input[type="number"] {
+         width: 80px;
+         height: 40px;
+      }
    </style>
 </head>
 
