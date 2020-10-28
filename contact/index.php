@@ -98,7 +98,7 @@ if (isset($_SESSION['data_admin'])) {
             </article>
             <article id="container-form" class="bg-dark px-2 py-3 p-sm-3 col-lg-6 my-lg-5">
                <div id="box-confirmpass" class="col-md-12 pb-lg-5 w-100 d-flex flex-wrap justify-content-center"></div>
-               <form action="" id="form-contact">
+               <form method="POST" id="form-contact">
                   <div class="form-group input">
                      <label for="full_name">Nombre completo:</label>
                      <input type="text" name="full_name" id="full_name" class="w-100 bg-dark" autofocus />
@@ -138,12 +138,51 @@ if (isset($_SESSION['data_admin'])) {
    ?>
 
    <script>
-      
+      function validateData() {
+         var regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
+         if ($("#full_name").val().replace(" ", "").trim() === "" ||
+            $("#email").val().replace(" ", "").trim() === "" ||
+            $("#telphone").val().replace(" ", "").trim() === "" ||
+            $("#msg").val().replace(" ", "").trim() === "") {
+            return false;
+         }
+         if ((!regexEmail.test($("#email").val())) || ($("#full_name").val().length)<5) {
+            return false;
+         }
+         if (isNaN($("#telphone").val())) {
+            return false;
+         } else {
+            if ((($("#telphone").val().length) < 10)) {
+               return false;
+            }
+         }
+         return true;
+      }
+
+      function showMessage(messague) {
+         if (!document.getElementById("msg-error-successful")) {
+            $("#box-confirmpass").append(
+               `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-success alert-dismissible fade show text-center" role="alert">
+                        ` + messague + `
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> 
+                    </p>`
+            );
+            $('html, body').animate({
+               scrollTop: $("#box-confirmpass").offset().top - 100
+            }, 500);
+         }
+      }
       $(document).ready(function() {
          $("#form-contact").submit(function() {
-            /*if (!validateData()) {
+            if (document.getElementById('msg-error-successful')) {
+               $('#msg-error-successful').remove();
+            }
+            if (!validateData()) {
                showMessage("Corrija o rellene todos los campos");
-            } else {*/
+            } else {
+               
                $.ajax({
                      data: {
                         "fullName": JSON.stringify($("#full_name").val()),
@@ -160,13 +199,20 @@ if (isset($_SESSION['data_admin'])) {
                      if (!document.getElementById("msg-error-successful")) {
                         $("#box-confirmpass").append(
                            `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-success alert-dismissible fade show" role="alert">
-                        <small>Se ha enviado tu mensaje</small>
+                        Se ha enviado tu mensaje
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button> 
                     </p>`
                         );
+                        $('html, body').animate({
+                           scrollTop: $("#box-confirmpass").offset().top - 100
+                        }, 500);
                      }
+                     $("#full_name").val("");
+                     $("#email").val("");
+                     $("#telphone").val("");
+                     $("#msg").val("");
                   })
                   .fail(function(jqXHR, textStatus, errorThrown) {
 
@@ -181,8 +227,8 @@ if (isset($_SESSION['data_admin'])) {
                         );
                      }
                   });
-            /*}
-            return false;*/
+            }
+            return false;
          });
       });
    </script>

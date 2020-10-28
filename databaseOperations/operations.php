@@ -21,6 +21,9 @@
             return $result_return;
         }
         public function updatePasswordUser($id, $newPassword){
+            $id = $this->connectDB->real_escape_string($id);
+            $newPassword = $this->connectDB->real_escape_string($newPassword);
+
             $result_return = "";
             $this->querys = "UPDATE user SET password_user='$newPassword' WHERE id_user='$id' ;";
             $result_return = array("successful-update",$newPassword); 
@@ -32,6 +35,8 @@
             return $result_return;
         }
         public function getReservations($id){
+            $id = $this->connectDB->real_escape_string($id);
+
             $result_return = "";
             $this->querys = "SELECT id_reservation,type_event,date_reservation_start,
                 price_total FROM reservations WHERE id_user='$id';";
@@ -61,6 +66,9 @@
             return $result_return;
         }
         public function deleteReservation($id,$idUser){
+            $id = $this->connectDB->real_escape_string($id);
+            $idUser = $this->connectDB->real_escape_string($idUser);
+
             $result_return = "not-successful";
             $folio = $this->getFolioServices($id,$idUser);
             if($this->connectDB->query("DELETE FROM reservations WHERE id_reservation=$id".
@@ -73,6 +81,9 @@
             return $result_return;
         }
         public function getFolioServices($id,$idUser){
+            $id = $this->connectDB->real_escape_string($id);
+            $idUser = $this->connectDB->real_escape_string($idUser);
+
             $folio = "";
             $this->querys = $this->connectDB->query("SELECT * FROM reservations".
                 " WHERE id_reservation=$id AND id_user=$idUser;");
@@ -85,6 +96,8 @@
             return $folio;
         }
         public function deleteFolioServices($folio){
+            $folio = $this->connectDB->real_escape_string($folio);
+
             $this->connectDB->query("DELETE FROM selectedservices WHERE id_folio_services=$folio;");
         }
         public function pricebyHour(){
@@ -96,6 +109,8 @@
             return $this->result;
         }
         public function getPriceServices($id){
+            $id = $this->connectDB->real_escape_string($id);
+
             $this->result = "";
 
             $this->querys = "SELECT price FROM services WHERE id_service='$id';";
@@ -117,6 +132,8 @@
             return $this->result; 
         }
         public function validateReservation($dateToReserve){
+            $dateToReserve = $this->connectDB->real_escape_string($dateToReserve);
+
             $this->result = "";
 
             $this->querys= "select * from reservations where".
@@ -137,6 +154,10 @@
         }
         public function addSelectedServices($id_service,$id_folio_services,$amount_service,
             $total_service){
+            $id_service = $this->connectDB->real_escape_string($id_service);
+            $id_folio_services = $this->connectDB->real_escape_string($id_folio_services);
+            $amount_service = $this->connectDB->real_escape_string($amount_service);
+            $total_service = $this->connectDB->real_escape_string($total_service);
 
             $this->querys = "INSERT INTO selectedservices VALUES($id_service, ".
                 " $id_folio_services, $amount_service, $total_service);";
@@ -145,6 +166,12 @@
         }
         public function addReservation($typeEvent,$priceTotal,$dateReservationStart,
             $dateReservationEnd,$idUser,$idFolioServices){
+            $typeEvent = $this->connectDB->real_escape_string($typeEvent);
+            $priceTotal = $this->connectDB->real_escape_string($priceTotal);
+            $dateReservationStart = $this->connectDB->real_escape_string($dateReservationStart);
+            $dateReservationEnd = $this->connectDB->real_escape_string($dateReservationEnd);
+            $idUser = $this->connectDB->real_escape_string($idUser);
+            $idFolioServices = $this->connectDB->real_escape_string($idFolioServices);
 
             $this->querys = "INSERT INTO reservations VALUES(null,'$typeEvent', ".
                 "0, $priceTotal, '$dateReservationStart', '$dateReservationEnd', ".
@@ -153,6 +180,9 @@
 
         }
         public function getInformationReservation($idReservation,$idUser){
+            $idReservation = $this->connectDB->real_escape_string($idReservation);
+            $idUser = $this->connectDB->real_escape_string($idUser);
+
             $this->querys = "SELECT * FROM reservations WHERE id_reservation=$idReservation".
                 " AND id_user=$idUser;";
             $this->result = $this->connectDB->query($this->querys);
@@ -162,6 +192,9 @@
             return $this->result;
         }
         public function getValueService($idService,$folioService){
+            $idService = $this->connectDB->real_escape_string($idService);
+            $folioService = $this->connectDB->real_escape_string($folioService);
+
             $this->querys = "SELECT amount_service".
                 " FROM selectedservices WHERE id_folio_services=$folioService AND ".
                 "id_service=$idService;";
@@ -177,15 +210,37 @@
             return $this->result;
         }
         public function updateFolioServices($folio,$newTotal){
+            $folio = $this->connectDB->real_escape_string($folio);
+            $newTotal = $this->connectDB->real_escape_string($newTotal);
+
             $this->querys = "UPDATE folioServices SET total_services=$newTotal ".
                 "WHERE id_folio_services=$folio ;";
             $this->connectDB->query($this->querys);
         }
         public function updateReservations($typeEvent,$priceTotal,$dateStart,$dateEnd,$id){
+            $typeEvent = $this->connectDB->real_escape_string($typeEvent);
+            $priceTotal = $this->connectDB->real_escape_string($priceTotal);
+            $dateStart = $this->connectDB->real_escape_string($dateStart);
+            $dateEnd = $this->connectDB->real_escape_string($dateEnd);
+            $id = $this->connectDB->real_escape_string($id);
+
             $this->querys = "UPDATE reservations SET type_event='$typeEvent', ".
                 "price_total=$priceTotal, date_reservation_start='$dateStart', ".
                 "date_reservation_end='$dateEnd' WHERE id_reservation=$id ;";
             $this->connectDB->query($this->querys);
+        }
+        public function sendMessageContac($fullName,$email,$phone,$message){
+
+            $fullName = $this->connectDB->real_escape_string($fullName);
+            $email = $this->connectDB->real_escape_string($email);
+            $phone = $this->connectDB->real_escape_string($phone);
+            $message = $this->connectDB->real_escape_string($message);
+
+            $this->querys = "INSERT INTO contac VALUES(null, '$fullName', ".
+                "'$email', '$phone', '$message')";
+            $this->connectDB->query($this->querys);
+
+            $this->connectDB->close();
         }
         /**
          * This method adds a record for a user in the user table.
