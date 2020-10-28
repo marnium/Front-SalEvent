@@ -10,9 +10,14 @@
             $this->connectDB->set_charset('utf8');
         }
         
+        /**
+         * -----Validation for sql injection.------
+         */
         public function consultUser($user, $password){
             $result_return = "";
             
+            $user = $this->connectDB->real_escape_string($user);
+            $password = $this->connectDB->real_escape_string($password);
             $this->querys = "SELECT * FROM user WHERE user_user='$user' AND password_user='$password';";
             $this->result = $this->connectDB->query($this->querys);
             $result_return = mysqli_fetch_array($this->result);

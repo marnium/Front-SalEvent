@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 session_start();
   if(isset($_SESSION['data_user'])){
     header("Location: /my/");
@@ -27,9 +24,17 @@ session_start();
   ?>
   <main class="container p-4 mt-2">
   <?php
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['user'], $_POST['password'], $_POST['name'], $_POST['pa_lastname'],
+      $_POST['mo_lastname'], $_POST['email'], $_POST['phone'])) {
       require_once('../databaseOperations/operations.php');
       $operationDB = new OperationBD();
+      $_POST['name'] = htmlspecialchars($_POST['name']);
+      $_POST['pa_lastname'] = htmlspecialchars($_POST['pa_lastname']);
+      $_POST['mo_lastname'] = htmlspecialchars($_POST['mo_lastname']);
+      $_POST['email'] = htmlspecialchars($_POST['email']);
+      $_POST['phone'] = htmlspecialchars($_POST['phone']);
+      $_POST['user'] = htmlspecialchars($_POST['user']);
+      $_POST['password'] = htmlspecialchars($_POST['password']);
       $response = $operationDB->create_user($_POST['name'],$_POST['pa_lastname'],$_POST['mo_lastname'],
       $_POST['email'],$_POST['phone'],$_POST['user'],$_POST['password']);
 
@@ -43,7 +48,7 @@ session_start();
           '<button type="button" class="close" data-dismiss="alert" aria-label="close">'.
           '<span aria-hidden="true">&times;</span></button></div>';
       } else {
-        $_SESSION['message-register'] = "¡Felicidades!".$_POST['name'].
+        $_SESSION['message-register'] = "¡Felicidades! ".$_POST['name'].
           ", has sido registrado exitosamente. Por favor inicia sesión";
         header('Location: /login/');
       }
