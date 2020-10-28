@@ -222,7 +222,7 @@ if (isset($_SESSION['data_admin'])) {
                   <div class="input-group align-items-center justify-content-end no-gutters">
                      <label for="total" class="pr-2 mb-0">Total:</label>
                      <div class="col-8 col-sm-7">
-                        <input type="text" name="total" id="total" class="form-control" v-model="total" />
+                        <input type="text" name="total" id="total" class="form-control" v-model="total" disabled />
                      </div>
                   </div>
                </div>
