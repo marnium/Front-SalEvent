@@ -43,7 +43,7 @@ $(document).ready(function () {
                     finalhour = finalhour - 12;
                     break;
             }
-            if (starthour > finalhour) {
+            if (starthour >= finalhour) {
                 showMessage();
                 return false;
             }
@@ -127,6 +127,7 @@ function showMessage() {
                   </p>`
         );
     }
+    document.getElementById('total').value="";
 }
 
 //clean button repair

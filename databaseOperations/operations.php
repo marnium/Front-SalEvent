@@ -247,6 +247,16 @@
 
             $this->connectDB->close();
         }
+        public function businessDays(){
+            $dataReturn = "";
+
+            $this->querys = "SELECT * FROM schedule WHERE id_schedule=1";
+            $dataReturn = $this->connectDB->query($this->querys);
+
+            $this->connectDB->close();
+
+            return $dataReturn;
+        }
         /**
          * This method adds a record for a user in the user table.
          * -----Validation for sql injection.-----

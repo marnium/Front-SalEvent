@@ -41,7 +41,7 @@ $(document).ready(function () {
                     finalhour = finalhour - 12;
                     break;
             }
-            if (starthour > finalhour) {
+            if (starthour >= finalhour) {
                 showMessage();
                 return false;
             }
@@ -118,13 +118,14 @@ function showMessage() {
     if (!document.getElementById("msg-error-successful")) {
         $("#box-confirmpass").append(
             `<p id="msg-error-successful" class="mb-0 mt-2 alert alert-danger alert-dismissible fade show" role="alert">
-                      <small>¡Vaya! Rellene o corrija los datos</small>
+                      ¡Vaya! Rellene o corrija los datos
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button> 
                   </p>`
         );
     }
+    document.getElementById('total').value="";
 }
 
 //clean button repair

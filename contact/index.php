@@ -101,7 +101,7 @@ if (isset($_SESSION['data_admin'])) {
                <form method="POST" id="form-contact">
                   <div class="form-group input">
                      <label for="full_name">Nombre completo:</label>
-                     <input type="text" name="full_name" id="full_name" class="w-100 bg-dark" autofocus />
+                     <input type="text" name="full_name" id="full_name" class="w-100 bg-dark" required autofocus />
                      <div class="animation-focus">
                         <div class="left"></div>
                         <div class="right"></div>
@@ -109,7 +109,7 @@ if (isset($_SESSION['data_admin'])) {
                   </div>
                   <div class="form-group input">
                      <label for="email">E-mail:</label>
-                     <input type="email" name="email" id="email" class="w-100 bg-dark" />
+                     <input type="email" name="email" id="email" class="w-100 bg-dark" required />
                      <div class="animation-focus">
                         <div class="left"></div>
                         <div class="right"></div>
@@ -117,7 +117,7 @@ if (isset($_SESSION['data_admin'])) {
                   </div>
                   <div class="form-group input">
                      <label for="telphone">Teléfono/Cel:</label>
-                     <input type="tel" name="telphone" id="telphone" class="w-100 bg-dark" />
+                     <input type="tel" name="telphone" id="telphone" class="w-100 bg-dark" required />
                      <div class="animation-focus">
                         <div class="left"></div>
                         <div class="right"></div>
@@ -125,7 +125,7 @@ if (isset($_SESSION['data_admin'])) {
                   </div>
                   <div class="form-group">
                      <label for="msg">Mensaje:</label>
-                     <textarea name="msg" id="msg" cols="30" rows="5" class="form-control bg-dark" style="color: white; resize: none;"></textarea>
+                     <textarea name="msg" id="msg" cols="30" rows="5" class="form-control bg-dark" style="color: white; resize: none;" required></textarea>
                   </div>
                   <input type="submit" value="Envía un mensaje" class="btn btn-warning btn-block text-white" />
                </form>

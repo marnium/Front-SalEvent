@@ -68,6 +68,7 @@ if (isset($_SESSION['modifyReservation'])) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <div id="box-message" class="mt-2 mb-2"></div>
       <div class="container-fluid calendar-fixed d-flex flex-wrap m-auto">
         <div class="col-md-8">
           <article id="date" class="w-100 text-center pt-2 col-lg-12 pb-4">

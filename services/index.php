@@ -1,14 +1,15 @@
 <?php
-  session_start();
-  if(isset($_SESSION['data_user'])){
-    header("Location: /my/");
-  }
-  if(isset($_SESSION['data_admin'])){
+session_start();
+if (isset($_SESSION['data_user'])) {
+   header("Location: /my/");
+}
+if (isset($_SESSION['data_admin'])) {
    header("Location: /admin/");
- }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,12 +17,12 @@
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
    <?php
-      require_once('../databaseOperations/operations.php');
-      $operationsDB = new OperationBD();
-      $date = explode(' ', date('Y m'));
-      echo "<script>var reservations = JSON.parse('".
-         $operationsDB->select_date_reservations_for_month($date[0], $date[1]).
-         "');</script>";
+   require_once('../databaseOperations/operations.php');
+   $operationsDB = new OperationBD();
+   $date = explode(' ', date('Y m'));
+   echo "<script>var reservations = JSON.parse('" .
+      $operationsDB->select_date_reservations_for_month($date[0], $date[1]) .
+      "');</script>";
    ?>
    <title>Servicios</title>
    <style>
@@ -29,22 +30,27 @@
          background-color: #1B1C1C;
          color: #EEEEEE;
       }
+
       #month {
          border-bottom: 2px solid #777e7e;
       }
+
       .box-state {
          width: 15px;
          height: 15px;
          margin-right: 7px;
       }
+
       .row-cal {
          margin-bottom: 15px;
          margin-left: 12px;
       }
+
       .box-col-cal {
          padding-right: 12px;
          width: 14.2857%;
       }
+
       .col-cal {
          width: 100%;
          padding: 0;
@@ -53,6 +59,7 @@
          color: #1B1C1C;
          border-color: #EEEEEE;
       }
+
       #cal .btn.disabled {
          cursor: not-allowed;
          opacity: 1;
@@ -60,29 +67,35 @@
          color: #1B1C1C;
          border-color: #EEEEEE;
       }
+
       #cal div.btn.selected {
          background-color: purple;
          border-color: purple;
       }
+
       #cal div.btn.reservated {
          background-color: #70A3ED;
          border-color: #70A3ED;
       }
+
       #cal div.btn.on-hold {
          background: #FCC70F;
          border-color: #FCC70F;
       }
-      #cal > div.row-cal:first-child {
+
+      #cal>div.row-cal:first-child {
          justify-content: flex-end;
       }
+
       #price {
          background-color: #EEEEEE;
       }
    </style>
 </head>
+
 <body class="w-100">
    <?php
-      include('../partials/home/navigation.html');
+   include('../partials/home/navigation.html');
    ?>
    <main class="container p-0 mt-2" id="app">
       <div class="alert alert-info alert-dismissible fade show text-center" role="alert">
@@ -125,96 +138,98 @@
             <div id="cal">
                <div class="d-flex row-cal" v-for="(week, indexweek) in calendar">
                   <div class="box-col-cal" v-for="(day, indexday) in week">
-                     <div class="col-cal btn" v-bind:class="get_class_date(day)"
-                        v-on:click="select_date(indexweek, indexday)">{{day}}</div>
+                     <div class="col-cal btn" v-bind:class="get_class_date(day)" v-on:click="select_date(indexweek, indexday)">{{day}}</div>
                   </div>
                </div>
             </div>
          </article>
          <article id="price" class="w-100 pt-4 pb-4 pl-sm-3 pr-sm-3 col-lg-7">
             <h5 class="font-weight-bold">Cotización</h5>
-            <form method="post">
-               <div class="row no-gutters mb-2 justify-content-end">
-                  <div class="mb-2 col-md-7">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="type_reserv" class="pr-2 mb-0">Reservar por:</label>
-                        <div class="col-8 col-lg-7">
-                           <select name="reservation_type" id="reservation_type" class="form-control" v-model="reservation_type">
-                              <option value="novalue" hidden="hidden">Seleccione una opción</option>
-                              <option value="days">Dias</option>
-                              <option value="hours">Horas</option>
+            <div id="box-confirmpass" class="col-md-12 d-flex flex-wrap justify-content-center"></div>
+            <form id="form-book" method="POST">
+               <div class="d-flex flex-row flex-wrap">
+                  <div class="col-md-12 input-group mb-2 mt-2" id="eventother">
+                     <div class="input-group-prepend mb-3">
+                        <label for="event" class="h6 mt-2 mr-2">Evento:</label>
+                     </div>
+                     <select id="event" class="custom-select mb-3" name="values[]" required>
+                        <option value="" selected hidden>Seleccione una opción</option>
+                        <option value="Graduacion">Graduacion</option>
+                        <option value="Boda">Boda</option>
+                        <option value="Bautizo">Bautizo</option>
+                        <option value="Comunion">Comunion</option>
+                        <option value="Confirmacion">Confirmacion</option>
+                        <option value="Cumpleaños">Cumpleaños</option>
+                        <option value="Quince años">Quince años</option>
+                        <option value="Reunion">Reunion</option>
+                        <option value="other">Otro</option>
+                     </select>
+                  </div>
+                  <div class="col-md-12">
+                     <div class="d-flex flex-column flex-wrap">
+                        <div class="mt-2 d-flex flex-wrap justify-content-center">
+                           <label for="start-time" class="mr-2 mt-1">Hr inicio:</label>
+                           <input type="number" name="values[]" id="start-time" class="mb-1" min="1" max="12" required />
+                           <select class="ml-2 selected mb-1" name="values[]" id="start-time-select">
+                              <option value="am">AM</option>
+                              <option value="pm">PM</option>
+                           </select>
+                        </div>
+                        <div class="mt-2 d-flex flex-wrap justify-content-center">
+                           <label for="final-time" class="mr-2 mt-1">Hr final:</label>
+                           <input type="number" name="values[]" id="final-time" class="mb-1" min="1" max="12" required />
+                           <select class="ml-2 selected mb-1" name="values[]" id="final-time-select">
+                              <option value="am">AM</option>
+                              <option value="pm">PM</option>
                            </select>
                         </div>
                      </div>
                   </div>
-                  <div class="mb-2 col-sm-6 col-md-5">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="count_time" class="pr-2 mb-0">Cantidad:</label>
-                        <div class="col-8 col-sm-7">
-                           <input type="number" name="count_time" id="count_time" class="form-control" min="0" v-model="count_time" />
-                        </div>
-                     </div>
+                  <div class="col-md-12 mt-4">
+                     <h3>Servicios:</h3>
                   </div>
-                  <div class="col-sm-6 col-md-5">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="count_people" class="pr-2 mb-0">Personas:</label>
-                        <div class="col-8 col-sm-7">
-                           <input type="number" name="count_people" id="count_people" class="form-control" min="0" v-model="count_people" />
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <p class="p-0 font-weight-bold">Mobiliario:</p>
-               <div class="row no-gutters mb-2">
-                  <div class="mb-2 col-sm-6 col-md-4">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="chairs" class="pr-2 mb-0">Sillas:</label>
-                        <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="chairs" id="chairs" class="form-control" min="0" v-model="chairs" />
-                        </div>
-                     </div>
-                  </div>
-                  <div class="mb-2 col-sm-6 col-md-4">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="tables" class="pr-2 mb-0">Mesas:</label>
-                        <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="tables" id="tables" class="form-control" min="0" v-model="tables" />
-                        </div>
-                     </div>
-                  </div>
-                  <div class="mb-2 col-sm-6 col-md-4">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="tablecloths" class="pr-2 mb-0">Manteles:</label>
-                        <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="tablecloths" id="tablecloths" class="form-control" min="0" v-model="tablecloths" />
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-sm-6 col-md-4">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="assistants" class="pr-2 mb-0">Asistentes:</label>
-                        <div class="col-8 col-sm-7 col-lg-6">
-                           <input type="number" name="assistants" id="assistants" class="form-control" min="0" v-model="assistants" />
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="row no-gutters justify-content-end mb-3">
-                  <div class="col-sm-6 col-md-5">
-                     <div class="input-group align-items-center justify-content-end no-gutters">
-                        <label for="total" class="pr-2 mb-0">Total:</label>
-                        <div class="col-8 col-sm-7">
-                           <input type="text" name="total" id="total" class="form-control" v-model="total" />
-                        </div>
+                  <div class="col-md-12 mt-2">
+                     <div class="d-flex flex-wrap justify-content-around" id="boxservices">
+                        <?php
+                        require_once('../databaseOperations/operations.php');
+                        $operations = new OperationBD();
+                        $services = $operations->getServices();
+                        if ($services->num_rows) {
+                           while ($row = $services->fetch_assoc()) {
+                              echo '
+                      <div class="col-md-4 mb-2 d-flex flex-wrap justify-content-center">
+                        <label for="';
+                              echo $row['id_service'];
+                              echo '" class="mr-2 mt-1">';
+                              echo $row['name_service'] . ":";
+                              echo '</label>
+                        <input type="number" name="';
+                              echo $row['id_service'];
+                              echo '" id="';
+                              echo $row['id_service'];
+                              echo '" class="mb-1" min="0" required  />
+                      </div>';
+                           }
+                        }
+                        ?>
+
                      </div>
                   </div>
                </div>
             </form>
-            <div class="d-flex justify-content-end">
-               <i class="fas fa-cart-plus fa-2x mr-2"></i>
-               <button type="button" class="btn btn-dark btn-sm mr-2">Agregar al carrito</button>
-               <button type="button" class="btn btn-dark btn-sm mr-2">Cotizar</button>
-               <button type="button" class="btn btn-dark btn-sm" v-on:click="clear_fields">Limpiar</button>
+            <div class="row no-gutters justify-content-end mb-3">
+               <div class="col-sm-6 col-md-5">
+                  <div class="input-group align-items-center justify-content-end no-gutters">
+                     <label for="total" class="pr-2 mb-0">Total:</label>
+                     <div class="col-8 col-sm-7">
+                        <input type="text" name="total" id="total" class="form-control" v-model="total" />
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="d-flex justify-content-center">
+               <button type="button" class="btn btn-dark btn-sm mr-2" onclick="quote()">Cotizar</button>
+               <button type="reset" class="btn btn-dark btn-sm" form="form-book" onclick="restore()">Limpiar</button>
             </div>
          </article>
       </section>
@@ -268,11 +283,11 @@
       </section>
    </main>
    <?php
-      include('../partials/home/footer.html');
+   include('../partials/home/footer.html');
    ?>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
    <script src="../js/servicios.js"></script>
 </body>
+
 </html>
