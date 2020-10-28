@@ -120,7 +120,7 @@
     <div class="col-md-6">
         <p class="border-top border-left border-bottom p-2 text-justify">
           Celebra con nosotros esa ocasión especial, contamos con meseros y un extenso menú de cubiertos y
-          accesorios para que te sientas lo más cómodo y a pases un rato muy agradable.
+          accesorios para que te sientas lo más cómodo y pases un rato muy agradable.
           El personal estará pendiente y a la orden en todo momento para que no descuides a tus invitados y
           captures esos momentos especiales.
         </p>
