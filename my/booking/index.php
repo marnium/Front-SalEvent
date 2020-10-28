@@ -147,7 +147,7 @@ if(isset($_POST['modify'])){
             <p>Hora inicio:</p>
             <p class="text-danger">
               <?php
-                echo ($startHour<12) ? $startHour." AM" : $startHour." PM";
+                echo $startHour.":00:00 horas";
               ?>
             </p>
           </div>
@@ -155,7 +155,7 @@ if(isset($_POST['modify'])){
             <p>Hora final:</p>
             <p class="text-danger">
               <?php
-                echo ($finalHour<12) ? $finalHour." AM" : $finalHour." PM";
+                echo $finalHour.":00:00 horas";
               ?></p>
           </div>
         </div>

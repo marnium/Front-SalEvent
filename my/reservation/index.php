@@ -97,7 +97,7 @@ if ($resultQuery->num_rows) {
             <p>Hora inicio:</p>
             <p class="text-danger">
               <?php
-              echo ($startDate < 12) ? $startDate . " AM" : $startDate . " PM";
+              echo $startDate.":00:00 horas";
               ?>
             </p>
           </div>
@@ -105,7 +105,7 @@ if ($resultQuery->num_rows) {
             <p>Hora final:</p>
             <p class="text-danger">
               <?php
-              echo ($endDate < 12) ? $endDate . " AM" : $endDate . " PM";
+              echo $endDate.":00:00 horas";
               ?>
             </p>
           </div>
