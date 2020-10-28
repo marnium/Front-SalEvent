@@ -24,9 +24,10 @@ if (isset($_SESSION['modifyReservation'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SallEvent</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <link rel="stylesheet" href="../../css/page-my/styles-index.css" />
   <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="shortcut icon" type="image/png" href="/img/favicon/favicon.png"/>
   <?php
   require_once('../../databaseOperations/operations.php');
   $operationsDB = new OperationBD();
