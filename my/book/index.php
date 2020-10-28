@@ -92,7 +92,7 @@ if (isset($_POST['returnToCalendar'])) {
             </div>
           </div>
           <div class="col-md-12 mt-4">
-            <h3>Mobiliario:</h3>
+            <h3>Servicios:</h3>
           </div>
           <div class="col-md-12 mt-2">
             <div class="d-flex flex-wrap justify-content-between" id="boxservices">

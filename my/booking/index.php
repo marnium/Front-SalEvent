@@ -136,14 +136,14 @@ if(isset($_POST['modify'])){
           <h2 class="text-center">Evento: <?php echo $typeEvent; ?></h2>
         </div>
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
-          <div class="d-flex flex-wrap justify-content-around mb-3">
+          <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Horas contratadas</p>
             <p class="text-danger">
               <?php 
                 echo $finalHour-$startHour;
               ?></p>
           </div>
-          <div class="d-flex flex-wrap justify-content-around mb-3">
+          <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Hora inicio:</p>
             <p class="text-danger">
               <?php
@@ -151,7 +151,7 @@ if(isset($_POST['modify'])){
               ?>
             </p>
           </div>
-          <div class="d-flex flex-wrap justify-content-around mb-3">
+          <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Hora final:</p>
             <p class="text-danger">
               <?php
@@ -165,7 +165,7 @@ if(isset($_POST['modify'])){
           <h2 class="text-center">Datos del cliente</h2>
         </div>
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
-          <div class="d-flex flex-wrap justify-content-around mb-3">
+          <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Nombre completo:</p>
             <p> 
               <?php 
@@ -174,11 +174,11 @@ if(isset($_POST['modify'])){
               ?> 
             </p>
           </div>
-          <div class="d-flex flex-wrap justify-content-around mb-3">
+          <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Email:</p>
             <p><?php echo $_SESSION["data_user"][5];  ?></p>
           </div>
-          <div class="d-flex flex-wrap justify-content-around mb-3">
+          <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Telefono:</p>
             <p><?php echo $_SESSION["data_user"][6];  ?></p>
           </div>
