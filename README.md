@@ -36,15 +36,15 @@ source database/database.sql
 ### Público en general
 _Tienen a su diposición las opciones de:_
 #### Inicio
-![Home](https://user-images.githubusercontent.com/53574794/97446729-64f81980-18f4-11eb-819b-98a7df389313.PNG)
+![init](https://user-images.githubusercontent.com/53574794/97509071-db256c00-1946-11eb-86bf-edffe70d14c2.png)
 #### Servicio
-![ServiciosHome](https://user-images.githubusercontent.com/53574794/97455568-9cb78f00-18fd-11eb-873b-267605285f53.PNG)
+![servicesHome](https://user-images.githubusercontent.com/53574794/97509247-5e46c200-1947-11eb-9a67-e8fd06bb84f3.png)
 #### Contacto
-![Contactus](https://user-images.githubusercontent.com/53574794/97446711-5f9acf00-18f4-11eb-98cf-db54758f1193.PNG)
+![contact](https://user-images.githubusercontent.com/53574794/97507050-fa6dca80-1941-11eb-85ea-6e49a394562a.png)
 #### Registrarse
 ![register](https://user-images.githubusercontent.com/53574794/97475838-5a00b180-1913-11eb-94b7-5ee951aaacd3.png)
 #### Acceder
-![Loggin](https://user-images.githubusercontent.com/53574794/97446749-6b869100-18f4-11eb-8f68-8dac6b451d61.PNG)
+![login](https://user-images.githubusercontent.com/53574794/97506675-1e7cdc00-1941-11eb-8b2e-731683d84429.png)
 
 ### Administrador
 _La app cuenta con un solo administrador, este biene configurado por defecto, los datos para su acceso son:_
@@ -55,45 +55,43 @@ _El administrador cuenta con las opciones de:_
 #### Clientes
 _Le permiten al administrador crear, buscar, modificar y eliminar clientes de la base de datos_
 
-![Clientes](https://user-images.githubusercontent.com/53574794/97446699-5ad61b00-18f4-11eb-9ae4-aa5de24e1641.PNG)
+![clientsAdm](https://user-images.githubusercontent.com/53574794/97509291-83d3cb80-1947-11eb-8d01-af6273e654fb.png)
 
 #### Reservaciones
 _Permite ver y confirmar reservaciones_
 
-![Reservaciones](https://user-images.githubusercontent.com/53574794/97446765-6fb2ae80-18f4-11eb-9291-35e4ff6ee4c6.PNG)
+![reservationsAdm](https://user-images.githubusercontent.com/53574794/97509345-a6fe7b00-1947-11eb-9365-3a69e5de60eb.png)
 
 #### Servicios
 _Permite crear, buscar, modificar servicios_
 
-![Servicios](https://user-images.githubusercontent.com/53574794/97446797-75a88f80-18f4-11eb-9619-8f50b3ec760b.PNG)
-
+![servicesAdm](https://user-images.githubusercontent.com/53574794/97509373-ba114b00-1947-11eb-8b89-e930a9dd5ee3.png)
 
 #### Salón
 _Permite modificar los datos del saón de eventos_
 
-![Salon](https://user-images.githubusercontent.com/53574794/97446778-72ad9f00-18f4-11eb-91a1-4d9833975c6d.PNG)
-
+![salonAdm](https://user-images.githubusercontent.com/53574794/97509418-d614ec80-1947-11eb-8b81-22dcb2d54ded.png)
 
 #### Datos personales
 _Le permite al administrador ver y modificar sus datos personales_
 
-![Datos](https://user-images.githubusercontent.com/53574794/97446722-6295bf80-18f4-11eb-8b2d-f5437912b6fb.PNG)
+![infoAdm](https://user-images.githubusercontent.com/53574794/97509445-ecbb4380-1947-11eb-8d08-19fbdb5400de.png)
 
 ### Cliente
 #### Calendario
 _Le permite al usuario ver y seleccionar un fecha a reservar sus reservaciones_
 
-![calendarCli](https://user-images.githubusercontent.com/53574794/97474771-135e8780-1912-11eb-9873-df7a0730bcc5.PNG)
+![calUser](https://user-images.githubusercontent.com/53574794/97509487-0a88a880-1948-11eb-85c8-303723310df0.png)
 
 #### Mis reservaciones
 _Le muestra al usuario sus reservaciones_
 
-![reservationsCli](https://user-images.githubusercontent.com/53574794/97475294-b0212500-1912-11eb-9d35-6c18b798e5b4.PNG)
+![reservationsUser](https://user-images.githubusercontent.com/53574794/97509523-255b1d00-1948-11eb-824c-70dbb394e5bf.png)
 
 #### Ajustes
 _Muestran los datos personales del usuario_
 
-![settingsCli](https://user-images.githubusercontent.com/53574794/97475421-db0b7900-1912-11eb-88f8-c5934c84253c.PNG)
+![settings](https://user-images.githubusercontent.com/53574794/97509575-415ebe80-1948-11eb-9128-df7afb55382f.png)
 
 ## Autores
 * **Eleomar Pedro Lorenzo**
