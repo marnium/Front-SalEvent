@@ -88,3 +88,4 @@ INSERT INTO direction VALUES(null,"Siloe","oaxaca","Pochutla","12");
 INSERT INTO schedule values(null,'Y','Y','Y','Y','Y','Y','Y');
 INSERT INTO info_room VALUES(null,1,1);
 INSERT INTO room VALUES(null,"SallEvent",1000,"salon San Pedro Pochutla",100,1);
+INSERT INTO services VALUES(null,"Sillas",5,"Sillas blancas de metal");

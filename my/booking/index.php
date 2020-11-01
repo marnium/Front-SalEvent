@@ -134,21 +134,21 @@ if(isset($_POST['modify'])){
       </div>
       <section class="col-md-4">
         <div class="col-md-12">
-          <h2 class="text-center">Evento: <?php echo $typeEvent; ?></h2>
+          <h2 class="text-center">Evento: <?php echo (isset($typeEvent)) ? $typeEvent : ""; ?></h2>
         </div>
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
           <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Horas contratadas</p>
             <p class="text-danger">
               <?php 
-                echo $finalHour-$startHour;
+                echo ((isset($finalHour) && isset($startHour)))? $finalHour-$startHour : "";
               ?></p>
           </div>
           <div class="d-flex flex-wrap justify-content-between mb-3">
             <p>Hora inicio:</p>
             <p class="text-danger">
               <?php
-                echo $startHour.":00:00 horas";
+                echo (isset($startHour)) ? $startHour.":00:00 horas": "";
               ?>
             </p>
           </div>
@@ -156,7 +156,7 @@ if(isset($_POST['modify'])){
             <p>Hora final:</p>
             <p class="text-danger">
               <?php
-                echo $finalHour.":00:00 horas";
+                echo (isset($finalHour)) ? $finalHour.":00:00 horas": "";
               ?></p>
           </div>
         </div>
@@ -189,11 +189,11 @@ if(isset($_POST['modify'])){
         <div class="d-flex flex-column flex-wrap mt-4 pt-4">
           <div class="d-flex flex-wrap mb-3">
             <p class="mr-4">Total a pagar:</p>
-            <p class="text-danger"><?php echo $priceByHour + $totalServices; ?></p>
+            <p class="text-danger"><?php echo (isset($priceByHour) && isset($totalServices))?$priceByHour + $totalServices:""; ?></p>
           </div>
           <div class="d-flex flex-wrap mb-3">
             <p class="mr-4">Estatus:</p>
-            <p class="text-danger">En espera</p>
+            <p class="text-danger"><?php echo (isset($priceByHour) && isset($totalServices))?"En espera":""?></p>
           </div>
         </div>
       </section>
