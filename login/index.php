@@ -6,6 +6,34 @@
   if(isset($_SESSION['data_admin'])){
     header("Location: /admin/");
   }
+if (isset($_POST['send'])) {
+  require_once('../databaseOperations/operations.php');
+  $user = $_POST['user'];
+  $password = $_POST['password'];
+  $operations = new OperationBD();
+  $results = $operations->consultUser($user, $password);
+  if (count($results > 0)) {
+    switch ($results['type_user']) {
+      case '0':
+        $_SESSION['data_admin'] = array('id_user' => $results['id_user'], 'name_user' => $results['name_user']);
+        //header('Location: /admin/');
+        echo '<!DOCTYPE html><html><head><script>window.location.href="/admin/";</script></head><body></body></html>';
+        exit();
+        break;
+      case '1':
+        $_SESSION['data_user'] = array(
+          $results['id_user'], $results['type_user'],
+          $results['name_user'], $results['pa_lastname_user'], $results['mo_lastname_user'],
+          $results['email_user'], $results['phone_user'], $results['user_user'],
+          $results['password_user']
+        );
+        //header('Location: /my/');
+        echo '<!DOCTYPE html><html><head><script>window.location.href="/my/";</script></head><body></body></html>';
+        exit();
+        break;
+    }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -88,30 +116,6 @@
         </div>
       </div>
     </div>
-    <?php
-      if(isset($_POST['send'])){
-        require_once('../databaseOperations/operations.php');
-        $user = $_POST['user'];
-        $password = $_POST['password'];
-        $operations = new OperationBD();
-        $results = $operations->consultUser($user,$password);
-        if(count($results>0)){
-          switch($results['type_user']){
-            case '0':
-              $_SESSION['data_admin'] = array('id_user'=>$results['id_user'],'name_user'=>$results['name_user']);
-              header('Location: /admin/');
-            break;
-            case '1':
-              $_SESSION['data_user'] = array($results['id_user'],$results['type_user'],
-                $results['name_user'],$results['pa_lastname_user'],$results['mo_lastname_user'],
-                $results['email_user'],$results['phone_user'],$results['user_user'],
-                $results['password_user']);
-              header('Location: /my/');
-            break;
-          }
-        }
-      }
-    ?>
     <?php
         include('../partials/home/footer.php');
     ?>

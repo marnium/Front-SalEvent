@@ -1,7 +1,8 @@
 <?php
   if(isset($_POST['closeSession'])){
     session_destroy();
-    header("Location: /home/");
+    //header("Location: /home/");
+    echo '<script>window.location.href="/home/";</script>';
   }
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
